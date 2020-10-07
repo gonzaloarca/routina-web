@@ -2,7 +2,7 @@
   <nav app>
     <v-app-bar
       app
-      class="appbar white--text"
+      class="appbar"
       dark
       color="transparent"
       flat
@@ -27,6 +27,7 @@
         text
         tile
         class="mx-2 font-weight-bold"
+        active-class="active-btn"
         router 
         :to="link.route"
       >
@@ -69,6 +70,14 @@ export default {
 @import "../sass/variables";
 
 .appbar {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+  background-image: linear-gradient(rgba(0, 0, 0, 1) 5%,rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0));
+}
+
+.active-btn{
+  color: #FF8000 !important;
+}
+
+.theme--dark.v-btn--active:hover::before, .theme--dark.v-btn--active::before {
+  opacity: 0;
 }
 </style>
