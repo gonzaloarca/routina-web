@@ -13,7 +13,8 @@
             class="scroller"
           >
             <template v-slot="{ item }">
-              {{ item }}
+              
+              <v-list-item class="item">{{ item }}</v-list-item>
             </template>
           </v-virtual-scroll>
         </div>
@@ -27,7 +28,7 @@
             class="scroller"
           >
             <template v-slot="{ item }">
-              {{ item }}
+              <v-list-item class="item">{{ item }}</v-list-item>
             </template>
           </v-virtual-scroll>
         </div>
@@ -40,13 +41,19 @@
 export default {
   data() {
     return {
-      items: ["hola", "como", "estas"],
+      items: ["ejercicio", "ejercicio", "ejercicio","ejercicio", "ejercicio", "ejercicio","ejercicio", "ejercicio", "ejercicio"],
     };
   },
 };
 </script>
 
 <style scoped>
+
+.item{
+    background-color:rgba(255,255,255,0.07);
+    margin: 3px;
+}
+
 .root {
   display: flex;
   flex-wrap: wrap;
@@ -60,12 +67,13 @@ export default {
 .scroller-container {
   width: 30%;
   margin: 10%;
+  white-space: nowrap;
 }
 
 .card {
-  width: 30vw;
+  width: 50vw;
   margin: auto;
-  border: 1px solid blue;
+  background-color:#FF8000;
 }
 
 .title{
