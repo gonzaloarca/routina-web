@@ -1,0 +1,7 @@
+$body-font-family: 'Raleway';
+$title-font: 'Raleway';
+$nav-bar-height: 70px;
+
+:export{
+    navBarHeight: $nav-bar-height;
+}

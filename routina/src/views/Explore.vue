@@ -1,6 +1,6 @@
 <template>
-  <div class="Home">
-    <v-img width="100%" src="../assets/ejercicio.jpg"/>
+  <div class="Explore">
+    <h1>Explore</h1>
   </div>
 </template>
 
@@ -8,8 +8,8 @@
 // @ is an alias to /src
 
 export default {
-  name: "Home",
-};
+  name: 'Explore',
+}
 </script>
 
 <style scoped>
