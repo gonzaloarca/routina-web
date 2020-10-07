@@ -49,6 +49,10 @@ export default {
 
 <style scoped>
 
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
 .item{
     background-color:rgba(255,255,255,0.07);
     margin: 3px;
