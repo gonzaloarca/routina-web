@@ -13,64 +13,50 @@
         </v-btn>
       </template>
 
-      <v-card>
-        <v-list>
-          <v-list-item>
-            <v-list-item-avatar>
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title>John Leider</v-list-item-title>
-              <v-list-item-subtitle>Founder of Vuetify</v-list-item-subtitle>
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-btn
-                :class="fav ? 'red--text' : ''"
-                icon
-                @click="fav = !fav"
-              >
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-            </v-list-item-action>
-          </v-list-item>
-        </v-list>
-        <v-row>
-          <v-text-field   
-            placeholder="account"
-            solo
-            rounded
-            :background-color="red"
+      <v-card color="grey darken-3" >
+        <v-layout-row-wrap>
+            <v-spacer></v-spacer>
+            <v-icon small>mdi-close</v-icon>
+        </v-layout-row-wrap>
+        <v-card-text> 
+         <v-text-field 
+                class="mt-1"  
+                placeholder="account"
+                solo
+                rounded
+                light
           ></v-text-field>
-        </v-row>
+          <v-text-field
+                class="mt-1"   
+                placeholder="password"
+                solo
+                rounded
+                light
+                append-icon="mdi-eye"
+          ></v-text-field> 
+        </v-card-text>   
+        
+       
+        <v-card-text>
+        
+        
         <v-divider></v-divider>
 
-        <v-list>
-          <v-list-item>
-            <v-list-item-action>
-              <v-switch
-                v-model="message"
-                color="purple"
-              ></v-switch>
-            </v-list-item-action>
-            <v-list-item-title>Enable messages</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-action>
-              <v-switch
-                v-model="hints"
-                color="purple"
-              ></v-switch>
-            </v-list-item-action>
-            <v-list-item-title>Enable hints</v-list-item-title>
-          </v-list-item>
-        </v-list>
-
+        
+        <v-checkbox
+          
+          light
+          label='Stay logged in?'>
+        </v-checkbox>
+        <v-btn v-if='options.isLoggingIn' @click.prevent='' block type='submit'> Sign in</v-btn>
+        <div v-if='options.isLoggingIn'>
+              Don't have an account?
+              <v-btn 
+                light
+                @click='options.isLoggingIn = false'
+               > Sign up</v-btn>
+        </div> 
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
 
@@ -88,6 +74,7 @@
             Save
           </v-btn>
         </v-card-actions>
+
       </v-card>
     </v-menu>
   </div>
@@ -102,8 +89,16 @@ export default {
       menu: false,
       message: false,
       hints: true,
+      options:{
+      shouldStayLoggedIn:true,
+      isLoggingIn:true,
+    },
     }),
     offset:true,
+    options:{
+      shouldStayLoggedIn:true,
+      isLoggingIn:true,
+    },
 }
 </script>
 
