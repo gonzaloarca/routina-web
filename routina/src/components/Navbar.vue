@@ -40,14 +40,14 @@
 
       <!-- Search bar -->
       <v-menu
-        elevation="0"
         offset-y
         nudge-left="240px"
         :close-on-content-click="false"
+        v-model="searchOpen"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-on="on" v-bind="attrs">
-            <v-icon>mdi-magnify</v-icon>
+          <v-btn icon v-on="on" v-bind="attrs" @click="searchOpen = !searchOpen">
+            <v-icon :class="searchOpen ? 'orange--text' : 'white--text'"> mdi-magnify</v-icon>
           </v-btn>
         </template>
         <v-text-field
@@ -114,6 +114,7 @@ export default {
       ],
       navBarHeight: styles.navBarHeight,
       drawer: false,
+      searchOpen: false,
       searchInput: "",
     };
   },
