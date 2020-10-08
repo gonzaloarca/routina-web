@@ -11,6 +11,7 @@
       <v-app-bar-nav-icon
         class="hidden-md-and-up"
         @click="drawer = !drawer"
+        @clos="console.log('cami')"
       ></v-app-bar-nav-icon>
 
       <router-link :to="'/'">
@@ -81,7 +82,12 @@
     </v-app-bar>
 
     <!-- Navigation drawer -->
-    <v-navigation-drawer v-model="drawer" class="hidden-md-and-up" app>
+    <v-navigation-drawer
+      v-model="drawer"
+      class="hidden-md-and-up"
+      disable-resize-watcher
+      app
+    >
       <v-list>
         <v-list-item
           class="orange--text"
@@ -128,6 +134,23 @@ export default {
     search() {
       console.log(this.searchInput);
     },
+    onResize() {
+      console.log("innerWidth = " + window.innerWidth + ", threshold = " + this.$vuetify.breakpoint.thresholds.md)
+      if (window.innerWidth >= this.$vuetify.breakpoint.thresholds.md) {
+        this.drawer = false;
+        console.log("il_betooo");
+      }
+    },
+  },
+  mounted() {
+    this.onResize();
+
+    window.addEventListener("resize", this.onResize);
+  },
+  beforeDestroy() {
+    if (typeof window === "undefined") return;
+
+    window.removeEventListener("resize", this.onResize);
   },
 };
 </script>

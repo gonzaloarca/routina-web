@@ -36,6 +36,6 @@ export default {
 .main {
   position: absolute;
   top: -$nav-bar-height;
-  width: 100%;
+  width: 100vw;
 }
 </style>
