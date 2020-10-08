@@ -28,7 +28,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -38,7 +38,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -48,7 +48,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -58,7 +58,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -68,7 +68,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -78,7 +78,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -88,7 +88,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -98,7 +98,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -108,7 +108,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -118,7 +118,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -128,7 +128,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
         {
           routineName: "Routine 1",
@@ -138,7 +138,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
-          image: "../assets/routine1.jpg",
+          image: require("../assets/routine1.jpg"),
         },
       ],
     };

@@ -46,14 +46,20 @@
         v-model="searchOpen"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-on="on" v-bind="attrs" @click="searchOpen = !searchOpen">
-            <v-icon :class="searchOpen ? 'orange--text' : 'white--text'"> mdi-magnify</v-icon>
+          <v-btn
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="searchOpen = !searchOpen"
+          >
+            <v-icon :class="searchOpen ? 'orange--text' : 'white--text'">
+              mdi-magnify</v-icon
+            >
           </v-btn>
         </template>
         <v-text-field
           elevation="0"
           v-model="searchInput"
-      
           append-icon="mdi-magnify"
           @keyup.enter="search"
           @click:append="search"

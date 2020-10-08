@@ -66,16 +66,21 @@ export default {
 <style scoped lang="scss">
 @import "../sass/variables";
 
-.home-content {
-  max-width: $content-container-width;
-  margin: auto;
-  padding: 30px 0 30px 0; 
+.Home{
   background-color: black;
 }
 
+.home-content {
+  max-width: $content-container-width;
+  margin: auto;
+  padding: 30px 30px 30px 30px; 
+
+}
+
 .routine-slide-group-container {
-  max-width: $content-container-width - 200px;
-  margin: 30px auto 30px auto;
+  max-width: $content-container-width - 150px;
+  align-content: center;
+  margin: 0 auto 30px;
   padding: 30px 30px 30px 30px;
 }
 /* 
