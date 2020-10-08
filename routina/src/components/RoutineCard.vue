@@ -40,17 +40,33 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~vuetify/src/styles/styles.sass";
 $card-height: 150px;
 $card-width: 150px;
 $card-title-height: 34px;
 $routine-info-min-width: 75px;
 
+.v-slide-group__content{
+  position: static !important;
+}
+.v-slide-group__wrapper{
+  contain: none !important;
+
+}
+
 .routine-card {
-  position: relative;
+  z-index: 0;
   height: $card-height;
   width: $card-width;
+  transition: transform 0.2s;
+}
+
+.routine-card:hover {
+  position: absolute;
+  z-index: 10;
+  transform: scale(2);
+ 
 }
 .routine-info-min {
   position: absolute;
