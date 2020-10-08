@@ -135,10 +135,8 @@ export default {
       console.log(this.searchInput);
     },
     onResize() {
-      console.log("innerWidth = " + window.innerWidth + ", threshold = " + this.$vuetify.breakpoint.thresholds.md)
       if (window.innerWidth >= this.$vuetify.breakpoint.thresholds.md) {
         this.drawer = false;
-        console.log("il_betooo");
       }
     },
   },
