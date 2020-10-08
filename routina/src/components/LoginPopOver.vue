@@ -1,11 +1,11 @@
 <template>
   <div class="text-center">
-    <v-menu
-      v-model="menu"
-      :close-on-content-click="false"
-      :nudge-width="200"
-      offset-x
-    >
+    <v-menu v-model="menu"
+        :rounded="0"  
+        :close-on-content-click="false"
+        :nudge-width="200"
+        offset-y
+      >
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon class="mr-1" v-bind="attrs"
           v-on="on">
@@ -39,7 +39,14 @@
             </v-list-item-action>
           </v-list-item>
         </v-list>
-
+        <v-row>
+          <v-text-field   
+            placeholder="account"
+            solo
+            rounded
+            :background-color="red"
+          ></v-text-field>
+        </v-row>
         <v-divider></v-divider>
 
         <v-list>
@@ -96,6 +103,7 @@ export default {
       message: false,
       hints: true,
     }),
+    offset:true,
 }
 </script>
 

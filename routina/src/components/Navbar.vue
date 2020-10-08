@@ -39,13 +39,13 @@
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
-      <loginPopOver/>
+      <LoginPopOver/>
     </v-app-bar>
   </nav>
 </template>
 
 <script>
-import loginPopOver from "@/components/LoginPopOver";
+import LoginPopOver from "@/components/LoginPopOver";
 import styles from "../sass/variables.scss";
 
 export default {
@@ -61,7 +61,7 @@ export default {
       navBarHeight: styles.navBarHeight,
     };
   },
-  components:{loginPopOver},
+  components:{LoginPopOver},
 };
 </script>
 
