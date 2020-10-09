@@ -15,39 +15,51 @@
 
       <v-card color="grey darken-3" >
         <v-layout-row-wrap>
-            <v-spacer></v-spacer>
-            <v-icon small>mdi-close</v-icon>
+          <v-spacer></v-spacer>
+          <v-icon small @click.stop="menu=!menu">mdi-close</v-icon>
         </v-layout-row-wrap>
         <v-card-text> 
-         <v-text-field 
-                class="mt-1"  
+         <v-text-field  
                 placeholder="account"
                 solo
                 rounded
+                dense
                 light
           ></v-text-field>
           <v-text-field
-                class="mt-1"   
+                :type="showPassword? 'text' : 'password'"   
                 placeholder="password"
                 solo
                 rounded
+                dense
                 light
-                append-icon="mdi-eye"
+                :append-icon="showPassword? 'mdi-eye':'mdi-eye-off'"
+                @click:append="showPassword=!showPassword"
           ></v-text-field> 
-        </v-card-text>   
+        </v-card-text>
+        <v-container >
+          <v-row align-start no-gutters>
+            <v-layout-col-wrap align-start>
+              <!-- <v-card> -->
+                <v-checkbox
+                  dark
+                  label='Stay logged in'>
+                </v-checkbox>
+              <!-- </v-card> -->
+            </v-layout-col-wrap>
+            <v-layout-col-wrap align-start>
+                Forgot Password?
+            </v-layout-col-wrap>
+          </v-row>
+          
+        </v-container>   
         
        
         <v-card-text>
         
-        
-        <v-divider></v-divider>
 
         
-        <v-checkbox
-          
-          light
-          label='Stay logged in?'>
-        </v-checkbox>
+        
         <v-btn v-if='options.isLoggingIn' @click.prevent='' block type='submit'> Sign in</v-btn>
         <div v-if='options.isLoggingIn'>
               Don't have an account?
@@ -92,7 +104,9 @@ export default {
       options:{
       shouldStayLoggedIn:true,
       isLoggingIn:true,
+      
     },
+    showPassword:false,
     }),
     offset:true,
     options:{
