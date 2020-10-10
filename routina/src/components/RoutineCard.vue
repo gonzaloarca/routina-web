@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="routine-container">
     <v-card class="routine-card" tile>
       <div class="routine-info-min">
         <p class="text-uppercase text-caption font-weight-medium mb-0">
@@ -47,11 +47,18 @@ $card-width: 150px;
 $card-title-height: 34px;
 $routine-info-min-width: 75px;
 
-.v-slide-group__content{
-  position: static !important;
+.routine-container{
+  height: $card-height;
+  width: $card-width;
 }
+
 .v-slide-group__wrapper{
   contain: none !important;
+  padding-top:$card-height*2;
+  padding-bottom:$card-height*2;
+  margin-bottom: -$card-height*2;
+  margin-top: -$card-height*2;
+
 
 }
 
@@ -59,7 +66,7 @@ $routine-info-min-width: 75px;
   z-index: 0;
   height: $card-height;
   width: $card-width;
-  transition: transform 0.2s;
+  transition: transform 0.2s !important;
 }
 
 .routine-card:hover {
