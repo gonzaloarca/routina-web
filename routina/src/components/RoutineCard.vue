@@ -54,10 +54,10 @@ $routine-info-min-width: 75px;
 
 .v-slide-group__wrapper{
   contain: none !important;
-  padding-top:$card-height*2;
-  padding-bottom:$card-height*2;
-  margin-bottom: -$card-height*2;
-  margin-top: -$card-height*2;
+  padding-top: $card-height/2;
+  padding-bottom: $card-height/2;
+  margin-bottom: -$card-height/2;
+  margin-top: -$card-height/2;
 
 
 }
