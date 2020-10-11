@@ -1,9 +1,8 @@
 <template>
-  <div class="text-center ma-2">
+  <div class="text-center" width="60%">
     <v-menu v-model="menu"
-        :rounded="0"  
         :close-on-content-click="false"
-        :nudge-width="200"
+        width="100%"
         offset-y
       >
       <template v-slot:activator="{ on, attrs }">
@@ -14,13 +13,14 @@
       </template>
 
       <v-card color="grey darken-3" >
-        <v-row  class="ma-2">
+        <v-row>
           <v-spacer></v-spacer>
-          <v-col cols="auto">
+          <v-col cols="auto" class="py-0" >
             <v-icon small left @click.stop="menu=!menu">mdi-close</v-icon>
           </v-col>
         </v-row>
-        <v-card-text class="px-2 ma-0"> 
+        <v-card-text class="px-2 py-0 ma-0"> 
+          <div class="my-1 py-0">
          <v-text-field  
                 placeholder="Email address"
                 solo
@@ -28,6 +28,8 @@
                 dense
                 light
                 clearable
+                hide-details
+                class="my-2"
           ></v-text-field>
           <v-text-field
                 :type="showPassword? 'text' : 'password'"   
@@ -37,30 +39,33 @@
                 dense
                 light
                 clearable
+                hide-details
                 :append-icon="showPassword? 'mdi-eye':'mdi-eye-off'"
                 @click:append="showPassword=!showPassword"
+                class="my-2"
           ></v-text-field> 
+          </div>
         </v-card-text>
-        <v-container>
+        <v-container class="py-2">
           <v-row align-start 
                   no-gutters
-                  class="pa-0 ma-0">
-            <v-row
-            :align="start"
-            no-gutters>
-                <v-col align-baseline>
+                  class="py-1 px-2 ma-0">
+            
+                <v-col align-center>
                   <v-checkbox
                     v-model="chbLogin"
                     color="orange darken-3"
                     dark
-                    label='Stay logged in'>
+                    label='Stay logged in'
+                    class="ma-0 pa-0"
+                    hide-details>
                   </v-checkbox> 
                 </v-col>
-                <v-col  align-baseline>
-                  <p class="blue--text">Forgot Password?</p>
+                <v-col  align-center>
+                  <p class="blue--text ma-0" style="text-align:center;">Forgot Password?</p>
                 </v-col>
                 
-            </v-row>
+           
           </v-row>
         </v-container>   
         <template>
@@ -75,49 +80,59 @@
             </v-btn>
           </div>
         </template>
-        <v-row align-content="center">
-          <v-col align="center  ">
-            <p class="font-weight-medium">or continue with</p>  
+        <v-row align-content="center" >
+          <v-col align="center" class="pa-1 mt-4">
+            <p class="font-weight-medium ma-0">or continue with</p>  
           </v-col>
         </v-row>
         <v-row align="center"
                justify="center"
                 no-gutters
-                class="ma-1">
+                class= "pb-4"
+                >
           <v-spacer></v-spacer>
           <v-col
             v-for="service in loginProvs"
             :key="service.name"
             align="center"
             class="ma-1"
+            width="15%"
           >
-          <v-responsive :aspect-ratio="1/1">
-              <v-btn
+            <v-btn
               align="center"
               justify="center"
               color="white"
-              filled
-              width="60"
-              height="60"
+              filled  
+              class="pa-0" 
+              width="100%"
+                   
               >
-               <v-img :src="require(`../assets/${service.icon}`)" contain height="40px" width="40px"/>   
+               <img :src="require(`../assets/${service.icon}`)" height="20px"/>   
               </v-btn>
-            </v-responsive>
           </v-col>
           <v-spacer></v-spacer>
           
         </v-row>  
-        <v-card-text>
-          <v-btn v-if='options.isLoggingIn' 
-                @click.prevent='' 
-                block type='submit'> Sign in</v-btn>
-          <div v-if='options.isLoggingIn'>
-                Don't have an account?
-                <v-btn 
-                  light
+        <v-card-text class="grey darken-1" >
+
+          <v-row align-center>
+            <v-col align-center>
+              <p v-if='options.isLoggingIn' class="black--text font-weight-regular ma-0" style="text-align:center;">
+                No account?
+              </p>
+            </v-col>
+            <v-col justify-center>
+              <v-btn 
+                  dark
+                  outlined
+                  rounded
+                  width="80%"
                   @click='options.isLoggingIn = false'
-                > Sign up</v-btn>
-          </div> 
+              > Sign up
+              </v-btn> 
+            </v-col>
+                
+          </v-row> 
         </v-card-text>
       </v-card>
     </v-menu>
