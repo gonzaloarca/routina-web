@@ -69,9 +69,7 @@
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
-      <v-btn icon class="mr-1">
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
+      <LoginPopOver/>
     </v-app-bar>
 
     <!-- Navigation drawer -->
@@ -96,6 +94,7 @@
 </template>
 
 <script>
+import LoginPopOver from "@/components/LoginPopOver";
 import styles from "../sass/variables.scss";
 
 export default {
@@ -123,6 +122,7 @@ export default {
       console.log(this.searchInput);
     },
   },
+  components:{LoginPopOver},
 };
 </script>
 
