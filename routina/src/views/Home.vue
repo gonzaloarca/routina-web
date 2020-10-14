@@ -22,17 +22,26 @@
 
     <!-- Cuerpo principal con rutinas y contenido -->
     <div class="home-content">
-      <v-card class="routine-slide-group-container">
+      <v-card class="content-container">
         <h1>Recommended routines</h1>
         <h2>Just for you</h2>
         <RoutineSlideGroup />
       </v-card>
-      <v-card class="routine-slide-group-container">
+
+      <v-card class="content-container-special">
+        <SpecialRoutineBanner
+          title="Routine of the day"
+          description=" Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor molestias, repellat odio aliquid perferendis amet."
+          image="routine-of-the-day.jpg"
+          :routineData="specialRoutine1"
+        />
+      </v-card>
+      <v-card class="content-container">
         <h1>Recommended routines</h1>
         <h2>Just for you</h2>
         <RoutineSlideGroup />
       </v-card>
-      <!-- <div class="routine-slide-group-container">
+      <!-- <div class="content-container">
         <h1>Recommended routines</h1>
         <h2>Just for you</h2>
         <RoutineSlideGroup />
@@ -43,11 +52,12 @@
 
 <script>
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
+import SpecialRoutineBanner from "../components/SpecialRoutineBanner";
 // @ is an alias to /src
 
 export default {
   name: "Home",
-  components: { RoutineSlideGroup },
+  components: { RoutineSlideGroup, SpecialRoutineBanner },
   data() {
     return {
       colors: [
@@ -58,6 +68,16 @@ export default {
         "deep-purple accent-4",
       ],
       slides: ["First", "Second", "Third", "Fourth", "Fifth"],
+      specialRoutine1: {
+        routineName: "Routine 1",
+        routineId: 1,
+        author: "Julian Sicardi",
+        type: "Cardio",
+        difficulty: 2,
+        muscleGroup: "Legs",
+        time: 45,
+        image: require("../assets/routine1.jpg"),
+      },
     };
   },
 };
@@ -66,23 +86,30 @@ export default {
 <style scoped lang="scss">
 @import "../sass/variables";
 
-.Home{
+.Home {
   background-color: black;
 }
 
 .home-content {
   max-width: $content-container-width;
   margin: auto;
-  padding: 30px 30px 30px 30px; 
-
+  padding: 30px 30px 30px 30px;
 }
 
-.routine-slide-group-container {
+.content-container {
   max-width: $content-container-width - 150px;
   align-content: center;
   margin: 0 auto 30px;
   padding: 30px 30px 30px 30px;
 }
+
+.content-container-special {
+  max-width: $content-container-width - 150px;
+  align-content: center;
+  margin: 0 auto 30px;
+}
+
+
 /* 
 Del Carousel Viejo
 .exhibitor {
