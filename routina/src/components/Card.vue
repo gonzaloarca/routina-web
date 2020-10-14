@@ -33,7 +33,12 @@
           <DifficultyLevel style="display:inline" :difficulty="2" />
         </v-col>
       </v-row>
-
+      <v-row class="card-buttons">
+        <v-btn>GO TO ROUTINE</v-btn>
+        <v-btn > <v-icon dark>
+        mdi-heart
+      </v-icon> </v-btn>
+      </v-row>
       <v-row>
         <div class="scroller-container">
           <h4>Excercise List</h4>
@@ -90,6 +95,12 @@ export default {
 </script>
 
 <style scoped>
+
+.card-buttons{
+  position: relative;
+  justify-content: center;
+}
+
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
