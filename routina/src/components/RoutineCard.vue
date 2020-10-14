@@ -66,6 +66,22 @@ export default {
 </script>
 
 <style lang="scss">
+$card-height: 150px;
+$card-width: 150px;
+$card-title-height: 34px;
+$card-title-mult: 1.5;
+$routine-info-width: 75px;
+
+.v-slide-group__wrapper {
+  contain: none !important;
+  padding-top: $card-height/2;
+  padding-bottom: $card-height/2;
+  margin-bottom: -$card-height/2;
+  margin-top: -$card-height/2;
+}
+</style>
+
+<style scoped lang="scss">
 @import "~vuetify/src/styles/styles.sass";
 $card-height: 150px;
 $card-width: 150px;
@@ -76,14 +92,6 @@ $routine-info-width: 75px;
 .routine-container {
   height: $card-height;
   width: $card-width;
-}
-
-.v-slide-group__wrapper {
-  contain: none !important;
-  padding-top: $card-height/2;
-  padding-bottom: $card-height/2;
-  margin-bottom: -$card-height/2;
-  margin-top: -$card-height/2;
 }
 
 .routine-card {
