@@ -33,7 +33,9 @@
       <img :src="routineData.image" class="card-image" />
       <div class="card-title white--text">
         <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
-        <p class="user-label my-0">by <span class="primary--text">{{ routineData.author }}</span></p>
+        <p class="user-label my-0">
+          by <span class="primary--text">{{ routineData.author }}</span>
+        </p>
       </div>
     </v-card>
   </div>
@@ -45,7 +47,12 @@ import DifficultyLevel from "./DifficultyLevel.vue";
 export default {
   name: "RoutineCard",
   components: { DifficultyLevel },
-  props: { routineData: Object },
+  props: {
+    routineData: {
+      type: Object,
+      required: true,
+    },
+  },
   computed: {
     formatTime() {
       let hours = Math.floor(this.routineData.time / 60);
