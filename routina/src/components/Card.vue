@@ -1,32 +1,51 @@
 <template>
-  <v-card class="root">
+  <v-overlay class="root" :value="overlay">
     <div class="card">
-        <v-card-title class="title" >ROUTINE 1</v-card-title>
+      <v-img :src="routineData.image" class="card-image" />
+      <div class="card-title white--text">
+        <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
+        <p class="user-label my-0">
+          by
+          <span class="primary--text">{{ routineData.author }}</span>
+        </p>
+      </div>
+      <v-row class="routine-info">
+        <v-col class="text-uppercase">
+          <span class="type-label">ROUTINE TYPE</span>
+          <br />
+          {{ routineData.type }}
+        </v-col>
+        <v-col class="text-uppercase">
+          <span class="type-label ">DURATION</span>
+          <br />
+          <v-icon dense>mdi-timer-outline</v-icon>
+          {{ formatTime }}
+        </v-col>
+        <v-col class="text-uppercase">
+          <span class="type-label">MUSCLE GROUP</span>
+          <br />
+          {{ routineData.muscleGroup }}
+        </v-col>
+
+        <v-col>
+          <span  class="type-label">DIFFICULTY</span>
+          <br />
+          <DifficultyLevel style="display:inline" :difficulty="2" />
+        </v-col>
+      </v-row>
+
       <v-row>
         <div class="scroller-container">
           <h4>Excercise List</h4>
-          <v-virtual-scroll
-            :bench="benched"
-            :items="items"
-            height="300"
-            item-height="64"
-            class="scroller"
-          >
+          <v-virtual-scroll :items="items" height="300" item-height="64" class="scroller">
             <template v-slot="{ item }">
-              
               <v-list-item class="item">{{ item }}</v-list-item>
             </template>
           </v-virtual-scroll>
         </div>
         <div class="scroller-container">
           <h4>Equipment needed</h4>
-          <v-virtual-scroll
-            :bench="benched"
-            :items="items"
-            height="300"
-            item-height="64"
-            class="scroller"
-          >
+          <v-virtual-scroll :items="items" height="300" item-height="64" class="scroller">
             <template v-slot="{ item }">
               <v-list-item class="item">{{ item }}</v-list-item>
             </template>
@@ -34,31 +53,54 @@
         </div>
       </v-row>
     </div>
-  </v-card>
+  </v-overlay>
 </template>
 
 <script>
+import DifficultyLevel from "./DifficultyLevel.vue";
 export default {
+  name: "overlayCard",
+  props: { overlay: Boolean, routineData: Object },
   data() {
     return {
-      items: ["ejercicio", "ejercicio", "ejercicio","ejercicio", "ejercicio", "ejercicio","ejercicio", "ejercicio", "ejercicio"],
+      items: [
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio"
+      ]
     };
   },
+  components: { DifficultyLevel },
+  computed: {
+    formatTime() {
+      let hours = Math.floor(this.routineData.time / 60);
+      let minutes = this.routineData.time % 60;
+      return `${hours !== 0 ? hours + "h" : ""} ${
+        minutes !== 0 ? minutes + "'" : ""
+      }`;
+    },
+  }
 };
 </script>
 
 <style scoped>
-
 ::-webkit-scrollbar {
-    width: 0px;  /* Remove scrollbar space */
-    background: transparent;  /* Optional: just make scrollbar invisible */
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
-.item{
-    background-color:rgba(255,255,255,0.07);
-    margin: 3px;
+.item {
+  background-color: rgba(255, 255, 255, 0.07);
+  margin: 3px;
 }
 
 .root {
+  z-index: 100 !important;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
@@ -75,13 +117,43 @@ export default {
 }
 
 .card {
-  width: 50vw;
+  position: relative;
+  z-index: 2;
+  width: 33vw;
   margin: auto;
-  background-color:#FF8000;
+  background: rgb(33, 33, 33);
 }
 
-.title{
-   text-align: center !important;
-   display: block !important;
+.card-title {
+  width: 100%;
+  padding: 5px 0 5px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition-duration: 200ms;
+  transition-property: height !important;
+  font-weight: 600;
+}
+
+.card-image {
+  z-index: -1;
+  position: absolute;
+  width: 100% !important;
+  height: 30%;
+  object-fit: cover !important;
+  object-position: right !important;
+  filter: blur(2px) !important;
+}
+
+.type-label {
+  font-size: 12px;
+}
+
+.routine-info {
+  margin:0;
+  padding: 0;
+  text-align: center;
+  font-size: 20px;
 }
 </style>
