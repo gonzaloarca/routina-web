@@ -1,8 +1,10 @@
 $body-font-family: 'Raleway';
 $title-font: 'Raleway';
 $nav-bar-height: 70px;
+$content-container-width: 1366px;
 
 
 :export{
     navBarHeight: $nav-bar-height;
+    contentContainerWidth: $content-container-width;
 }

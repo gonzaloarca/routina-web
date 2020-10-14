@@ -11,6 +11,7 @@
       <v-app-bar-nav-icon
         class="hidden-md-and-up"
         @click="drawer = !drawer"
+        @clos="console.log('cami')"
       ></v-app-bar-nav-icon>
 
       <router-link :to="'/'">
@@ -46,14 +47,20 @@
         v-model="searchOpen"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-on="on" v-bind="attrs" @click="searchOpen = !searchOpen">
-            <v-icon :class="searchOpen ? 'orange--text' : 'white--text'"> mdi-magnify</v-icon>
+          <v-btn
+            icon
+            v-on="on"
+            v-bind="attrs"
+            @click="searchOpen = !searchOpen"
+          >
+            <v-icon :class="searchOpen ? 'orange--text' : 'white--text'">
+              mdi-magnify</v-icon
+            >
           </v-btn>
         </template>
         <v-text-field
           elevation="0"
           v-model="searchInput"
-      
           append-icon="mdi-magnify"
           @keyup.enter="search"
           @click:append="search"
@@ -73,7 +80,12 @@
     </v-app-bar>
 
     <!-- Navigation drawer -->
-    <v-navigation-drawer v-model="drawer" class="hidden-md-and-up" app>
+    <v-navigation-drawer
+      v-model="drawer"
+      class="hidden-md-and-up"
+      disable-resize-watcher
+      app
+    >
       <v-list>
         <v-list-item
           class="orange--text"
@@ -121,6 +133,21 @@ export default {
     search() {
       console.log(this.searchInput);
     },
+    onResize() {
+      if (window.innerWidth >= this.$vuetify.breakpoint.thresholds.md) {
+        this.drawer = false;
+      }
+    },
+  },
+  mounted() {
+    this.onResize();
+
+    window.addEventListener("resize", this.onResize);
+  },
+  beforeDestroy() {
+    if (typeof window === "undefined") return;
+
+    window.removeEventListener("resize", this.onResize);
   },
   components:{LoginPopOver},
 };
