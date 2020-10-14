@@ -8,7 +8,10 @@
       flat
       :height="navBarHeight"
     >
-      <v-app-bar-nav-icon class="hidden-md-and-up"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        class="hidden-md-and-up"
+        @click="drawer = !drawer"
+      ></v-app-bar-nav-icon>
 
       <router-link :to="'/'">
         <v-img
@@ -21,22 +24,48 @@
       <div></div>
 
       <v-spacer></v-spacer>
+
       <v-btn
         v-for="link in navLinks"
         :key="link.label"
         text
         tile
-        class="mx-2 font-weight-bold"
+        class="mx-2 font-weight-bold hidden-sm-and-down"
         active-class="active-btn"
-        router 
+        router
         :to="link.route"
       >
         {{ link.label }}
       </v-btn>
 
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <!-- Search bar -->
+      <v-menu
+        offset-y
+        nudge-left="240px"
+        :close-on-content-click="false"
+        v-model="searchOpen"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-on="on" v-bind="attrs" @click="searchOpen = !searchOpen">
+            <v-icon :class="searchOpen ? 'orange--text' : 'white--text'"> mdi-magnify</v-icon>
+          </v-btn>
+        </template>
+        <v-text-field
+          elevation="0"
+          v-model="searchInput"
+      
+          append-icon="mdi-magnify"
+          @keyup.enter="search"
+          @click:append="search"
+          clearable
+          label="Search"
+          solo
+          rounded
+          light
+        >
+        </v-text-field>
+      </v-menu>
+
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
@@ -44,6 +73,25 @@
         <v-icon>mdi-account</v-icon>
       </v-btn>
     </v-app-bar>
+
+    <!-- Navigation drawer -->
+    <v-navigation-drawer v-model="drawer" class="hidden-md-and-up" app>
+      <v-list>
+        <v-list-item
+          class="orange--text"
+          v-for="link in navLinks"
+          :key="link.text"
+          :to="link.route"
+        >
+          <v-list-item-action>
+            <v-icon>{{ link.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-title class="font-weight-medium">{{
+            link.label
+          }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
   </nav>
 </template>
 
@@ -54,14 +102,26 @@ export default {
   data() {
     return {
       navLinks: [
-        { label: "Home", route: "/" },
-        { label: "Explore", route: "/explore" },
-        { label: "My Routines", route: "/routines" },
-        { label: "Plans", route: "/plans" },
-        { label: "Tracking", route: "/tracking" },
+        { label: "Home", route: "/", icon: "mdi-home" },
+        { label: "Explore", route: "/explore", icon: "mdi-magnify" },
+        { label: "My Routines", route: "/routines", icon: "mdi-dumbbell" },
+        { label: "Plans", route: "/plans", icon: "mdi-clipboard-text" },
+        {
+          label: "Tracking",
+          route: "/tracking",
+          icon: "mdi-chart-timeline-variant",
+        },
       ],
       navBarHeight: styles.navBarHeight,
+      drawer: false,
+      searchOpen: false,
+      searchInput: "",
     };
+  },
+  methods: {
+    search() {
+      console.log(this.searchInput);
+    },
   },
 };
 </script>
@@ -70,14 +130,23 @@ export default {
 @import "../sass/variables";
 
 .appbar {
-  background-image: linear-gradient(rgba(0, 0, 0, 1) 5%,rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0));
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 1) 5%,
+    rgba(0, 0, 0, 0.7) 40%,
+    rgba(0, 0, 0, 0)
+  );
 }
 
-.active-btn{
-  color: #FF8000 !important;
+.active-btn {
+  color: #ff8000 !important;
 }
 
-.theme--dark.v-btn--active:hover::before, .theme--dark.v-btn--active::before {
+.v-menu__content {
+  box-shadow: none;
+}
+
+.theme--dark.v-btn--active:hover::before,
+.theme--dark.v-btn--active::before {
   opacity: 0;
 }
 </style>
