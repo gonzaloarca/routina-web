@@ -19,36 +19,72 @@
     <!-- <section class="exhibitor">
       <img class="slide" src="../assets/yoga1.jpg" />
     </section>-->
+
+    <!-- Cuerpo principal con rutinas y contenido -->
+    <div class="home-content">
+      <v-card class="routine-slide-group-container">
+        <h1>Recommended routines</h1>
+        <h2>Just for you</h2>
+        <RoutineSlideGroup />
+      </v-card>
+      <v-card class="routine-slide-group-container">
+        <h1>Recommended routines</h1>
+        <h2>Just for you</h2>
+        <RoutineSlideGroup />
+      </v-card>
+      <!-- <div class="routine-slide-group-container">
+        <h1>Recommended routines</h1>
+        <h2>Just for you</h2>
+        <RoutineSlideGroup />
+      </div> -->
+    </div>
   </div>
 </template> 
 
 <script>
+import RoutineSlideGroup from "../components/RoutineSlideGroup";
 // @ is an alias to /src
 
 export default {
   name: "Home",
-  data(){
-    return{
+  components: { RoutineSlideGroup },
+  data() {
+    return {
       colors: [
-          'indigo',
-          'warning',
-          'pink darken-2',
-          'red lighten-1',
-          'deep-purple accent-4',
-        ],
-        slides: [
-          'First',
-          'Second',
-          'Third',
-          'Fourth',
-          'Fifth',
-        ],
-    }
-  }
+        "indigo",
+        "warning",
+        "pink darken-2",
+        "red lighten-1",
+        "deep-purple accent-4",
+      ],
+      slides: ["First", "Second", "Third", "Fourth", "Fifth"],
+    };
+  },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../sass/variables";
+
+.Home{
+  background-color: black;
+}
+
+.home-content {
+  max-width: $content-container-width;
+  margin: auto;
+  padding: 30px 30px 30px 30px; 
+
+}
+
+.routine-slide-group-container {
+  max-width: $content-container-width - 150px;
+  align-content: center;
+  margin: 0 auto 30px;
+  padding: 30px 30px 30px 30px;
+}
+/* 
+Del Carousel Viejo
 .exhibitor {
   height: 400px;
   width: 100vw;
@@ -62,5 +98,5 @@ export default {
   width: 100%;
   height: 400px;
   object-fit: none;
-}
+} */
 </style>
