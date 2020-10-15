@@ -4,7 +4,7 @@
       <v-btn icon text absolute v-on:click="closeOverlay"
         ><v-icon>mdi-close</v-icon></v-btn
       >
-      <v-img :src="routineData.image" class="card-image" />
+      <v-img :src="routineData.image" v-class="card-image" />
       <div class="card-title white--text">
         <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
         <p class="user-label my-0">
@@ -45,7 +45,7 @@
             font-size: 15px !important;
           "
           rounded
-          class="ma-0 primary black--text font-weight-black"
+          class="goto-button ma-0 primary black--text font-weight-black"
           >GO TO ROUTINE</v-btn
         >
         <v-btn
@@ -164,6 +164,8 @@ export default {
   justify-content: center;
 }
 
+
+
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
@@ -279,5 +281,9 @@ export default {
     padding: 0;
     z-index: 2;
   }
+}
+
+.goto-button:hover{
+  background-color: white !important;
 }
 </style>
