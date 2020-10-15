@@ -1,6 +1,6 @@
 <template>
-  <div class="routine-container">
-    <v-card class="routine-card" tile>
+  <div class="routine-container" >
+    <v-card class="routine-card" v-on:click="overlay=true" tile>
       <div class="routine-info">
         <p class="text-uppercase text-caption font-weight-medium mb-0">
           <span class="type-label text-caption grey--text text--lighten-1 my-0"
@@ -36,15 +36,21 @@
         <p class="user-label my-0">by <span class="primary--text">{{ routineData.author }}</span></p>
       </div>
     </v-card>
+    <Card :routine-data="routineData"  v-on:close-overlay="updateOverlay" :overlay="overlay" />
   </div>
 </template>
 
 <script>
 import DifficultyLevel from "./DifficultyLevel.vue";
-
+import Card from "./Card.vue";
 export default {
   name: "RoutineCard",
-  components: { DifficultyLevel },
+  data(){
+    return{
+      overlay:false,
+    };
+  },
+  components: { DifficultyLevel,Card },
   props: { routineData: Object },
   computed: {
     formatTime() {
@@ -55,10 +61,31 @@ export default {
       }`;
     },
   },
+  methods:{
+    updateOverlay(){
+      this.overlay=false;
+    }
+  }
 };
 </script>
 
 <style lang="scss">
+@import "~vuetify/src/styles/styles.sass";
+$card-height: 150px;
+$card-width: 150px;
+$card-title-height: 34px;
+$card-title-mult: 1.5;
+$routine-info-width: 75px;
+.v-slide-group__wrapper {
+  contain: none !important;
+  padding-top: $card-height/2;
+  padding-bottom: $card-height/2;
+  margin-bottom: -$card-height/2;
+  margin-top: -$card-height/2;
+}
+</style>
+
+<style scoped lang="scss">
 @import "~vuetify/src/styles/styles.sass";
 $card-height: 150px;
 $card-width: 150px;
@@ -71,13 +98,6 @@ $routine-info-width: 75px;
   width: $card-width;
 }
 
-.v-slide-group__wrapper {
-  contain: none !important;
-  padding-top: $card-height/2;
-  padding-bottom: $card-height/2;
-  margin-bottom: -$card-height/2;
-  margin-top: -$card-height/2;
-}
 
 .routine-card {
   position: absolute !important;

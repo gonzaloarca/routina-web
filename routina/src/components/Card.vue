@@ -1,6 +1,9 @@
 <template>
   <v-overlay class="root" :value="overlay">
     <div class="card">
+      <v-btn icon text absolute v-on:click="closeOverlay"
+        ><v-icon>mdi-close</v-icon></v-btn
+      >
       <v-img :src="routineData.image" class="card-image" />
       <div class="card-title white--text">
         <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
@@ -16,7 +19,7 @@
           {{ routineData.type }}
         </v-col>
         <v-col class="text-uppercase">
-          <span class="type-label ">DURATION</span>
+          <span class="type-label">DURATION</span>
           <br />
           <v-icon dense>mdi-timer-outline</v-icon>
           {{ formatTime }}
@@ -28,34 +31,75 @@
         </v-col>
 
         <v-col>
-          <span  class="type-label">DIFFICULTY</span>
+          <span class="type-label">DIFFICULTY</span>
           <br />
-          <DifficultyLevel style="display:inline" :difficulty="2" />
+          <DifficultyLevel style="display: inline" :difficulty="2" />
         </v-col>
       </v-row>
       <v-row class="card-buttons">
-        <v-btn>GO TO ROUTINE</v-btn>
-        <v-btn > <v-icon dark>
-        mdi-heart
-      </v-icon> </v-btn>
+        <v-btn
+          x-small
+          style="
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            font-size: 15px !important;
+          "
+          rounded
+          class="ma-0 primary black--text font-weight-black"
+          >GO TO ROUTINE</v-btn
+        >
+        <v-btn
+          v-on:click="pressed = !pressed"
+          icon
+          class="like-button primary--text"
+        >
+          <v-icon v-if="pressed" class="like-icon" dark> mdi-heart </v-icon>
+          <v-icon v-if="!pressed" class="like-icon" dark>
+            mdi-heart-outline
+          </v-icon>
+        </v-btn>
       </v-row>
-      <v-row>
-        <div class="scroller-container">
+      <v-row class="scrollers">
+        <v-col class="scroller-container">
           <h4>Excercise List</h4>
-          <v-virtual-scroll :items="items" height="300" item-height="64" class="scroller">
+          <v-virtual-scroll
+            :items="excercises"
+            height="300"
+            item-height="55"
+            class="scroller"
+          >
             <template v-slot="{ item }">
-              <v-list-item class="item">{{ item }}</v-list-item>
+              <v-list-item class="item">
+                <v-row class="excercise-row">
+                  <v-col class="ma-0 pa-0"
+                    ><img :src="routineData.image"
+                  /></v-col>
+                  <v-col> duration </v-col>
+                  <v-col> {{ item }} </v-col>
+                </v-row>
+              </v-list-item>
             </template>
           </v-virtual-scroll>
-        </div>
-        <div class="scroller-container">
+        </v-col>
+
+        <v-col class="scroller-container">
           <h4>Equipment needed</h4>
-          <v-virtual-scroll :items="items" height="300" item-height="64" class="scroller">
+          <v-virtual-scroll
+            :items="equipments"
+            height="300"
+            item-height="55"
+            class="scroller"
+          >
             <template v-slot="{ item }">
-              <v-list-item class="item">{{ item }}</v-list-item>
+              <v-list-item class="item">
+                <v-row class="equipment-row">
+                  <img :src="routineData.image" />
+                  <v-col> {{ item }} </v-col>
+                </v-row>
+              </v-list-item>
             </template>
           </v-virtual-scroll>
-        </div>
+        </v-col>
       </v-row>
     </div>
   </v-overlay>
@@ -68,7 +112,7 @@ export default {
   props: { overlay: Boolean, routineData: Object },
   data() {
     return {
-      items: [
+      excercises: [
         "ejercicio",
         "ejercicio",
         "ejercicio",
@@ -77,8 +121,20 @@ export default {
         "ejercicio",
         "ejercicio",
         "ejercicio",
-        "ejercicio"
-      ]
+        "ejercicio",
+      ],
+      equipments: [
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+      ],
+      pressed: false,
     };
   },
   components: { DifficultyLevel },
@@ -90,13 +146,20 @@ export default {
         minutes !== 0 ? minutes + "'" : ""
       }`;
     },
-  }
+  },
+
+  methods: {
+    closeOverlay() {
+      this.$emit("close-overlay", false);
+      return;
+    },
+  },
 };
 </script>
 
-<style scoped>
-
-.card-buttons{
+<style scoped lang="scss">
+@import "~vuetify/src/styles/styles.sass";
+.card-buttons {
   position: relative;
   justify-content: center;
 }
@@ -106,8 +169,9 @@ export default {
   background: transparent; /* Optional: just make scrollbar invisible */
 }
 .item {
+  padding: 0;
   background-color: rgba(255, 255, 255, 0.07);
-  margin: 3px;
+  margin: 5px;
 }
 
 .root {
@@ -117,13 +181,21 @@ export default {
   align-content: center;
 }
 
+.scrollers {
+  width: 100%;
+  margin: auto !important;
+  justify-content: center;
+  padding: 0 !important;
+}
 .scroller {
   background-color: black !important;
+  border-bottom:5px solid black;
 }
 
 .scroller-container {
-  width: 30%;
-  margin: 10%;
+  width: 45%;
+  padding: 0;
+  margin: 10px;
   white-space: nowrap;
 }
 
@@ -162,9 +234,50 @@ export default {
 }
 
 .routine-info {
-  margin:0;
+  margin: 0;
   padding: 0;
   text-align: center;
   font-size: 20px;
+}
+.excercise-row {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 12px;
+  img {
+    position: absolute;
+    width: 20% !important;
+    height: 100%;
+    object-fit: cover !important;
+    object-position: right !important;
+  }
+}
+
+.equipment-row {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 12px;
+  text-align: center;
+  overflow: hidden;
+  img {
+    margin: 0;
+    z-index: 0;
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: right !important;
+    // filter: blur(2px);
+  }
+  .col {
+    margin: auto;
+    padding: 0;
+    z-index: 2;
+  }
 }
 </style>
