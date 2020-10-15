@@ -4,7 +4,7 @@
       <v-btn icon text absolute v-on:click="closeOverlay"
         ><v-icon>mdi-close</v-icon></v-btn
       >
-      <v-img :src="routineData.image" v-class="card-image" />
+      <v-img :src="routineData.image" class="card-image" />
       <div class="card-title white--text">
         <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
         <p class="user-label my-0">
