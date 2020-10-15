@@ -1,16 +1,18 @@
 <template>
   <div class="Explore">
-    <h1>Explore</h1>
+    <ExploreBanner />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import ExploreBanner from "../components/ExploreBannner";
 
 export default {
-  name: 'Explore',
-}
+  name: "Explore",
+  components: { ExploreBanner },
+};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
 </style>
