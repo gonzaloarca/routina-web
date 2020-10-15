@@ -121,7 +121,7 @@ $routine-info-width: 75px;
   $center-dy: $card-height * $h-mult * 0.5 - $card-height * 0.5;
 
   position: absolute;
-  z-index: 10;
+  z-index: 1;
   height: $card-height * $h-mult;
   width: $card-width * $w-mult;
   transform: translate(-$center-dx, -$center-dy);
