@@ -58,11 +58,62 @@
         </v-row>
       </div>
     </div>
-    <v-row class="info-container">
-      <v-col class="exercise-list"></v-col>
+    <v-row class="info-container ma-8">
+      <v-col class="exercise-container">
+        <div class="exercise-list">
+          <h1 class="grey darken-1" style="text-align: center">
+            Exercise List
+          </h1>
+         
+          <div class=" mx-12 list-container">
+          <h2 >Round 1</h2>
+            <ExerciseList              
+              itemHeight="55"
+              height="300"
+              :exercises="exercises"
+            />
+         
+         
+          </div>
+
+          <div class=" mx-12 list-container">
+          <h2 >Round 3</h2>
+            <ExerciseList              
+              itemHeight="55"
+              height="300"
+              :exercises="exercises"
+            />
+         
+         
+          </div>
+
+          <div class=" mx-12 list-container">
+          <h2 >Round 2</h2>
+            <ExerciseList              
+              itemHeight="55"
+              height="300"
+              :exercises="exercises"
+            />
+         
+         
+          </div>
+        </div>
+      </v-col>
       <v-col class="more-info">
-        <v-row class="additional-information"></v-row>
-        <v-row class="equipment-needed"></v-row>
+        <div class="additional-information">
+          <h1 style="text-align: center">Additional Information</h1>
+          <img src="../assets/additional-info.png" />
+        </div>
+        <div class="equipment-needed">
+          <h1 style="text-align: center">Equipment Needed</h1>
+          <EquipmentNeeded
+            class="mx-12"
+            style="font-size: 35px !important"
+            itemHeight="60"
+            height="300"
+            :equipments="equipments"
+          />
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -71,12 +122,36 @@
 <script>
 // @ is an alias to /src
 import DifficultyLevel from "../components/DifficultyLevel.vue";
+import ExerciseList from "../components/ExerciseList.vue";
+import EquipmentNeeded from "../components/EquipmentNeeded.vue";
 
 export default {
   name: "Routine",
-  components: { DifficultyLevel },
+  components: { DifficultyLevel, ExerciseList, EquipmentNeeded },
   data() {
     return {
+      exercises: [
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+        "ejercicio",
+      ],
+      equipments: [
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+        "equipo",
+      ],
       pressed: false,
     };
   },
@@ -84,6 +159,10 @@ export default {
 </script>
 
 <style scoped  lang="scss">
+.routine {
+  background-color: black;
+}
+
 .headers {
   position: relative;
   height: 60vh;
@@ -108,14 +187,13 @@ export default {
   justify-content: center;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5);
-  .routine-specifications{
+  .routine-specifications {
     font-size: 25px;
     font-weight: 600;
     .type-label {
       font-size: 16px !important;
+    }
   }
-  
-}
 }
 
 .routine-buttons {
@@ -144,25 +222,37 @@ export default {
   }
 }
 
-.exercise-list {
-  height: 1000px;
-  width: 40%;
-  background-color: green;
+.info-container {
+  width: 60%;
+  margin: auto !important;
+}
+
+.exercise-container {
+  margin: 0;
+  padding: 0;
+  width: 60%;
 }
 
 .more-info {
-  width: 40%;
+  margin: 0;
+  padding: 0;
+}
+
+.exercise-list {
+  width: 100%;
+  background-color: rgb(66, 66, 66);
 }
 
 .additional-information {
-  height: 300px;
-  width: 100%;
-  background-color: purple;
+  background-color: rgb(33, 33, 33);
+  img {
+    width: 100% !important;
+  }
 }
 
 .equipment-needed {
   height: 400px;
   width: 100%;
-  background-color: yellow;
+  background-color: rgb(33, 33, 33);
 }
 </style>
