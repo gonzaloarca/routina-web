@@ -33,7 +33,9 @@
       <img :src="routineData.image" class="card-image" />
       <div class="card-title white--text">
         <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
-        <p class="user-label my-0">by <span class="primary--text">{{ routineData.author }}</span></p>
+        <p class="user-label my-0">
+          by <span class="primary--text">{{ routineData.author }}</span>
+        </p>
       </div>
     </v-card>
     <Card :routine-data="routineData"  v-on:close-overlay="updateOverlay" :overlay="overlay" />
@@ -51,7 +53,12 @@ export default {
     };
   },
   components: { DifficultyLevel,Card },
-  props: { routineData: Object },
+  props: {
+    routineData: {
+      type: Object,
+      required: true,
+    },
+  },
   computed: {
     formatTime() {
       let hours = Math.floor(this.routineData.time / 60);
@@ -70,12 +77,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~vuetify/src/styles/styles.sass";
 $card-height: 150px;
 $card-width: 150px;
 $card-title-height: 34px;
 $card-title-mult: 1.5;
 $routine-info-width: 75px;
+
 .v-slide-group__wrapper {
   contain: none !important;
   padding-top: $card-height/2;
@@ -126,7 +133,7 @@ $routine-info-width: 75px;
   $center-dy: $card-height * $h-mult * 0.5 - $card-height * 0.5;
 
   position: absolute;
-  z-index: 10;
+  z-index: 1;
   height: $card-height * $h-mult;
   width: $card-width * $w-mult;
   transform: translate(-$center-dx, -$center-dy);
