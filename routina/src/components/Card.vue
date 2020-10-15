@@ -45,6 +45,8 @@
             font-size: 15px !important;
           "
           rounded
+          router
+          to="routine"
           class="goto-button ma-0 primary black--text font-weight-black"
           >GO TO ROUTINE</v-btn
         >

@@ -5,6 +5,7 @@ import Explore from "../views/Explore.vue";
 import Tracking from "../views/Tracking.vue";
 import Routines from "../views/Routines.vue";
 import Plans from "../views/Plans.vue";
+import Routine from "../views/Routine.vue";
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: "/tracking",
     name: "Tracking",
     component: Tracking,
+  },
+  {
+    path: "/routine",
+    name: "Routine",
+    component: Routine,
   },
 ];
 
