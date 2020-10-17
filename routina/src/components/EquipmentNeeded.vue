@@ -6,10 +6,21 @@
     class="scroller"
   >
     <template v-slot="{ item }">
-      <v-list-item class="item">
+      <v-list-item class="item" :key="rerender">
         <v-row class="equipment-row">
           <img src="../assets/routine1.jpg" />
           <v-col> {{ item }} </v-col>
+          <v-col v-if="editable" class="editable ma-0 pa-0">
+            <v-btn x-small class="ma-0 pa-0" icon
+              ><v-icon class="ma-0 pa-0">mdi-pencil</v-icon></v-btn
+            >
+            <v-btn v-on:click="swapUp(item)" x-small class="ma-0 pa-0" icon
+              ><v-icon class="ma-0 pa-0">mdi-arrow-up</v-icon></v-btn
+            >
+            <v-btn v-on:click="swapDown(item)" x-small class="ma-0 pa-0" icon
+              ><v-icon class="ma-0 pa-0">mdi-arrow-down</v-icon></v-btn
+            >
+          </v-col>
         </v-row>
       </v-list-item>
     </template>
@@ -19,7 +30,29 @@
 <script>
 export default {
   name: "EquipmentNeeded",
-  props: { equipments: Array, itemHeight: String, height: String },
+  props: {
+    equipments: Array,
+    itemHeight: String,
+    height: String,
+    editable: { type: Boolean, default: false },
+  },
+  data() {
+    return {
+      rerender: 0,
+    };
+  },
+  methods: {
+    async swapUp(item) {
+      let actualIndex = this.equipments.indexOf(item);
+      await this.$emit("swap-up", actualIndex);
+      this.rerender--;
+    },
+    async swapDown(item) {
+      let actualIndex = this.equipments.indexOf(item);
+      await this.$emit("swap-down", actualIndex);
+      this.rerender++;
+    },
+  },
 };
 </script>
 
@@ -64,5 +97,10 @@ export default {
     padding: 0;
     z-index: 2;
   }
+}
+.editable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

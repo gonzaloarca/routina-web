@@ -11,11 +11,16 @@
           <v-col class="ma-0 pa-0"><img src="../assets/routine1.jpg" /></v-col>
           <v-col> duration </v-col>
           <v-col> {{ item }} </v-col>
-          <v-col v-if="editable" class=" editable ma-0 pa-0">
-            <v-btn x-small class="ma-0 pa-0" icon><v-icon class="ma-0 pa-0">mdi-pencil</v-icon></v-btn>
-              <v-btn v-on:click="swapUp(item)" x-small class="ma-0 pa-0" icon><v-icon class="ma-0 pa-0">mdi-arrow-up</v-icon></v-btn>
-              <v-btn v-on:click="swapDown(item)" x-small class="ma-0 pa-0" icon><v-icon class="ma-0 pa-0">mdi-arrow-down</v-icon></v-btn>
-              
+          <v-col v-if="editable" class="editable ma-0 pa-0">
+            <v-btn x-small class="ma-0 pa-0" icon
+              ><v-icon class="ma-0 pa-0">mdi-pencil</v-icon></v-btn
+            >
+            <v-btn v-on:click="swapUp(item)" x-small class="ma-0 pa-0" icon
+              ><v-icon class="ma-0 pa-0">mdi-arrow-up</v-icon></v-btn
+            >
+            <v-btn v-on:click="swapDown(item)" x-small class="ma-0 pa-0" icon
+              ><v-icon class="ma-0 pa-0">mdi-arrow-down</v-icon></v-btn
+            >
           </v-col>
         </v-row>
       </v-list-item>
@@ -26,25 +31,29 @@
 <script>
 export default {
   name: "ExerciseList",
-  props: { exercises: Array, itemHeight: String, height: String, editable:{type:Boolean, default:false} },
-  data(){
-    return{
-      rerender:0,
-    }
+  props: {
+    exercises: Array,
+    itemHeight: String,
+    height: String,
+    editable: { type: Boolean, default: false },
   },
-  methods:{
-    async swapUp(item){
-      let actualIndex=this.exercises.indexOf(item);
-      await this.$emit("swap-up",actualIndex);
-      this.rerender--;      
+  data() {
+    return {
+      rerender: 0,
+    };
+  },
+  methods: {
+    async swapUp(item) {
+      let actualIndex = this.exercises.indexOf(item);
+      await this.$emit("swap-up", actualIndex);
+      this.rerender--;
     },
-    async swapDown(item){
-      let actualIndex=this.exercises.indexOf(item);
-      await this.$emit("swap-down",actualIndex);
+    async swapDown(item) {
+      let actualIndex = this.exercises.indexOf(item);
+      await this.$emit("swap-down", actualIndex);
       this.rerender++;
-      
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -76,10 +85,11 @@ export default {
     object-fit: cover !important;
     object-position: right !important;
   }
-.editable{
+}
+
+.editable {
   display: flex;
   align-items: center;
   justify-content: center;
-}
 }
 </style>

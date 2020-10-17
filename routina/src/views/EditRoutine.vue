@@ -47,26 +47,16 @@
             Exercise List
           </h1>
 
-          <div class="mx-12 list-container">
-            <h2>Round 1</h2>
+          <div v-for="n in 5" :key="n" class="mx-12 list-container">
+            <h2>Round {{ n }}</h2>
             <ExerciseList
               itemHeight="55"
               height="300"
               editable
-              v-on:swap-up="swapUp"
-              v-on:swap-down="swapDown"
+              v-on:swap-up="(index) => swapUp(index, exercises)"
+              v-on:swap-down="(index) => swapDown(index, exercises)"
               :exercises="exercises"
             />
-          </div>
-
-          <div class="mx-12 list-container">
-            <h2>Round 2</h2>
-            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
-          </div>
-
-          <div class="mx-12 list-container">
-            <h2>Round 3</h2>
-            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
           </div>
         </div>
       </v-col>
@@ -82,6 +72,9 @@
             style="font-size: 35px !important"
             itemHeight="60"
             height="300"
+            editable
+            v-on:swap-up="(index) => swapUp(index, equipments)"
+            v-on:swap-down="(index) => swapDown(index, equipments)"
             :equipments="equipments"
           />
         </div>
@@ -112,34 +105,34 @@ export default {
         "ejercicio9",
       ],
       equipments: [
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
+        "equipo1",
+        "equipo2",
+        "equipo3",
+        "equipo4",
+        "equipo5",
+        "equipo6",
+        "equipo7",
+        "equipo8",
+        "equipo9",
       ],
       pressed: false,
     };
   },
   methods: {
-    swapUp(item) {
+    swapUp(item, elements) {
       if (item > 0) {
-        this.swap(item, item - 1);
+        this.swap(item, item - 1, elements);
       }
     },
-    swapDown(item) {
-      if (item < this.exercises.length-1) {
-        this.swap(item, item + 1);
+    swapDown(item, elements) {
+      if (item < elements.length - 1) {
+        this.swap(item, item + 1, elements);
       }
     },
-    swap(id1, id2) {
-      let aux = this.exercises[id1];
-      this.exercises[id1] = this.exercises[id2];
-      this.exercises[id2] = aux;
+    swap(id1, id2, elements) {
+      let aux = elements[id1];
+      elements[id1] = elements[id2];
+      elements[id2] = aux;
     },
   },
 };
