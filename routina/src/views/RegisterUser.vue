@@ -1,9 +1,32 @@
 <template>
-  <div>
-    <h1>Register User</h1>
-    <h1>HOLAAA PROBANDO PROBANDO</h1>
-    <v-container >
-                <v-row class="grey darken-1" align-center justify-center>CREATE AN ACCOUNT</v-row>
+  <div class="RegisterUser">
+    
+      <v-card  class="registerUserCard" tile> 
+        <v-card tile color="grey darken-1" height="12%" class="pa-3" style="align-items:center;">
+          <h2 class="registerUserTitle">CREATE AN ACCOUNT</h2>
+        </v-card>
+       <v-row class="ma-0" style="position:relative; height:88%">
+         <v-col class="ma-0 pa-0">
+           <v-card tile color="grey darken-4" style="position:relative; height:100%;">
+             hola
+           </v-card>
+         </v-col>
+         <v-col class="ma-0 pa-0" >
+           <v-card  tile color="white" style="position:relative; height:100%;">
+             si
+           </v-card>
+         </v-col>
+       </v-row>
+      </v-card>
+      <v-avatar
+        size="70"
+        color="black"
+        class="position:relative position-x:50% position-y:64%"
+      >
+        <h4 class=" white--text">OR</h4>
+      </v-avatar>
+    
+      <!-- <v-row class="grey darken-1" align-center justify-center>CREATE AN ACCOUNT</v-row>
                 <v-row>
                     <v-column class="grey darken-2">
                         FirstName
@@ -54,8 +77,8 @@
                     <v-column class="white">
                         white
                     </v-column>
-                </v-row>
-    </v-container>
+                </v-row> -->
+                
   </div>
 </template>
 
@@ -67,5 +90,40 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../sass/variables";
+.RegisterUser {
+  position: relative;
+  height: 100vh;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.registerUserCard{
+  position:absolute;
+  height:60%;
+  width:70%;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  justify-self:center;
+  margin:auto;
+  
+}
+
+.registerUserTitle{
+  color: black;
+  font-weight: bold;
+  align-content: center;
+  text-align: center;
+  text-justify: center;
+  font-size:120%;
+  font-weight: 600;
+ 
+}
+
 </style>
+
+
