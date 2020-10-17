@@ -6,6 +6,7 @@ import Tracking from "../views/Tracking.vue";
 import Routines from "../views/Routines.vue";
 import Plans from "../views/Plans.vue";
 import Routine from "../views/Routine.vue";
+import EditRoutine from "../views/EditRoutine.vue";
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
     path: "/routine",
     name: "Routine",
     component: Routine,
+  },
+  {
+    path: "/edit-routine",
+    name: "EditRoutine",
+    component: EditRoutine,
   },
 ];
 

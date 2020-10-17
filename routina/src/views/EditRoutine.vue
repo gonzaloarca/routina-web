@@ -3,32 +3,14 @@
     <div class="headers">
       <v-img src="../assets/routine1.jpg" class="routine-image" />
       <div class="routine-info">
-        <h1>Routine 1</h1>
-        <h2>by <span class="primary--text">UserX</span></h2>
-        <v-row class="routine-specifications">
-          <v-col class="text-uppercase">
-            <span class="type-label">ROUTINE TYPE</span>
-            <br />
-            CARDIO
-          </v-col>
-          <v-col class="text-uppercase">
-            <span class="type-label">DURATION</span>
-            <br />
-            <v-icon dense>mdi-timer-outline</v-icon>
-            45'
-          </v-col>
-          <v-col class="text-uppercase">
-            <span class="type-label">MUSCLE GROUP</span>
-            <br />
-            FULL BODY
-          </v-col>
-
-          <v-col>
-            <span class="type-label">DIFFICULTY</span>
-            <br />
-            <DifficultyLevel style="display: inline" :difficulty="2" />
-          </v-col>
-        </v-row>
+        <v-btn text class="image-button"
+          >Change routine image <v-icon>mdi-image</v-icon></v-btn
+        >
+        <div style="info-container">
+          <h2>Now editing</h2>
+          <h1>Routine 1</h1>
+          <h2>Originally made by <span class="primary--text">UserX</span></h2>
+        </div>
       </div>
       <div class="routine-buttons">
         <v-row>
@@ -52,8 +34,6 @@
               x-big
               rounded
               class="ma-0 white black--text font-weight-black"
-              router
-              to="edit-routine"
               >Edit Rotuine<v-icon>mdi-pencil</v-icon></v-btn
             >
           </v-col>
@@ -66,38 +46,28 @@
           <h1 class="grey darken-1" style="text-align: center">
             Exercise List
           </h1>
-         
-          <div class=" mx-12 list-container">
-          <h2 >Round 1</h2>
-            <ExerciseList              
+
+          <div class="mx-12 list-container">
+            <h2>Round 1</h2>
+            <ExerciseList
               itemHeight="55"
               height="300"
+              :key="exerciseChange"
+              editable
+              v-on:swap-up="swapUp"
+              v-on:swap-down="swapDown"
               :exercises="exercises"
             />
-         
-         
           </div>
 
-          <div class=" mx-12 list-container">
-          <h2 >Round 2</h2>
-            <ExerciseList              
-              itemHeight="55"
-              height="300"
-              :exercises="exercises"
-            />
-         
-         
+          <div class="mx-12 list-container">
+            <h2>Round 2</h2>
+            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
           </div>
 
-          <div class=" mx-12 list-container">
-          <h2 >Round 3</h2>
-            <ExerciseList              
-              itemHeight="55"
-              height="300"
-              :exercises="exercises"
-            />
-         
-         
+          <div class="mx-12 list-container">
+            <h2>Round 3</h2>
+            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
           </div>
         </div>
       </v-col>
@@ -123,25 +93,24 @@
 
 <script>
 // @ is an alias to /src
-import DifficultyLevel from "../components/DifficultyLevel.vue";
 import ExerciseList from "../components/ExerciseList.vue";
 import EquipmentNeeded from "../components/EquipmentNeeded.vue";
 
 export default {
   name: "Routine",
-  components: { DifficultyLevel, ExerciseList, EquipmentNeeded },
+  components: { ExerciseList, EquipmentNeeded },
   data() {
     return {
       exercises: [
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
+        "ejercicio1",
+        "ejercicio2",
+        "ejercicio3",
+        "ejercicio4",
+        "ejercicio5",
+        "ejercicio6",
+        "ejercicio7",
+        "ejercicio8",
+        "ejercicio9",
       ],
       equipments: [
         "equipo",
@@ -155,7 +124,26 @@ export default {
         "equipo",
       ],
       pressed: false,
+      exerciseChange: 0,
     };
+  },
+  methods: {
+    swapUp(item) {
+      if (item > 0) {
+        this.swap(item, item - 1);
+      }
+    },
+    swapDown(item) {
+      if (item < this.exercises.length-1) {
+        this.swap(item, item + 1);
+      }
+    },
+    swap(id1, id2) {
+      let aux = this.exercises[id1];
+      this.exercises[id1] = this.exercises[id2];
+      this.exercises[id2] = aux;
+      this.exerciseChange++;
+    },
   },
 };
 </script>
@@ -179,6 +167,14 @@ export default {
   object-fit: cover;
 }
 
+.image-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .routine-info {
   margin: auto;
   justify-self: center;
@@ -186,7 +182,10 @@ export default {
   width: 50%;
   height: 50%;
   justify-content: center;
+  align-items: center;
   text-align: center;
+  vertical-align: center;
+  display: flex;
   background-color: rgba(0, 0, 0, 0.5);
   .routine-specifications {
     font-size: 25px;

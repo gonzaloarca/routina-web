@@ -1,5 +1,6 @@
 <template>
   <v-virtual-scroll
+  
     :items="exercises"
     :height="height"
     :item-height="itemHeight"
@@ -11,6 +12,12 @@
           <v-col class="ma-0 pa-0"><img src="../assets/routine1.jpg" /></v-col>
           <v-col> duration </v-col>
           <v-col> {{ item }} </v-col>
+          <v-col v-if="editable" class=" editable ma-0 pa-0">
+            <v-btn x-small class="ma-0 pa-0" icon><v-icon class="ma-0 pa-0">mdi-pencil</v-icon></v-btn>
+              <v-btn v-on:click="swapUp(item)" x-small class="ma-0 pa-0" icon><v-icon class="ma-0 pa-0">mdi-arrow-up</v-icon></v-btn>
+              <v-btn v-on:click="swapDown(item)" x-small class="ma-0 pa-0" icon><v-icon class="ma-0 pa-0">mdi-arrow-down</v-icon></v-btn>
+              
+          </v-col>
         </v-row>
       </v-list-item>
     </template>
@@ -20,7 +27,18 @@
 <script>
 export default {
   name: "ExerciseList",
-  props: { exercises: Array, itemHeight: String, height: String },
+  props: { exercises: Array, itemHeight: String, height: String, editable:{type:Boolean, default:false} },
+  methods:{
+    swapUp(item){
+      let actualIndex=this.exercises.indexOf(item);
+      this.$emit("swap-up",actualIndex);      
+    },
+    swapDown(item){
+      let actualIndex=this.exercises.indexOf(item);
+      this.$emit("swap-down",actualIndex);
+      
+    }
+  }
 };
 </script>
 
@@ -52,5 +70,10 @@ export default {
     object-fit: cover !important;
     object-position: right !important;
   }
+.editable{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 }
 </style>
