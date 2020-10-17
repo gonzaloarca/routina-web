@@ -52,7 +52,6 @@
             <ExerciseList
               itemHeight="55"
               height="300"
-              :key="exerciseChange"
               editable
               v-on:swap-up="swapUp"
               v-on:swap-down="swapDown"
@@ -124,7 +123,6 @@ export default {
         "equipo",
       ],
       pressed: false,
-      exerciseChange: 0,
     };
   },
   methods: {
@@ -142,7 +140,6 @@ export default {
       let aux = this.exercises[id1];
       this.exercises[id1] = this.exercises[id2];
       this.exercises[id2] = aux;
-      this.exerciseChange++;
     },
   },
 };

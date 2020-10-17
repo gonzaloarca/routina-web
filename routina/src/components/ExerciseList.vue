@@ -1,13 +1,12 @@
 <template>
   <v-virtual-scroll
-  
     :items="exercises"
     :height="height"
     :item-height="itemHeight"
     class="scroller"
   >
     <template v-slot="{ item }">
-      <v-list-item class="item">
+      <v-list-item class="item" :key="rerender">
         <v-row class="excercise-row">
           <v-col class="ma-0 pa-0"><img src="../assets/routine1.jpg" /></v-col>
           <v-col> duration </v-col>
@@ -28,14 +27,21 @@
 export default {
   name: "ExerciseList",
   props: { exercises: Array, itemHeight: String, height: String, editable:{type:Boolean, default:false} },
+  data(){
+    return{
+      rerender:0,
+    }
+  },
   methods:{
-    swapUp(item){
+    async swapUp(item){
       let actualIndex=this.exercises.indexOf(item);
-      this.$emit("swap-up",actualIndex);      
+      await this.$emit("swap-up",actualIndex);
+      this.rerender--;      
     },
-    swapDown(item){
+    async swapDown(item){
       let actualIndex=this.exercises.indexOf(item);
-      this.$emit("swap-down",actualIndex);
+      await this.$emit("swap-down",actualIndex);
+      this.rerender++;
       
     }
   }
