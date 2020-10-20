@@ -128,6 +128,7 @@
                   rounded
                   width="80%"
                   @click='options.isLoggingIn = false'
+                  :to="navLink.route"
               > Sign up
               </v-btn> 
             </v-col>
@@ -158,6 +159,7 @@ export default {
         { name: "Facebook", icon:"facebook.png", route: "/explore" },
         { name: "Twitter", icon:"twitter.png", route: "/routines" },
       ],
+      navLink: {label: "RegisterUser", route: "/register"},
     }),
     offset:true,
     options:{
