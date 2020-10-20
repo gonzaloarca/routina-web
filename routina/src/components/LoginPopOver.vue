@@ -22,7 +22,7 @@
         <v-card-text class="px-2 py-0 ma-0"> 
           <div class="my-1 py-0">
          <v-text-field  
-                placeholder="Email address"
+                placeholder="Username"
                 solo
                 rounded
                 dense
@@ -30,6 +30,7 @@
                 clearable
                 hide-details
                 class="my-2"
+                v-model="username"
           ></v-text-field>
           <v-text-field
                 :type="showPassword? 'text' : 'password'"   
@@ -43,6 +44,7 @@
                 :append-icon="showPassword? 'mdi-eye':'mdi-eye-off'"
                 @click:append="showPassword=!showPassword"
                 class="my-2"
+                v-model="password"
           ></v-text-field> 
           </div>
         </v-card-text>
@@ -76,6 +78,7 @@
               color="orange darken-3"
               light
               class="button font-weight-bold"
+              v-on:click="login()"
             >Log in
             </v-btn>
           </div>
@@ -138,12 +141,13 @@
     </v-menu>
   </div>
 </template>
-
+ 
 
 <script>
-
+import {UserApi,Credentials} from '../services/user.js'; 
 export default {
     data: ()  => ({
+      cred:"",
       fav: true,
       menu: false,
       message: false,
@@ -158,12 +162,28 @@ export default {
         { name: "Facebook", icon:"facebook.png", route: "/explore" },
         { name: "Twitter", icon:"twitter.png", route: "/routines" },
       ],
+      username:"",
+      password:"",
     }),
     offset:true,
     options:{
       shouldStayLoggedIn:true,
       isLoggingIn:true,
     },
+    methods:{
+      login:function(){
+        console.log("username = "+this.username + "password = " + this.password);
+        if(this.username!==null && this.username!=='' && this.password!==null && this.password!==''){
+          let cred= new Credentials(this.username,this.password);
+          console.log(UserApi.login(cred));
+        }else{
+          console.log("Error: username or password are empty");
+        }
+        
+        
+      }
+    }
+    
 }
 </script>
 

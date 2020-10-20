@@ -4,7 +4,6 @@ import router from './router'
 import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
-axios.defaults.baseURL = 'http://localhost:8080'
 new Vue({
   router,
   vuetify,

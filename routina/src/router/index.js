@@ -1,13 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import axios from 'axios';
 import Home from "../views/Home.vue";
 import Explore from "../views/Explore.vue";
 import Tracking from "../views/Tracking.vue";
 import Routines from "../views/Routines.vue";
 import Plans from "../views/Plans.vue";
 
-Vue.use(VueRouter,axios);
+Vue.use(VueRouter);
 
 const routes = [
   {
