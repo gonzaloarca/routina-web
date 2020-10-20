@@ -37,7 +37,7 @@
                       hide-details
                       light
                       clearable
-                      :append-example="showPassword? 'mdi-eye':'mdi-eye-off'"
+                      :append-icon="showPassword? 'mdi-eye':'mdi-eye-off'"
                       @click:append="showPassword=!showPassword"
                 ></v-text-field> 
                 
