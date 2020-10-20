@@ -7,6 +7,7 @@ import Routines from "../views/Routines.vue";
 import Plans from "../views/Plans.vue";
 import Routine from "../views/Routine.vue";
 import EditRoutine from "../views/EditRoutine.vue";
+import RegisterUser from "../views/RegisterUser.vue";
 
 Vue.use(VueRouter);
 
@@ -46,6 +47,11 @@ const routes = [
     name: "EditRoutine",
     component: EditRoutine,
   },
+  {
+    path: "/register",
+    name: "RegisterUser",
+    component: RegisterUser,
+  }
 ];
 
 const router = new VueRouter({
