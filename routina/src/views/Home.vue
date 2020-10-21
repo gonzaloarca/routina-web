@@ -14,6 +14,7 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
+    
 
     <!-- banner viejo -->
     <!-- <section class="exhibitor">
@@ -22,6 +23,15 @@
 
     <!-- Cuerpo principal con rutinas y contenido -->
     <div class="home-content">
+      <v-btn
+              rounded
+              width="50%"
+              color="orange darken-3"
+              light
+              class="button font-weight-bold"
+              v-on:click="getRoutines()"
+            >getRoutines
+            </v-btn>
       <v-card class="content-container">
         <h1>Recommended routines</h1>
         <h2>Just for you</h2>
@@ -54,7 +64,7 @@
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
 import SpecialRoutineBanner from "../components/SpecialRoutineBanner";
 // @ is an alias to /src
-
+import {RoutinesApi} from "../services/routines.js";
 export default {
   name: "Home",
   components: { RoutineSlideGroup, SpecialRoutineBanner },
@@ -80,6 +90,18 @@ export default {
       },
     };
   },
+  methods:{
+    getRoutines: async function(){
+      try {
+        const res = await RoutinesApi.getRoutines();
+        console.log("ROUTINESS =====================");
+        console.log(res);
+      } catch (error) {
+        console.log("Error acquiring routines");
+        console.log(error);
+      }
+    }
+  }
 };
 </script>
 
