@@ -8,16 +8,16 @@
           <v-tab
             v-for="tab in tabs"
             :key="tab.name"
-            @change="tab.focus=!tab.focus"
             
           >
-            <ExploreTabHead :name="tab.name" :icon="tab.icon" :focus="tab.focus" ></ExploreTabHead>
+            <ExploreTabHead :name="tab.name" :icon="tab.icon" ></ExploreTabHead>
           </v-tab>
           <v-tab-item v-for="tab in tabs" :key="tab.name">
-            <exploreGrid :name="tab.name" :categories="tab.categories" :qty="tab.numCat" width="100%"></exploreGrid>
+            <div style="overflow:hidden; display:flex; align-items:center; justify-content:center;">
+               <ExploreGrid :name="tab.name" :categories="tab.categories" width="100%"></ExploreGrid>
+            </div>
           </v-tab-item>
       </v-tabs>
-      <h1>hola</h1>
       </v-card>
       
     </div>
@@ -27,25 +27,80 @@
 <script>
 import ExploreBanner from "../components/ExploreBannner";
 import ExploreTabHead from "../components/ExploreTabHead";
-import exploreGrid from "../components/exploreGrid";
+import ExploreGrid from "../components/ExploreGrid";
 
 
 
 export default {
   name: "Explore",
-  components: { ExploreBanner, ExploreTabHead, exploreGrid },
+  components: { ExploreBanner, ExploreTabHead, ExploreGrid },
   data(){
     return{
+   
+
       tabs:[
-        {name:"featured", icon:"mdi-star", focus:"true", categories:[{name:"favorites", image:"" },
-        {name:"recent", image:""}, {name:"popular", image:""}], numCat:"3",},
-        {name:"duration", icon:"mdi-timer", focus:"false"},
-        {name:"type", icon:"fa-heartbeat", focus:"false"},
-        {name:"difficulty level", icon:"mdi-fire", focus:"false"},
-        {name:"equipment", icon:"fa-dumbbell", focus:"false"},
-        {name:"muscle group", icon:"fa-running", focus:"false", categories:[{name:"arms", image:"ejercicio.jpg" },
-        {name:"core", image:"ejercicio.jpg"}, {name:"legs", image:"ejercicio.jpg"}, {name:"full body", image:"ejercicio.jpg", }, {name:"abs", image:"ejercicio.jpg" }], numCat:"5",},
+        {name:"featured", 
+        icon:"mdi-star", 
+        categories:[
+          {name:"favorites", image:"yoga.jpg" },
+          {name:"popular", image:"cardio.jpeg" },
+          {name:"recently used", image:"chest.jpeg" },
+          {name:"new", image:"basiceq.jpg" },], 
+        },
+
+        {name:"duration", 
+        icon:"mdi-timer", 
+        categories:[
+          {name:"under 15'", image:"abs.jpg" },
+          {name:"15'-30'", image:"crossfit.jpg" },
+          {name:"30'-45'", image:"hiit.jpg" },
+          {name:"45'-60'", image:"arms.jpg" },
+          {name:"above 60'", image:"fullbody.jpg" },], 
+        },
+
+        {name:"type", 
+        icon:"fa-heartbeat", 
+        categories:[
+          {name:"Cardio", image:"cardio.jpeg" },
+          {name:"Strength", image:"strength.jpg" },
+          {name:"HIIT", image:"hiit.jpg" },
+          {name:"Yoga", image:"yoga.jpg" },
+          {name:"Pilates", image:"pilates.jpg" },],
+        },
+
+        {name:"difficulty level", 
+        icon:"mdi-fire", 
+        categories:[
+          {name:"Easy", image:"lowerbody.jpg" },
+          {name:"Accesible", image:"pilates.jpg" },
+          {name:"Moderate", image:"strength.jpg" },
+          {name:"Hard", image:"back.jpg" },],
+        },
+
+        {name:"equipment", 
+        icon:"fa-dumbbell", 
+        categories:[
+          {name:"No equipment", image:"bodyweight.jpg" },
+          {name:"Basic equipment", image:"basiceq.jpg" },
+          {name:"Crossfit equipment", image:"crossfit.jpg" },
+          {name:"Gym equipment", image:"gym.jpg" },],
+        },
+
+        {name:"muscle group", 
+        icon:"fa-running",
+        categories:[
+          {name:"arms", image:"arms.jpg" },
+          {name:"core", image:"core.jpg"}, 
+          {name:"legs", image:"lowerbody.jpg"}, 
+          {name:"full body", image:"fullbody.jpg", }, 
+          {name:"abs", image:"abs.jpg" }, 
+          {name:"back", image:"back.jpg" }, 
+          {name:"chest", image:"chest.jpeg" },
+      ], 
+      },
       ],
+
+      
       
     }
   }

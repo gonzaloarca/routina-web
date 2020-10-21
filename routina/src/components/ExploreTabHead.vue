@@ -1,15 +1,15 @@
 <template>
     <div>
        
-        <v-card class="tab-head" tile>
-            <v-card class="tab-icon" tile background-color="focus? orange darken-3 : $dark-grey">
-                <v-icon class="form-icon">{{icon}}</v-icon>
-            </v-card>
+        <div class="tab-head" tile>
+            <span class="tab-icon">
+              <v-icon class="form-icon">{{icon}}</v-icon>  
+            </span>
             <span height="100%" class="cont-text" >
                 <h3>{{name}}</h3>
             </span>
             
-        </v-card>
+        </div>
     </div>
   
 </template>
@@ -25,10 +25,7 @@
                 type:String,
                 required:true,
             },
-            focus:{
-                type:Boolean,
-                required:true,
-            },
+            
         }
     };
 </script>
@@ -40,7 +37,6 @@
     $dark-grey:#1d1d1d;
     .tab-head{
         position:relative;
-        background-color:$light-grey;
         display:flex;
         align-items: center;
         justify-content: center;
@@ -54,7 +50,6 @@
         display:flex;
         align-items: center;
         justify-content:center;
-        // background-color:$dark-grey;
         width:25%;
         height:100%;
     }
