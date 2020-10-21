@@ -57,9 +57,11 @@ export default {
 @import "~vuetify/src/styles/styles.sass";
 .col-style {
   position: relative;
-
+    display:flex;
+    justify-content:center;
   padding: 10px 10px 10px 10px;
 }
+
 .row-style {
   margin-right: 0px;
   margin-left: 0px;
