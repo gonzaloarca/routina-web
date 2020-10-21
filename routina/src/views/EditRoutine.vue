@@ -42,22 +42,46 @@
     </div>
     <v-row class="info-container ma-8">
       <v-col class="exercise-container">
+        <h1>
+          {{ routineData.name }}
+        </h1>
         <div class="exercise-list">
-          <h1 class="grey darken-1" style="text-align: center">
-            Exercise List
-          </h1>
-
-          <div v-for="n in 5" :key="n" class="mx-12 list-container">
-            <h2>Round {{ n }}</h2>
-            <ExerciseList
-              itemHeight="55"
-              height="300"
-              editable
-              v-on:swap-up="(index) => swapUp(index, exercises)"
-              v-on:swap-down="(index) => swapDown(index, exercises)"
-              :exercises="exercises"
-            />
-          </div>
+          <v-tabs background-color="black" v-model="tab">
+            <v-tab v-for="round in routineData.rounds" :key="round.id">
+              Round {{ routineData.rounds.indexOf(round) + 1 }}
+            </v-tab>
+          </v-tabs>
+          <v-tabs-items class="black" v-model="tab">
+            <v-tab-item
+              v-for="round in routineData.rounds"
+              :key="round.id"
+              class=" mx-2"
+            >
+              <ExerciseList
+                itemHeight="55"
+                height="300"
+                editable
+                v-on:swap-up="(index) => swapUp(index, round)"
+                v-on:swap-down="(index) => swapDown(index, round)"
+                :exercises="round"
+                
+              />
+              <div class="py-4">
+              <v-btn
+                tile
+                x-large
+                block
+                class=" primary black--text"
+                >+ Add Exercise</v-btn
+              >
+              </div>
+            </v-tab-item>
+          </v-tabs-items>
+          
+        </div>
+        <div class="mx-2">
+        <v-btn tile x-large block class="my-4 black white--text"
+            >+ Add Round</v-btn>
         </div>
       </v-col>
       <v-col class="more-info">
@@ -73,9 +97,9 @@
             itemHeight="60"
             height="300"
             editable
-            v-on:swap-up="(index) => swapUp(index, equipments)"
-            v-on:swap-down="(index) => swapDown(index, equipments)"
-            :equipments="equipments"
+            v-on:swap-up="(index) => swapUp(index, routineData.equipments)"
+            v-on:swap-down="(index) => swapDown(index, routineData.equipments)"
+            :equipments="routineData.equipments"
           />
         </div>
       </v-col>
@@ -93,28 +117,56 @@ export default {
   components: { ExerciseList, EquipmentNeeded },
   data() {
     return {
-      exercises: [
-        "ejercicio1",
-        "ejercicio2",
-        "ejercicio3",
-        "ejercicio4",
-        "ejercicio5",
-        "ejercicio6",
-        "ejercicio7",
-        "ejercicio8",
-        "ejercicio9",
-      ],
-      equipments: [
-        "equipo1",
-        "equipo2",
-        "equipo3",
-        "equipo4",
-        "equipo5",
-        "equipo6",
-        "equipo7",
-        "equipo8",
-        "equipo9",
-      ],
+      tab: null,
+      routineData: {
+        name: "Routine 1",
+        rounds: [
+          [
+            "ejercicio1",
+            "ejercicio2",
+            "ejercicio3",
+            "ejercicio4",
+            "ejercicio5",
+            "ejercicio6",
+            "ejercicio7",
+            "ejercicio8",
+            "ejercicio9",
+          ],
+          [
+            "ejercicio1",
+            "ejercicio2",
+            "ejercicio3",
+            "ejercicio4",
+            "ejercicio5",
+            "ejercicio6",
+            "ejercicio7",
+            "ejercicio8",
+            "ejercicio9",
+          ],
+          [
+            "ejercicio1",
+            "ejercicio2",
+            "ejercicio3",
+            "ejercicio4",
+            "ejercicio5",
+            "ejercicio6",
+            "ejercicio7",
+            "ejercicio8",
+            "ejercicio9",
+          ],
+        ],
+        equipments: [
+          "equipo1",
+          "equipo2",
+          "equipo3",
+          "equipo4",
+          "equipo5",
+          "equipo6",
+          "equipo7",
+          "equipo8",
+          "equipo9",
+        ],
+      },
       pressed: false,
     };
   },
@@ -221,6 +273,7 @@ export default {
   margin: 0;
   padding: 0;
   width: 60%;
+  background-color: rgb(66, 66, 66);
 }
 
 .more-info {
@@ -229,9 +282,12 @@ export default {
 }
 
 .exercise-list {
-  width: 100%;
-  background-color: rgb(66, 66, 66);
+  width: 95%;
+  margin: auto;
+  background-color: black !important;
 }
+
+
 
 .additional-information {
   background-color: rgb(33, 33, 33);
