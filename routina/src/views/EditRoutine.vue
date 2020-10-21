@@ -12,33 +12,6 @@
           <h2>Originally made by <span class="primary--text">UserX</span></h2>
         </div>
       </div>
-      <div class="routine-buttons">
-        <v-row>
-          <v-col>
-            <v-btn
-              x-big
-              rounded
-              class="ma-0 primary black--text font-weight-black"
-              ><span class="ma-10">START</span></v-btn
-            >
-            <v-btn class="primary--text" v-on:click="pressed = !pressed" icon>
-              <v-icon v-if="pressed" class="like-icon" dark> mdi-heart </v-icon>
-              <v-icon v-if="!pressed" class="like-icon" dark>
-                mdi-heart-outline
-              </v-icon>
-            </v-btn>
-          </v-col>
-          <v-spacer />
-          <v-col>
-            <v-btn
-              x-big
-              rounded
-              class="ma-0 white black--text font-weight-black"
-              >Edit Rotuine<v-icon>mdi-pencil</v-icon></v-btn
-            >
-          </v-col>
-        </v-row>
-      </div>
     </div>
     <v-row class="info-container ma-8">
       <v-col class="exercise-container">
