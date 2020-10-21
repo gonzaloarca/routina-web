@@ -17,6 +17,11 @@ class UserApi {
         await Api.post(`${UserApi.url}/logout`, true, controller);
         Api.token = undefined;
     }
+
+    static async getCurrentUser(controller){
+        return await Api.get(`${UserApi.url}/current`,true,controller);
+        
+    }
 }
 
 class Credentials {

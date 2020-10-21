@@ -81,6 +81,15 @@
               v-on:click="login()"
             >Log in
             </v-btn>
+            <v-btn
+              rounded
+              width="50%"
+              color="orange darken-3"
+              light
+              class="button font-weight-bold"
+              v-on:click="current()"
+            >Current User
+            </v-btn>
           </div>
         </template>
         <v-row align-content="center" >
@@ -181,6 +190,9 @@ export default {
         }
         
         
+      },
+      current:function(){
+        console.log("CURRENT USER = " + UserApi.getCurrentUser());
       }
     }
     
