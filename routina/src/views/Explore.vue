@@ -13,6 +13,9 @@
           >
             <ExploreTabHead :name="tab.name" :icon="tab.icon" :focus="tab.focus" ></ExploreTabHead>
           </v-tab>
+          <v-tab-item v-for="tab in tabs" :key="tab.name">
+            <exploreGrid :name="tab.name" :categories="tab.categories" :qty="tab.numCat" width="100%"></exploreGrid>
+          </v-tab-item>
       </v-tabs>
       <h1>hola</h1>
       </v-card>
@@ -24,20 +27,24 @@
 <script>
 import ExploreBanner from "../components/ExploreBannner";
 import ExploreTabHead from "../components/ExploreTabHead";
+import exploreGrid from "../components/exploreGrid";
+
 
 
 export default {
   name: "Explore",
-  components: { ExploreBanner, ExploreTabHead },
+  components: { ExploreBanner, ExploreTabHead, exploreGrid },
   data(){
     return{
       tabs:[
-        {name:"featured", icon:"mdi-star", focus:"true"},
+        {name:"featured", icon:"mdi-star", focus:"true", categories:[{name:"favorites", image:"" },
+        {name:"recent", image:""}, {name:"popular", image:""}], numCat:"3",},
         {name:"duration", icon:"mdi-timer", focus:"false"},
-        {name:"type", icon:"mdi-star", focus:"false"},
-        {name:"difficulty level", icon:"mdi-star", focus:"false"},
-        {name:"equipment", icon:"mdi-star", focus:"false"},
-        {name:"muscle group", icon:"mdi-star", focus:"false"},
+        {name:"type", icon:"fa-heartbeat", focus:"false"},
+        {name:"difficulty level", icon:"mdi-fire", focus:"false"},
+        {name:"equipment", icon:"fa-dumbbell", focus:"false"},
+        {name:"muscle group", icon:"fa-running", focus:"false", categories:[{name:"arms", image:"ejercicio.jpg" },
+        {name:"core", image:"ejercicio.jpg"}, {name:"legs", image:"ejercicio.jpg"}, {name:"full body", image:"ejercicio.jpg", }, {name:"abs", image:"ejercicio.jpg" }], numCat:"5",},
       ],
       
     }

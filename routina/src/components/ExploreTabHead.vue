@@ -3,7 +3,7 @@
        
         <v-card class="tab-head" tile>
             <v-card class="tab-icon" tile background-color="focus? orange darken-3 : $dark-grey">
-                <v-icon color="white">{{icon}}</v-icon>
+                <v-icon class="form-icon">{{icon}}</v-icon>
             </v-card>
             <span height="100%" class="cont-text" >
                 <h3>{{name}}</h3>
@@ -57,6 +57,12 @@
         // background-color:$dark-grey;
         width:25%;
         height:100%;
+    }
+
+    .form-icon{
+        position:relative;
+        width:90%;
+        color:white;
     }
 
     .cont-text{
