@@ -8,16 +8,21 @@
           <v-tab
             v-for="tab in tabs"
             :key="tab.name"
-            
+            v-on:click="showingRoutines=false"
           >
             <ExploreTabHead :name="tab.name" :icon="tab.icon" ></ExploreTabHead>
           </v-tab>
-          <v-tab-item v-for="tab in tabs" :key="tab.name">
+      </v-tabs>
+
+      <v-tabs-items v-if="!showingRoutines" v-model="explore_tabs">
+        <v-tab-item v-for="tab in tabs" :key="tab.name">
             <div style="overflow:hidden; display:flex; align-items:center; justify-content:center;">
-               <ExploreGrid :name="tab.name" :categories="tab.categories" width="100%"></ExploreGrid>
+               <ExploreGrid v-on:click="categoryClick" componentType="CategoryCard" :name="tab.name" :categories="tab.categories" width="100%"></ExploreGrid>
             </div>
           </v-tab-item>
-      </v-tabs>
+      </v-tabs-items>
+
+       <ExploreGrid v-if="showingRoutines" componentType="RoutineCard" name="holaa" :categories="routines" width="100%"></ExploreGrid>
       </v-card>
       
     </div>
@@ -34,9 +39,138 @@ import ExploreGrid from "../components/ExploreGrid";
 export default {
   name: "Explore",
   components: { ExploreBanner, ExploreTabHead, ExploreGrid },
+  methods:{
+    categoryClick(){
+      this.showingRoutines=true;
+    }
+  },
   data(){
     return{
-   
+      showingRoutines:false,
+      explore_tabs:null,
+      routines: [
+        //time esta en minutos
+        {
+          routineName: "Routine 1",
+          routineId: 1,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 2,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 3,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 4,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 5,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 6,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 7,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 8,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 9,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 10,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 11,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+        {
+          routineName: "Routine 1",
+          routineId: 12,
+          author: "Julian Sicardi",
+          type: "Cardio",
+          difficulty: 2,
+          muscleGroup: "Legs",
+          time: 45,
+          image: require("../assets/routine1.jpg"),
+        },
+      ],
 
       tabs:[
         {name:"featured", 
