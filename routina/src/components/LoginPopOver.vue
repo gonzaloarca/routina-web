@@ -11,8 +11,8 @@
         <v-icon >mdi-account</v-icon>
         </v-btn>
       </template>
-
-      <v-card color="grey darken-3" >
+      <div v-if="!isLoggedIn">
+        <v-card color="grey darken-3" >
         <v-row>
           <v-spacer></v-spacer>
           <v-col cols="auto" class="py-0" >
@@ -146,7 +146,49 @@
                 
           </v-row> 
         </v-card-text>
-      </v-card>
+        </v-card>
+      </div>
+      <div v-else>
+        <v-card color="grey darken-3" >
+        <v-row>
+          <v-spacer></v-spacer>
+          <v-col cols="auto" class="py-0" >
+            <v-icon small left @click.stop="menu=!menu">mdi-close</v-icon>
+          </v-col>
+        </v-row>
+        <v-card-text class="px-2 py-0 ma-0"> 
+          <div class="my-1 py-0" v-if="user!==null">
+            <p class="--text ma-0" style="text-align:center;">{{user.username}}</p>
+            <p class="--text ma-0" style="text-align:center;">{{user.avatarUrl}}</p>
+            <p class="--text ma-0" style="text-align:center;">{{user.gender}}</p>
+            <p class="--text ma-0" style="text-align:center;">{{user.id}}</p>
+            
+          </div>
+        </v-card-text>
+        <v-container class="py-2">
+          <v-row align-start 
+                  no-gutters
+                  class="py-1 px-2 ma-0">
+                <v-col  align-center>
+                  <p class="--text ma-0" style="text-align:center;">Forgot Password?</p>
+                </v-col>
+          </v-row>
+        </v-container>   
+        <template>
+          <div class="text-center">
+            <v-btn
+              rounded
+              width="50%"
+              color="orange darken-3"
+              light
+              class="button font-weight-bold"
+              v-on:click="logout()"
+            >Logout
+            </v-btn>
+          </div>
+        </template>
+        </v-card>
+      </div>
     </v-menu>
   </div>
 </template>
@@ -174,6 +216,8 @@ export default {
       username:"",
       password:"",
       chbLogin:true,
+      isLoggedIn:false,
+      user:null,
     }),
     offset:true,
     options:{
@@ -181,21 +225,39 @@ export default {
       isLoggingIn:true,
     },
     methods:{
-      login:function(){
+      current:async function(){
+        this.user= await UserApi.getCurrentUser();
+        console.log("CURRENT USER = " + `${JSON.stringify(this.user)}`);
+        console.log(this.user);
+      },
+      login:async function(){
         console.log("username = "+this.username + "password = " + this.password);
         if(this.username!==null && this.username!=='' && this.password!==null && this.password!==''){
-          let cred= new Credentials(this.username,this.password);
-          console.log(UserApi.login(cred));
+          try{
+            let cred= new Credentials(this.username,this.password);
+            await UserApi.login(cred);
+            this.isLoggedIn=true;
+            this.current();
+          }catch(error){
+            console.log("error");
+            this.isLoggedIn=false;
+          }
+          
         }else{
           console.log("Error: username or password are empty");
         }
         
         
       },
-      current:async function(){
-        let user= await UserApi.getCurrentUser();
-        console.log("CURRENT USER = " + `${JSON.stringify(user)}`);
-      }
+      logout:async function(){
+        try {
+          await UserApi.logout();
+          this.isLoggedIn= false;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      
     }
     
 }
