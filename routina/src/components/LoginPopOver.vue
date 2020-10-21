@@ -173,6 +173,7 @@ export default {
       ],
       username:"",
       password:"",
+      chbLogin:true,
     }),
     offset:true,
     options:{
@@ -191,8 +192,9 @@ export default {
         
         
       },
-      current:function(){
-        console.log("CURRENT USER = " + UserApi.getCurrentUser());
+      current:async function(){
+        let user= await UserApi.getCurrentUser();
+        console.log("CURRENT USER = " + `${JSON.stringify(user)}`);
       }
     }
     

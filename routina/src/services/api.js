@@ -33,7 +33,7 @@ class Api {
       return result;
     } catch (error) {
       if (!error.code) {
-        error = { "code": 99, "description": error.message.toLowerCase() };
+        //error = { "code": 99, "description": error.message.toLowerCase() };
       }
       throw error;
     } finally {
