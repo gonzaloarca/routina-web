@@ -2,9 +2,7 @@
   <div
     style="overflow:hidden; position:relative; width:100%; align-items:center; justify-content:center"
   >
-    <v-row>
-      <v-card color="orange darken-2" height="25px" width="100%" tile class="content-container"></v-card>
-    </v-row>
+   
     <div style=" position:relative; width:100%; align-items:center; justify-content:center">
       <v-row class="row-style" justify="center">
         <v-container style="width:75%" fluid>

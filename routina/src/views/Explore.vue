@@ -13,7 +13,11 @@
             <ExploreTabHead :name="tab.name" :icon="tab.icon" ></ExploreTabHead>
           </v-tab>
       </v-tabs>
-
+      <v-row>
+        <v-card color="orange darken-2" height="30px" width="100%" tile class="content-container">
+         <h2 class="text-color " v-if="showingRoutines">{{this.tabName}}</h2>
+        </v-card>
+      </v-row>
       <v-tabs-items v-if="!showingRoutines" v-model="explore_tabs">
         <v-tab-item v-for="tab in tabs" :key="tab.name">
             <div style="overflow:hidden; display:flex; align-items:center; justify-content:center;">
@@ -40,7 +44,8 @@ export default {
   name: "Explore",
   components: { ExploreBanner, ExploreTabHead, ExploreGrid },
   methods:{
-    categoryClick(){
+    categoryClick(event){
+      this.tabName=event.emitter;
       this.showingRoutines=true;
     }
   },
@@ -48,6 +53,7 @@ export default {
     return{
       showingRoutines:false,
       explore_tabs:null,
+      tabName:"null",
       routines: [
         //time esta en minutos
         {
@@ -261,9 +267,19 @@ export default {
   }
   .content-container {
     max-width: $content-container-width - 150px;
-    align-content: center;
+    align-items: center;
+    justify-content: center;
     margin: 0 auto 30px;
     // padding: 30px 30px 30px 30px;
+  }
+
+  .text-color{
+    color: rgb(19, 19, 19) ;
+    text-transform: uppercase;
+    font-size: 18px;
+    padding: 2px 2px 2px 2px;
+    text-align: center;
+    font-weight: 600;
   }
 
 </style>
