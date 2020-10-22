@@ -48,13 +48,14 @@ export default {
 </script>
 
 <style scoped  lang="scss">
+@import "../sass/variables";
 .tracking {
   background-color: black;
 }
 
 .headers {
   position: relative;
-  height: 50vh;
+  height: $banner-height;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -81,6 +82,10 @@ export default {
   width: 100%;
   z-index: 2 !important;
   backdrop-filter: blur(3px);
+}
+
+.tabs-container{
+  margin-top:20px;
 }
 
 .tabs {

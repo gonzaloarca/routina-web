@@ -1,11 +1,11 @@
 <template>
-  <div style="display: flex; justify-content: center; align-items:center">
+  <div style="display: flex; justify-content: center;">
     <div
       style="background-color: rgb(33, 33, 33); width: 40%; height: fit-content"
       class="my-0 center"
     >
       <div class="my-4">
-        <div style="text-transform:uppercase; font-size: 20px; display:flex; align-items:center; justify-content:center;" class="grey darken-2">
+        <div style="position:relative; text-transform:uppercase; font-size: 20px; display:flex; align-items:center; justify-content:center;" class="grey darken-2">
           <span class="font-weight-black mx-10"
             ><v-icon class="icon-left">mdi-scale-bathroom</v-icon> Latest Weightings Records</span
           >
@@ -28,7 +28,7 @@
       class="my-0 center"
     >
       <div style="width: 95%" class="my-4">
-        <div style="text-transform:uppercase; font-size: 20px; display:flex; align-items:center; justify-content:center;" class="grey darken-2">
+        <div style=" position:relative;text-transform:uppercase; font-size: 20px; display:flex; justify-content:center;" class="grey darken-2">
           <span class="font-weight-black mx-10"
             ><v-icon class="icon-left">mdi-history</v-icon> Weighting History</span
           >
