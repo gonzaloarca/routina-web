@@ -11,31 +11,27 @@ class RoutinesApi {
 
     static async getRoutines(difficulty,page,size,orderBy,direction,controller){
         let parameters =parametersFormatter(page,size,orderBy,direction);
-        let concatenate = false;
         if(difficulty!==null && difficulty!==''){
             parameters+=`difficulty=${difficulty}`;
         }
-        if(concatenate == true){
-            parameters+="&";
-        }
-        return await Api.get(`${RoutinesApi.url}/routines?${parameters}`, false, controller);
+        return await Api.get(`${RoutinesApi.url}/?${parameters}`, true, controller);
          
     }
     static async createRoutine(routine,controller){
-        return await Api.post(`${RoutinesApi.url}/routines`, true,routine, controller);
+        return await Api.post(`${RoutinesApi.url}=`, true,routine, controller);
     }
     
     static async getRoutine(id,controller){
-       return await Api.get(`${RoutinesApi.url}/routines/${id}`, false, controller);
+       return await Api.get(`${RoutinesApi.url}/${id}`, false, controller);
         
     }
 
     static async updateRoutine(id,routine,controller){
-        return await Api.put(`${RoutinesApi.url}/routines/${id}`, false,routine, controller);
+        return await Api.put(`${RoutinesApi.url}/${id}`, false,routine, controller);
     }
 
     static async deleteRoutine(id,controller){
-        return await Api.get(`${RoutinesApi.url}/routines/${id}`, false, controller);
+        return await Api.get(`${RoutinesApi.url}/${id}`, false, controller);
     }
 
     // static async getRoutineExecutions(id,page,size,orderBy,direction,controller){

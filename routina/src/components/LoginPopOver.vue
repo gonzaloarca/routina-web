@@ -239,7 +239,7 @@ export default {
             this.isLoggedIn=true;
             this.current();
           }catch(error){
-            console.log("error");
+            console.log(error);
             this.isLoggedIn=false;
           }
           
