@@ -185,7 +185,7 @@ export default {
 }
 
 .title {
-  background-color: rgb(150, 150, 150);
+  background-color: rgb(100, 100, 100);
   position: relative;
   font-size: 15px !important;
   display: flex;

@@ -1,13 +1,13 @@
 <template>
-  <div style="display: flex; justify-content: center">
+  <div style="display: flex; justify-content: center; align-items:center">
     <div
       style="background-color: rgb(33, 33, 33); width: 40%; height: fit-content"
       class="my-0 center"
     >
       <div class="my-4">
-        <div style="font-size: 20px" class="grey">
+        <div style="text-transform:uppercase; font-size: 20px; display:flex; align-items:center; justify-content:center;" class="grey darken-2">
           <span class="font-weight-black mx-10"
-            ><v-icon>mdi-scale-bathroom</v-icon> Latest Weightings Records</span
+            ><v-icon class="icon-left">mdi-scale-bathroom</v-icon> Latest Weightings Records</span
           >
         </div>
         <div class="weight-container center"><span>65.1kg</span></div>
@@ -16,6 +16,7 @@
             x-big
             rounded
             class="my-6 primary black--text font-weight-black"
+            @click="clickWeightings"
             ><span>Add New Weighting</span></v-btn
           >
         </div>
@@ -27,9 +28,9 @@
       class="my-0 center"
     >
       <div style="width: 95%" class="my-4">
-        <div style="font-size: 20px" class="grey">
+        <div style="text-transform:uppercase; font-size: 20px; display:flex; align-items:center; justify-content:center;" class="grey darken-2">
           <span class="font-weight-black mx-10"
-            ><v-icon>mdi-history</v-icon> Weighting History</span
+            ><v-icon class="icon-left">mdi-history</v-icon> Weighting History</span
           >
         </div>
         <div class="center">
@@ -73,13 +74,36 @@
         </div>
       </div>
     </div>
+    <OverlayWeighting
+      v-if="overlayWeight"
+      v-on:close-overlay-weight="overlayWeight = false"
+      :overlayWeightings="overlayWeight">
+    </OverlayWeighting>
+
   </div>
 </template>
 
 <script>
+import OverlayWeighting from "./OverlayWeighting.vue";
+
 export default {
   name: "Weights",
-  props: { weightings: Array },
+  components:{OverlayWeighting,},
+  props: { weightings: Array,
+           withOverlay: {
+              type: Boolean,
+              default: false,}, },
+  data(){
+    return{
+      overlayWeight:false
+    };
+  },
+  methods: {
+    clickWeightings(event) {
+      this.overlayWeight=true;
+      this.$emit("click-weight", event);
+    },
+  },
 };
 </script>
 
@@ -97,6 +121,12 @@ export default {
   text-align: center;
   vertical-align: middle;
   margin: auto;
+}
+.icon-left{
+    position:absolute;
+    left:0px;
+    padding: 3px 3px 3px 3px;
+
 }
 
 ::-webkit-scrollbar {

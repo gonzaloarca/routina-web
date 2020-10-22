@@ -22,12 +22,17 @@
       <!-- <v-tab-item  class="tab-item"> <Goals /> </v-tab-item> -->
     </v-tabs-items>
     <v-footer color="black" />
+
+    
   </div>
+
+
 </template>
 
 <script>
 import Stats from "../components/Tracking/Stats.vue";
 import Weights from "../components/Tracking/Weights.vue";
+
 // import Goals from "../components/Tracking/Goals.vue";
 
 export default {
