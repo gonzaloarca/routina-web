@@ -1,43 +1,43 @@
 <template>
-  <div class="explore-banner">
+  <div class="routines-banner">
     <div class="slider-wrapper">
-      <div class="explore-header">
-        <h1 class="black--text">Explore</h1>
+      <div class="routines-header">
+        <h1 class="black--text">My Routines</h1>
       </div>
       <div class="slider">
         <div class="slider-row1"></div>
-        <div class="slider-row2"></div>
-        <div class="slider-row3"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+
 
 export default {
-  name: "ExploreBanner",
+  name: "RoutinesBanner",
 };
 </script>
 
 <style scoped lang="scss">
-$img-w: 4980px;
-$img-h: 1080px;
-$shrink: 7;
+@import "../sass/variables";
+
+$img-w: 1969px;
+$img-h: 350px;
+$shrink: 7/5;
 $ratio: 1 / $shrink;
 $speed: 40s;
-$banner-height: 350px;
-$y-displacement: -(3 * $img-h * $ratio - $banner-height);
+
+$y-displacement: 0px;
 
 .slider-wrapper {
   position: relative;
   width: 100%;
   height: $banner-height;
   
-  .explore-header {
+  .routines-header {
     height: 70px;
-    width: 170px;
+    width: 350px;
     position: absolute;
     z-index: 1;
     left: 0;
@@ -64,34 +64,14 @@ $y-displacement: -(3 * $img-h * $ratio - $banner-height);
       width: 200%;
       height: $img-h * $ratio;
       top: $y-displacement;
-      background-image: url("../assets/explore-inf-scroll.jpg");
+      background-image: url("../assets/myroutbanner.jpg");
       background-repeat: repeat-x;
       position: relative;
       transform: translateX(-90px);
       background-size: $img-w * $ratio $img-h * $ratio;
       animation: slide $speed linear infinite;
     }
-    .slider-row2 {
-      width: 200%;
-      height: $img-h * $ratio;
-      top: $y-displacement;
-      position: relative;
-      background-image: url("../assets/explore-inf-scroll.jpg");
-      background-repeat: repeat-x;
-      background-size: $img-w * $ratio $img-h * $ratio;
-      animation: slide $speed linear infinite;
-    }
-    .slider-row3 {
-      width: 500%;
-      height: $img-h * $ratio;
-      top: $y-displacement;
-      position: relative;
-      background-image: url("../assets/explore-inf-scroll.jpg");
-      background-repeat: repeat-x;
-      transform: translateX(-300px);
-      background-size: $img-w * $ratio $img-h * $ratio;
-      animation: slide $speed linear infinite;
-    }
+    
   }
 }
 

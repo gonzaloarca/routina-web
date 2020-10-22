@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import ExploreBanner from "../components/ExploreBannner";
+import ExploreBanner from "../components/ExploreBanner";
 import ExploreTabHead from "../components/ExploreTabHead";
 import ExploreGrid from "../components/ExploreGrid";
 
