@@ -26,7 +26,7 @@
           </v-tab-item>
       </v-tabs-items>
 
-       <ExploreGrid v-if="showingRoutines" componentType="RoutineCard" name="holaa" :categories="routines" width="100%"></ExploreGrid>
+       <ExploreGrid v-if="showingRoutines" :withOverlay="true" componentType="RoutineCard" name="Routine" :categories="routines" width="100%"></ExploreGrid>
       </v-card>
       
     </div>

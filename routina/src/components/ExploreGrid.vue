@@ -13,6 +13,7 @@
                 :is="componentType"
                 :routineData="cat"
                 :name="cat.name"
+                :withOverlay="withOverlay"
                 :image="cat.image"
                 width="100%"
               ></component>
@@ -40,6 +41,9 @@ export default {
     },
     componentType: {
       type: String
+    },
+    withOverlay:{
+      type:Boolean
     }
   },
   methods: {
