@@ -1,7 +1,8 @@
+import {Cookies} from "./cookies.js";
 export { Api };
 
 class Api {
-  static token;
+  static token = Cookies.readCookie("token");
 
   static get baseUrl() {
     return 'http://127.0.0.1:8080/api';
@@ -71,3 +72,4 @@ class Api {
     }, controller);
   }
 }
+

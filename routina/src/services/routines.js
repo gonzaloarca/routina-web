@@ -14,6 +14,7 @@ class RoutinesApi {
         if(difficulty!==null && difficulty!==''){
             parameters+=`difficulty=${difficulty}`;
         }
+        parameters="";
         return await Api.get(`${RoutinesApi.url}/?${parameters}`, true, controller);
          
     }

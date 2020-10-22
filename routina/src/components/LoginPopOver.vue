@@ -197,6 +197,9 @@
 <script>
 import {UserApi,Credentials} from '../services/user.js'; 
 export default {
+    created(){
+      this.isLoggedIn=this.current();
+    },
     data: ()  => ({
       cred:"",
       fav: true,
@@ -226,9 +229,22 @@ export default {
     },
     methods:{
       current:async function(){
-        this.user= await UserApi.getCurrentUser();
-        console.log("CURRENT USER = " + `${JSON.stringify(this.user)}`);
-        console.log(this.user);
+        try {
+          this.user= await UserApi.getCurrentUser();
+          if(this.user==null){
+            console.log("USER IS NULL");
+          }
+          console.log("CURRENT USER = " + `${JSON.stringify(this.user)}`);
+          console.log(this.user);
+          return true;
+        } catch (error) {
+          console.log(error);
+          this.user=null;
+          this.isLoggedIn=false;
+          return false;
+        }
+        
+        
       },
       login:async function(){
         console.log("username = "+this.username + "password = " + this.password);

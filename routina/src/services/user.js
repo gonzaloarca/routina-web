@@ -1,4 +1,5 @@
 import { Api } from './api.js';
+import {Cookies} from './cookies.js';
 
 export { UserApi, Credentials,FullUser,User };
 
@@ -17,12 +18,14 @@ class UserApi {
     static async login(credentials, controller) {
         const result = await Api.post(`${UserApi.url}/login`, false, credentials, controller);
         Api.token = result.token;
+        Cookies.createCookie("token",result.token);
         return result;
     }
 
     static async logout(controller) {
         await Api.post(`${UserApi.url}/logout`, true, controller);
         Api.token = undefined;
+        Cookies.deleteCookie("token");
     }
     static async getUser(id,controller){
         return await Api.get(`${UserApi.url}/${id}`,true,controller);
