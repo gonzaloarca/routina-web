@@ -3,11 +3,11 @@
     <v-sheet class="mx-auto" color="black" max-width="1300">
       <v-slide-group class="pa-4" show-arrows>
         <v-slide-item v-for="routine in routines" :key="routine.routineId">
-          <div v-on:click="overlay=true; data=routine"><RoutineCard :routine-data="routine" class="ma-4"/></div>
+          <RoutineCard v-on:click="overlay=true; data=routine" :editable="editable" :routine-data="routine" class="ma-4"/>
         </v-slide-item>
       </v-slide-group>
     </v-sheet>
-    <Card :routine-data="data"  v-on:close-overlay="updateOverlay" :overlay="overlay" />
+    <Card :routine-data="data"  v-on:close-overlay="updateOverlay" :overlay="overlay" :editable="editable" />
   </div>
 </template>
 
@@ -17,6 +17,7 @@ import Card from "./Card.vue";
 
 export default {
   name: "RoutineSlideGroup",
+  props:{editable:Boolean},
   components: { RoutineCard, Card },
   data() {
     return {
