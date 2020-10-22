@@ -20,6 +20,7 @@
         </v-virtual-scroll>
       </div>
     </div>
+    <div class="divider"></div>
     <div class="container">
       <div class="date-btn-container">
         <v-menu offset-y>
@@ -142,13 +143,13 @@ export default {
 <style lang="scss" scoped>
 .stats {
   display: flex;
+  margin:0;
+  padding:0;
 }
 
 .container {
-  width: 40%;
+  width: 50%;
   background-color: rgb(33, 33, 33);
-  margin-right: 10px;
-  margin-left: 10px;
   height: fit-content;
 }
 
@@ -227,5 +228,9 @@ export default {
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
+}
+.divider{
+  width:10px;
+  background-color: black ;
 }
 </style>

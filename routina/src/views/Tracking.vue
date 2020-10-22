@@ -1,6 +1,5 @@
 <template>
   <div class="tracking">
-    hola
     <div class="headers">
       <v-img src="../assets/tracking.png" class="routine-image" />
       <div class="image-blur"></div>
@@ -8,33 +7,32 @@
         <h1 class="ma-6">Tracking</h1>
       </div>
     </div>
-    <v-tabs class="tabs" v-model="tab">
-      <v-tab class="tab-title"> Weight </v-tab>
-      <v-tab class="tab-title"> Workout stats </v-tab>
-      <v-tab class="tab-title"> Goals </v-tab>
-    </v-tabs>
+    <div class="tabs-container">
+      <v-tabs class="tabs" v-model="tab">
+        <v-tab class="tab-title"> Weight </v-tab>
+        <v-tab class="tab-title"> Workout stats </v-tab>
+        <!-- <v-tab class="tab-title"> Goals </v-tab> -->
+      </v-tabs>
+    </div>
     <v-tabs-items class="tab-items my-5" v-model="tab">
       <v-tab-item class="tab-item">
-        <Weights :weightings="weightings"/>
+        <Weights :weightings="weightings" />
       </v-tab-item>
-       <v-tab-item class="tab-item"> <Stats/>  </v-tab-item>
-      <v-tab-item class="tab-item"> <Goals/> </v-tab-item>
-     
+      <v-tab-item class="tab-item"> <Stats /> </v-tab-item>
+      <!-- <v-tab-item  class="tab-item"> <Goals /> </v-tab-item> -->
     </v-tabs-items>
     <v-footer color="black" />
   </div>
 </template>
 
 <script>
-import Stats from '../components/Tracking/Stats.vue';
-import Weights from '../components/Tracking/Weights.vue';
-import Goals from '../components/Tracking/Goals.vue';
-
-
+import Stats from "../components/Tracking/Stats.vue";
+import Weights from "../components/Tracking/Weights.vue";
+// import Goals from "../components/Tracking/Goals.vue";
 
 export default {
   name: "Tracking",
-  components:{Weights,Goals,Stats},
+   components: { Weights, Stats },
   data() {
     return {
       tab: null,
@@ -82,6 +80,8 @@ export default {
 
 .tabs {
   background-color: rgb(33, 33, 33);
+  width: 70%;
+  margin:auto;
 }
 
 .tab-title {
@@ -91,10 +91,12 @@ export default {
 
 .tab-items {
   background-color: black !important;
-
+  width: 70%;
+  margin:auto;
+  padding: 0;
   .tab-item {
-    margin-left: 20px;
-    margin-right: 20px;
+    margin:0;
+    padding: 0;
     //background-color: rgba(33, 33, 33);
   }
 }

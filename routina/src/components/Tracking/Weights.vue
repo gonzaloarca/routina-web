@@ -1,8 +1,8 @@
 <template>
   <div style="display: flex; justify-content: center">
     <div
-      style="background-color: rgb(33, 33, 33); width: 30%; height: fit-content"
-      class="my-0 mx-2 center"
+      style="background-color: rgb(33, 33, 33); width: 40%; height: fit-content"
+      class="my-0 center"
     >
       <div class="my-4">
         <div style="font-size: 20px" class="grey">
@@ -21,9 +21,10 @@
         </div>
       </div>
     </div>
+    <div class="divider"></div>
     <div
-      style="background-color: rgb(33, 33, 33); width: 40%"
-      class="my-0 mx-2 center"
+      style="background-color: rgb(33, 33, 33); width: 60%"
+      class="my-0 center"
     >
       <div style="width: 95%" class="my-4">
         <div style="font-size: 20px" class="grey">
@@ -77,9 +78,9 @@
 
 <script>
 export default {
-    name: "Weights",
-    props:{weightings:Array}
-}
+  name: "Weights",
+  props: { weightings: Array },
+};
 </script>
 
 <style scoped>
@@ -101,5 +102,10 @@ export default {
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
+}
+
+.divider{
+  width:10px;
+  background-color: black ;
 }
 </style>
