@@ -3,21 +3,19 @@
     <v-sheet class="mx-auto" color="black" max-width="1300">
       <v-slide-group class="pa-4" show-arrows>
         <v-slide-item v-for="routine in routines" :key="routine.routineId">
-          <div v-on:click="overlay=true; data=routine"><RoutineCard :routine-data="routine" class="ma-4"/></div>
+          <div ><RoutineCard :routine-data="routine" class="ma-4"/></div>
         </v-slide-item>
       </v-slide-group>
     </v-sheet>
-    <Card :routine-data="data"  v-on:close-overlay="updateOverlay" :overlay="overlay" />
   </div>
 </template>
 
 <script>
 import RoutineCard from "./RoutineCard";
-import Card from "./Card.vue";
 
 export default {
   name: "RoutineSlideGroup",
-  components: { RoutineCard, Card },
+  components: { RoutineCard },
   data() {
     return {
       routines: [
@@ -143,15 +141,8 @@ export default {
           image: require("../assets/routine1.jpg"),
         },
       ],
-      data:{},
-      overlay:false,    
     };
   },
-  methods:{
-    updateOverlay(){
-      this.overlay=false;
-    }
-  }
 };
 </script>
 

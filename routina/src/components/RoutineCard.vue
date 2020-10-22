@@ -1,6 +1,8 @@
 <template>
-  <div class="routine-container" >
-    <v-card class="routine-card" tile>
+  <div class="routine-container">
+    
+
+    <v-card class="routine-card" v-on:click="overlay = true" tile>
       <div class="routine-info">
         <p class="text-uppercase text-caption font-weight-medium mb-0">
           <span class="type-label text-caption grey--text text--lighten-1 my-0"
@@ -38,19 +40,26 @@
         </p>
       </div>
     </v-card>
+    
+    <Card
+      :routine-data="routineData"
+      v-on:close-overlay="overlay = false"
+      :overlay="overlay"
+    />
   </div>
 </template>
 
 <script>
 import DifficultyLevel from "./DifficultyLevel.vue";
+import Card from "./Card.vue";
 export default {
   name: "RoutineCard",
-  data(){
-    return{
-      overlay:false,
+  components: { DifficultyLevel, Card },
+  data() {
+    return {
+      overlay: false,
     };
   },
-  components: { DifficultyLevel },
   props: {
     routineData: {
       type: Object,
@@ -97,7 +106,6 @@ $routine-info-width: 75px;
   height: $card-height;
   width: $card-width;
 }
-
 
 .routine-card {
   position: absolute !important;
