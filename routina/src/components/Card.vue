@@ -2,7 +2,7 @@
   <v-overlay class="root" :value="overlay">
     <div class="card">
       <v-btn icon text absolute v-on:click="closeOverlay"
-        ><v-icon>mdi-close</v-icon></v-btn
+        class="close-button"><v-icon>mdi-close</v-icon></v-btn
       >
       <div class="backdrop-card-image"></div>
       <v-img class="card-image" :src="routineData.image" />
@@ -162,6 +162,12 @@ export default {
 
 <style scoped lang="scss">
 @import "~vuetify/src/styles/styles.sass";
+
+.close-button{
+  position: absolute;
+  right: 0px;
+}
+
 .card-buttons {
   position: relative;
   justify-content: center;
@@ -235,7 +241,7 @@ export default {
   position: absolute;
   width: 100% !important;
   height: 30%;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px) brightness(0.7);
 }
 
 .type-label {
