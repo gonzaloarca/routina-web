@@ -92,6 +92,7 @@ export default {
   },
   methods: {
     clickEvent(event) {
+      this.overlay=true;
       this.$emit("click", event);
     },
   },
