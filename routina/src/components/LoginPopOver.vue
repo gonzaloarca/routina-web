@@ -140,6 +140,7 @@
                   rounded
                   width="80%"
                   @click='options.isLoggingIn = false'
+                  :to="navLink.route"
               > Sign up
               </v-btn> 
             </v-col>
@@ -221,6 +222,7 @@ export default {
       chbLogin:true,
       isLoggedIn:false,
       user:null,
+      navLink: {label: "RegisterUser", route: "/register"},
     }),
     offset:true,
     options:{

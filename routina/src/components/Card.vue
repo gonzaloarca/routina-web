@@ -2,9 +2,10 @@
   <v-overlay class="root" :value="overlay">
     <div class="card">
       <v-btn icon text absolute v-on:click="closeOverlay"
-        ><v-icon>mdi-close</v-icon></v-btn
+        class="close-button"><v-icon>mdi-close</v-icon></v-btn
       >
-      <v-img :src="routineData.image" class="card-image" />
+      <div class="backdrop-card-image"></div>
+      <v-img class="card-image" :src="routineData.image" />
       <div class="card-title white--text">
         <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
         <p class="user-label my-0">
@@ -45,6 +46,8 @@
             font-size: 15px !important;
           "
           rounded
+          router
+          to="routine"
           class="goto-button ma-0 primary black--text font-weight-black"
           >GO TO ROUTINE</v-btn
         >
@@ -159,12 +162,16 @@ export default {
 
 <style scoped lang="scss">
 @import "~vuetify/src/styles/styles.sass";
+
+.close-button{
+  position: absolute;
+  right: 0px;
+}
+
 .card-buttons {
   position: relative;
   justify-content: center;
 }
-
-
 
 ::-webkit-scrollbar {
   width: 0px; /* Remove scrollbar space */
@@ -191,7 +198,7 @@ export default {
 }
 .scroller {
   background-color: black !important;
-  border-bottom:5px solid black;
+  border-bottom: 5px solid black;
 }
 
 .scroller-container {
@@ -222,13 +229,19 @@ export default {
 }
 
 .card-image {
-  z-index: -1;
+  z-index: -2;
   position: absolute;
   width: 100% !important;
   height: 30%;
   object-fit: cover !important;
   object-position: right !important;
-  filter: blur(2px) !important;
+}
+.backdrop-card-image {
+  z-index: -1;
+  position: absolute;
+  width: 100% !important;
+  height: 30%;
+  backdrop-filter: blur(3px) brightness(0.7);
 }
 
 .type-label {
@@ -283,7 +296,7 @@ export default {
   }
 }
 
-.goto-button:hover{
+.goto-button:hover {
   background-color: white !important;
 }
 </style>
