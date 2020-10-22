@@ -22,11 +22,7 @@
       <!-- <v-tab-item  class="tab-item"> <Goals /> </v-tab-item> -->
     </v-tabs-items>
     <v-footer color="black" />
-
-    
   </div>
-
-
 </template>
 
 <script>
@@ -37,11 +33,44 @@ import Weights from "../components/Tracking/Weights.vue";
 
 export default {
   name: "Tracking",
-   components: { Weights, Stats },
+  components: { Weights, Stats },
   data() {
     return {
       tab: null,
-      weightings: [61.5, 62.2, 67.7, 63.1, 68.5, 61.5, 62.2, 67.7, 63.1, 68.5],
+      weightings: [
+        {
+          date: "mar 1 2020",
+          weight: 61.5,
+        },
+        {
+          date: "mar 2 2020",
+          weight: 62.3,
+        },
+        {
+          date: "mar 3 2020",
+          weight: 60.2,
+        },
+        {
+          date: "mar 8 2020",
+          weight: 64.3,
+        },
+        {
+          date: "mar 15 2020",
+          weight: 65.7,
+        },
+        {
+          date: "mar 16 2020",
+          weight: 63.2,
+        },
+        {
+          date: "mar 17 2020",
+          weight: 62.1,
+        },
+        {
+          date: "mar 18 2020",
+          weight: 60.2,
+        },
+      ],
     };
   },
 };
@@ -62,7 +91,7 @@ export default {
 }
 
 .title {
-  z-index: 30 !important;
+  z-index: 2 !important;
   text-align: center;
   background-color: rgba(66, 66, 66, 0.5);
   margin: auto !important;
@@ -84,14 +113,14 @@ export default {
   backdrop-filter: blur(3px);
 }
 
-.tabs-container{
-  margin-top:20px;
+.tabs-container {
+  margin-top: 20px;
 }
 
 .tabs {
   background-color: rgb(33, 33, 33);
   width: 70%;
-  margin:auto;
+  margin: auto;
 }
 
 .tab-title {
@@ -102,10 +131,10 @@ export default {
 .tab-items {
   background-color: black !important;
   width: 70%;
-  margin:auto;
+  margin: auto;
   padding: 0;
   .tab-item {
-    margin:0;
+    margin: 0;
     padding: 0;
     //background-color: rgba(33, 33, 33);
   }

@@ -3,16 +3,16 @@
     <div class="container">
       <div class="routine-history-scroller">
         <div class="title">
-        <v-icon>mdi-history</v-icon><span>Routine History</span>
-      </div>
+          <v-icon>mdi-history</v-icon><span>Routine History</span>
+        </div>
         <v-virtual-scroll :items="stats" :item-height="70" height="400">
           <template v-slot:default="{ item }">
             <div class="item-container">
               <div class="date-container">{{ item.date }}</div>
               <div class="name-container">
                 <span class="routine-name">{{ item.name }}</span>
-                <span class="routine-author"
-                  > by <span class="primary--text">{{ item.author }}</span></span
+                <span class="routine-author">
+                  by <span class="primary--text">{{ item.author }}</span></span
                 >
               </div>
             </div>
@@ -61,17 +61,34 @@
         <div class="description">5 hours, 30.1 minutes</div>
       </div>
       <div class="btn-container">
-        <v-btn rounded class="primary black--text" small>Show Graph</v-btn>
+        <v-btn
+          v-on:click="overlayGraph = true"
+          rounded
+          class="primary black--text"
+          small
+          >Show Graph</v-btn
+        >
       </div>
     </div>
+    <OverlayGraph
+      :value="overlayGraph"
+      v-on:close-graph="overlayGraph = false"
+      :data="statsWithTime.map((item) => item.time)"
+      :labels="statsWithTime.map((item) => item.date)"
+      label="Weight"
+    >
+    </OverlayGraph>
   </div>
 </template>
 
 <script>
+import OverlayGraph from "./OverlayGraph.vue";
 export default {
   name: "Stats",
+  components:{OverlayGraph},
   data() {
     return {
+      overlayGraph: false,
       dates: [
         { title: "Last Week" },
         { title: "Last Month" },
@@ -135,6 +152,40 @@ export default {
           author: "UserX",
         },
       ],
+      statsWithTime: [
+        {
+          date: "mar 1 2020",
+          time: 25,
+        },
+        {
+          date: "mar 2 2020",
+          time: 30,
+        },
+        {
+          date: "mar 3 2020",
+          time: 0,
+        },
+        {
+          date: "mar 8 2020",
+          time: 0,
+        },
+        {
+          date: "mar 15 2020",
+          time: 80,
+        },
+        {
+          date: "mar 16 2020",
+          time: 60,
+        },
+        {
+          date: "mar 17 2020",
+          time: 70,
+        },
+        {
+          date: "mar 18 2020",
+          time: 90,
+        },
+      ],
     };
   },
 };
@@ -143,8 +194,8 @@ export default {
 <style lang="scss" scoped>
 .stats {
   display: flex;
-  margin:0;
-  padding:0;
+  margin: 0;
+  padding: 0;
 }
 
 .container {
@@ -155,7 +206,7 @@ export default {
 
 .routine-history-scroller {
   background-color: rgb(23, 23, 23);
-  margin-left:20px;
+  margin-left: 20px;
   margin-right: 20px;
   .item-container {
     background-color: rgb(66, 66, 66);
@@ -164,17 +215,17 @@ export default {
     .date-container {
       background-color: white;
       color: black;
-      display:flex;
+      display: flex;
       align-items: center;
     }
-    .name-container{
-      margin-left:auto;
+    .name-container {
+      margin-left: auto;
       margin-right: 10px;
-      .routine-name{
-        font-size:35px;
+      .routine-name {
+        font-size: 35px;
       }
-      .routine-author{
-        font-size:25px ;
+      .routine-author {
+        font-size: 25px;
       }
     }
   }
@@ -229,8 +280,8 @@ export default {
   width: 0px; /* Remove scrollbar space */
   background: transparent; /* Optional: just make scrollbar invisible */
 }
-.divider{
-  width:10px;
-  background-color: black ;
+.divider {
+  width: 10px;
+  background-color: black;
 }
 </style>

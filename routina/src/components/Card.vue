@@ -1,8 +1,8 @@
 <template>
   <v-overlay class="root" :value="overlay">
     <div class="card">
-      <v-btn icon text absolute v-on:click="closeOverlay"
-        class="close-button"><v-icon>mdi-close</v-icon></v-btn
+      <v-btn icon text absolute v-on:click="closeOverlay" class="close-button"
+        ><v-icon>mdi-close</v-icon></v-btn
       >
       <div class="backdrop-card-image"></div>
       <v-img class="card-image" :src="routineData.image" />
@@ -163,7 +163,7 @@ export default {
 <style scoped lang="scss">
 @import "~vuetify/src/styles/styles.sass";
 
-.close-button{
+.close-button {
   position: absolute;
   right: 0px;
 }
