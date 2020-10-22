@@ -30,14 +30,30 @@
           </v-col>
         </v-row>
       </div>
-      <div class="routine-buttons">
-        <v-row>
+      <div class="routine-buttons-container">
+        <div>
+          <v-btn
+            x-big
+            rounded
+            router
+            to="edit-routine"
+            class="ma-0 primary black--text font-weight-black"
+            ><span><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</span></v-btn
+          >
+          <v-btn class="primary--text" v-on:click="pressed = !pressed" icon>
+            <v-icon v-if="pressed" class="like-icon" dark> mdi-heart </v-icon>
+            <v-icon v-if="!pressed" class="like-icon" dark>
+              mdi-heart-outline
+            </v-icon>
+          </v-btn>
+        </div>
+        <!-- <v-row>
           <v-col>
             <v-btn
               x-big
               rounded
               class="ma-0 primary black--text font-weight-black"
-              ><span class="ma-10">START</span></v-btn
+              ><span class="ma-10"><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</span></v-btn
             >
             <v-btn class="primary--text" v-on:click="pressed = !pressed" icon>
               <v-icon v-if="pressed" class="like-icon" dark> mdi-heart </v-icon>
@@ -57,7 +73,7 @@
               >Edit Rotuine<v-icon>mdi-pencil</v-icon></v-btn
             >
           </v-col>
-        </v-row>
+        </v-row> -->
       </div>
     </div>
     <v-row class="info-container ma-8">
@@ -66,38 +82,20 @@
           <h1 class="grey darken-1" style="text-align: center">
             Exercise List
           </h1>
-         
-          <div class=" mx-12 list-container">
-          <h2 >Round 1</h2>
-            <ExerciseList              
-              itemHeight="55"
-              height="300"
-              :exercises="exercises"
-            />
-         
-         
+
+          <div class="mx-12 list-container">
+            <h2>Round 1</h2>
+            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
           </div>
 
-          <div class=" mx-12 list-container">
-          <h2 >Round 2</h2>
-            <ExerciseList              
-              itemHeight="55"
-              height="300"
-              :exercises="exercises"
-            />
-         
-         
+          <div class="mx-12 list-container">
+            <h2>Round 2</h2>
+            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
           </div>
 
-          <div class=" mx-12 list-container">
-          <h2 >Round 3</h2>
-            <ExerciseList              
-              itemHeight="55"
-              height="300"
-              :exercises="exercises"
-            />
-         
-         
+          <div class="mx-12 list-container">
+            <h2>Round 3</h2>
+            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
           </div>
         </div>
       </v-col>
@@ -197,20 +195,18 @@ export default {
   }
 }
 
-.routine-buttons {
+.routine-buttons-container {
   position: absolute;
   width: 100%;
   bottom: 0;
-  backdrop-filter: blur(5px);
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 1) 5%,
-    rgba(0, 0, 0, 0.7) 40%,
-    rgba(0, 0, 0, 0)
-  );
-  .row {
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  div {
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 60%;
-    margin: auto;
-    text-align: center;
     .v-btn {
       margin-top: auto !important;
       margin-bottom: auto !important;
@@ -221,6 +217,20 @@ export default {
       }
     }
   }
+  // .row {
+  //   width: 60%;
+  //   margin: auto;
+  //   text-align: center;
+  //   .v-btn {
+  //     margin-top: auto !important;
+  //     margin-bottom: auto !important;
+  //     margin-left: 10px;
+  //     font-size: 20px !important;
+  //     .like-icon {
+  //       font-size: 40px;
+  //     }
+  //   }
+  // }
 }
 
 .info-container {

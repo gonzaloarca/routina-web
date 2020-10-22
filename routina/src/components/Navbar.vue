@@ -11,7 +11,6 @@
       <v-app-bar-nav-icon
         class="hidden-md-and-up"
         @click="drawer = !drawer"
-        @clos="console.log('cami')"
       ></v-app-bar-nav-icon>
 
       <router-link :to="'/'">
@@ -73,9 +72,9 @@
         </v-text-field>
       </v-menu>
 
-      <v-btn icon>
+      <!-- <v-btn icon>
         <v-icon>mdi-bell</v-icon>
-      </v-btn>
+      </v-btn> -->
       <LoginPopOver/>
     </v-app-bar>
 
@@ -116,7 +115,7 @@ export default {
         { label: "Home", route: "/", icon: "mdi-home" },
         { label: "Explore", route: "/explore", icon: "mdi-magnify" },
         { label: "My Routines", route: "/routines", icon: "mdi-dumbbell" },
-        { label: "Plans", route: "/plans", icon: "mdi-clipboard-text" },
+        // { label: "Plans", route: "/plans", icon: "mdi-clipboard-text" },
         {
           label: "Tracking",
           route: "/tracking",
