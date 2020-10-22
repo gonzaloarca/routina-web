@@ -1,6 +1,6 @@
 <template>
   <div class="routine-container" >
-    <v-card class="routine-card" tile>
+    <v-card class="routine-card" v-on:click="overlay=false" tile>
       <div class="routine-info">
         <p class="text-uppercase text-caption font-weight-medium mb-0">
           <span class="type-label text-caption grey--text text--lighten-1 my-0"
