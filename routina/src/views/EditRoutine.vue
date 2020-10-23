@@ -8,7 +8,7 @@
         >
         <div style="info-container">
           <h2>Now editing</h2>
-          <h1>Routine 1</h1>
+          <h1>{{ routineData.name }}</h1>
           <h2>Originally made by <span class="primary--text">UserX</span></h2>
         </div>
       </div>
@@ -17,30 +17,22 @@
       <v-col class="exercise-container">
         <div class="mx-2 title-container">
           <div style="width: 250px; margin-top: 10px">
-            <v-text-field
-              style="font-size: 40px"
-              background-color="transparent"
-              :value="routineData.name"
-              append-icon="mdi-pencil"
-              solo
-              hide-details
-              dense
-              flat
-            >
-            </v-text-field>
+            <div class="ma-0 pa-0" style="background-color: rgba(0,0,0,0.4) ">
+              <v-text-field
+                style="font-size: 30px; font-weight: 600; margin-left:10px; margin-right:10px;"
+                background-color="transparent"
+                v-model="routineData.name"
+                append-icon="mdi-pencil"
+                hide-details
+                dense
+              >
+              </v-text-field>
+            </div>
           </div>
         </div>
 
         <div class="mx-3 my-4 types-container">
-          <div
-            class="my-2"
-            style="
-              display: flex;
-              align-items: center;
-              position: relative;
-              background-color: black;
-            "
-          >
+          <div class="my-2 center-v">
             <h3 class="mx-2">Type</h3>
             <div class="select-container">
               <v-select
@@ -56,20 +48,28 @@
               ></v-select>
             </div>
           </div>
-          <div
-            class="my-2"
-            style="
-              display: flex;
-              align-items: center;
-              position: relative;
-              background-color: black;
-            "
-          >
+          <div class="my-2 center-v">
             <h3 class="mx-2">Muscle Group</h3>
             <div class="select-container">
               <v-select
                 :items="muscleGroupItems"
-                label="Muscle Group"
+                label="Full Body"
+                return-object
+                single-line
+                class="primary black--text"
+                color="black"
+                light
+                dense
+                hide-details="true"
+              ></v-select>
+            </div>
+          </div>
+          <div class="my-2 center-v">
+            <h3 class="mx-2">Difficulty Level</h3>
+            <div class="select-container">
+              <v-select
+                :items="[1, 2, 3, 4]"
+                label="1"
                 return-object
                 single-line
                 class="primary black--text"
@@ -84,8 +84,12 @@
 
         <div class="exercise-list">
           <v-tabs background-color="black" v-model="tab">
-            <v-tab v-for="round in routineData.rounds" :key="round.id">
-              Round {{ routineData.rounds.indexOf(round) + 1 }}
+            <v-tab
+              v-for="round in routineData.rounds"
+              v-model="round.name"
+              :key="round.id"
+            >
+              {{ round.name }}
             </v-tab>
           </v-tabs>
           <v-tabs-items class="black" v-model="tab">
@@ -105,14 +109,11 @@
               <div class="primary--text round-title-container">
                 <div>
                   <v-text-field
+                    v-model="round.name"
                     style="width: 200px; font-size: 25px"
                     background-color="transparent"
-                    :value="round.name"
                     append-icon="mdi-pencil"
-                    solo
-                    hide-details
                     dense
-                    rounded
                   >
                   </v-text-field>
                 </div>
@@ -162,18 +163,21 @@
             </div>
 
             <v-textarea
-              style="font-size: 17px; margin-bottom:20px; margin-left:20px; margin-right:20px"
+              style="
+                font-size: 17px;
+                margin-bottom: 20px;
+                margin-left: 20px;
+                margin-right: 20px;
+              "
               background-color="black"
               v-model="routineData.description"
               solo
-              
               counter
               no-resize
-              :rules=" [v => v.length <= 150 || 'Max 150 characters']"
+              :rules="[(v) => v.length <= 150 || 'Max 150 characters']"
               flat
             >
             </v-textarea>
-
           </div>
         </div>
         <!-- <div class="additional-information">
@@ -310,10 +314,14 @@ export default {
   background-color: black;
 }
 
+.types-container {
+  background-color: transparent;
+}
+
 .select-container {
   width: 100px;
   position: relative;
-  margin-left: auto;
+  margin-left: 15px;
   margin-top: 0;
   padding: 0;
   z-index: 30;
