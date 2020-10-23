@@ -24,7 +24,54 @@
           >
         </div>
 
-        <div class="types-container"></div>
+        <div class="mx-3 my-4 types-container">
+          <div class="my-2"
+            style="
+              display: flex;
+              align-items: center;
+              position: relative;
+              background-color: black;
+            "
+          >
+            <h3 class="mx-2">Type</h3>
+            <div class="select-container">
+              <v-select
+                :items="typeItems"
+                label="Type"
+                return-object
+                single-line
+                class="primary black--text"
+                color="black"
+                light
+                dense
+                hide-details="true"
+              ></v-select>
+            </div>
+          </div>
+          <div class="my-2"
+            style="
+              display: flex;
+              align-items: center;
+              position: relative;
+              background-color: black;
+            "
+          >
+            <h3 class="mx-2">Muscle Group</h3>
+            <div class="select-container">
+              <v-select
+                :items="muscleGroupItems"
+                label="Muscle Group"
+                return-object
+                single-line
+                class="primary black--text"
+                color="black"
+                light
+                dense
+                hide-details="true"
+              ></v-select>
+            </div>
+          </div>
+        </div>
 
         <div class="exercise-list">
           <v-tabs background-color="black" v-model="tab">
@@ -70,11 +117,16 @@
             </v-tab-item>
           </v-tabs-items>
         </div>
-        <div class="mx-2" style="display:flex; justify-content:center">
-          <v-btn class=" title primary black--text ma-2" rounded small
+        <div class="mx-2" style="display: flex; justify-content: center">
+          <v-btn class="title primary black--text ma-2" rounded small
             >SAVE CHANGES</v-btn
           >
-          <v-btn outlined style="border-color:rgb(255,128,0) !important;border-width:2px" class=" title black primary--text ma-2" rounded small
+          <v-btn
+            outlined
+            style="border-color: rgb(255, 128, 0) !important; border-width: 2px"
+            class="title black primary--text ma-2"
+            rounded
+            small
             >DISCARD CHANGES</v-btn
           >
         </div>
@@ -132,6 +184,8 @@ export default {
   data() {
     return {
       tab: null,
+      typeItems: ["Cardio", "Strength", "Yoga"],
+      muscleGroupItems: ["Full body", "Legs", "Arms"],
       routineData: {
         name: "Routine 1",
         rounds: [
@@ -213,6 +267,20 @@ export default {
 <style scoped  lang="scss">
 .routine {
   background-color: black;
+}
+
+.select-container {
+  width: 100px;
+  position: relative;
+  margin-left: auto;
+  margin-top: 0;
+  padding: 0;
+  z-index: 30;
+  right: 0;
+  .v-input {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .headers {
