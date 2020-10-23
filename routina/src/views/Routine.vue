@@ -5,113 +5,144 @@
       <div class="routine-info">
         <h1>Routine 1</h1>
         <h2>by <span class="primary--text">UserX</span></h2>
-        <v-row class="routine-specifications">
-          <v-col class="text-uppercase">
+        <div style="height:15px; width:100%;"></div>
+        <v-row class=" row-pad routine-specifications">
+          <v-col class="col-pad text-uppercase">
             <span class="type-label">ROUTINE TYPE</span>
             <br />
             CARDIO
           </v-col>
-          <v-col class="text-uppercase">
+          <v-col class="col-pad text-uppercase">
             <span class="type-label">DURATION</span>
             <br />
             <v-icon dense>mdi-timer-outline</v-icon>
             45'
           </v-col>
-          <v-col class="text-uppercase">
+          <v-col class="col-pad text-uppercase">
             <span class="type-label">MUSCLE GROUP</span>
             <br />
             FULL BODY
           </v-col>
 
-          <v-col>
+          <v-col class="col-pad text-uppercase">
             <span class="type-label">DIFFICULTY</span>
             <br />
             <DifficultyLevel style="display: inline" :difficulty="2" />
           </v-col>
+
+          <v-col class="col-pad text-uppercase">
+            <span class="type-label">Rating</span>
+            <br />
+            <v-rating
+              :length="5"
+              :size="18"
+              dense
+              background-color="white"
+              color="white"
+              :readonly="true"
+              :value="3"
+            ></v-rating>
+          </v-col>
+
+
         </v-row>
       </div>
       <div class="routine-buttons-container">
-        <div>
+        <div style="margin-left:100px; margin-right:100px;">
           <v-btn
             x-big
             rounded
             router
             to="edit-routine"
-            class="ma-0 primary black--text font-weight-black"
-            ><span><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</span></v-btn
-          >
-          <v-btn class="primary--text" v-on:click="pressed = !pressed" icon>
-            <v-icon v-if="pressed" class="like-icon" dark> mdi-heart </v-icon>
-            <v-icon v-if="!pressed" class="like-icon" dark>
+            class="ma-0 black--text font-weight-black"
+            color="white"
+            ><span 
+            style="display:flex; justify-content:center; align-items:center;">EDIT ROUTINE
+            <v-icon class="pa-1" >mdi-pencil</v-icon>
+            </span>
+          </v-btn>
+          <v-btn class="primary--text" v-on:click="pressed = !pressed" style="z-index:50;" icon>
+            <v-icon v-if="pressed" class="like-icon"  dark> mdi-heart </v-icon>
+            <v-icon v-if="!pressed" class="like-icon"  dark>
               mdi-heart-outline
             </v-icon>
           </v-btn>
         </div>
-        <!-- <v-row>
-          <v-col>
-            <v-btn
-              x-big
-              rounded
-              class="ma-0 primary black--text font-weight-black"
-              ><span class="ma-10"><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</span></v-btn
-            >
-            <v-btn class="primary--text" v-on:click="pressed = !pressed" icon>
-              <v-icon v-if="pressed" class="like-icon" dark> mdi-heart </v-icon>
-              <v-icon v-if="!pressed" class="like-icon" dark>
-                mdi-heart-outline
-              </v-icon>
-            </v-btn>
-          </v-col>
-          <v-spacer />
-          <v-col>
-            <v-btn
-              x-big
-              rounded
-              class="ma-0 white black--text font-weight-black"
-              router
-              to="edit-routine"
-              >Edit Rotuine<v-icon>mdi-pencil</v-icon></v-btn
-            >
-          </v-col>
-        </v-row> -->
       </div>
     </div>
-    <v-row class="info-container ma-8">
+
+
+
+    <div class="info-container">
+    
+    <v-row class="content-container">
       <v-col class="exercise-container">
         <div class="exercise-list">
-          <h1 class="grey darken-1" style="text-align: center">
-            Exercise List
-          </h1>
-
-          <div
-            v-for="round in rounds"
-            :key="round.id"
-            class="mx-12 list-container"
-          >
-            <h2>Round {{ rounds.indexOf(round) + 1 }}</h2>
-            <div style="height: 300px">
-              <ExerciseList itemHeight="55" height="300" :exercises="round" />
-            </div>
+          <div style="width:750px; background-color:grey darken-5;">
+            <v-tabs class="tab-fmt" v-model="tab" :fixed-tabs="true">
+            <v-tab
+              v-for="round in rounds"
+              v-model="round.name"
+              :key="round.name"
+              class="tab-fmt"
+              
+            >
+              {{ round.name }}
+            </v-tab>
+          </v-tabs>
+          <div class="ma-5" style="background-color:rgb(30, 30, 30);">
+            <v-tabs-items class="black" v-model="tab">
+            <v-tab-item
+              v-for="round in rounds"
+              :key="round.name"
+              class="mx-2"
+            >
+              <div style="height: 300px">
+                <ExerciseList
+                  itemHeight="55"
+                  height="300"
+                  
+                  v-on:swap-up="(index) => swapUp(index, round.exercises)"
+                  v-on:swap-down="(index) => swapDown(index, round.exercises)"
+                  :exercises="round.exercises"
+                />
+              </div>
+            
+            </v-tab-item>
+          </v-tabs-items>  
           </div>
+          </div>  
+          
         </div>
+      </v-col>
+      <v-col style=" max-width:5px;">
+        <div ></div>
       </v-col>
       <v-col class="more-info">
         <div class="additional-information">
-          <h1 style="text-align: center">Additional Information</h1>
-          <img src="../assets/additional-info.png" />
+          <h2 style="text-align: center; height:50px;">Rate this routine</h2>
         </div>
-        <div class="equipment-needed">
-          <h1 style="text-align: center">Equipment Needed</h1>
-          <EquipmentNeeded
-            class="mx-12"
-            style="font-size: 35px !important"
-            itemHeight="60"
-            height="300"
-            :equipments="equipments"
-          />
+        <div class="rating-fmt">
+          <v-rating
+              :length="5"
+              :size="18"
+              dense
+              background-color="primary"
+              color="primary"
+              large
+
+            ></v-rating>
         </div>
+        <div class="additional-information">
+          <h2 style="text-align: center; height:50px;">Description</h2>
+        </div>
+        <div class="desc-fmt">
+          <p class="pa-2">{{description}}</p>
+        </div>
+        
       </v-col>
     </v-row>
+    </div>
   </div>
 </template>
 
@@ -119,15 +150,16 @@
 // @ is an alias to /src
 import DifficultyLevel from "../components/DifficultyLevel.vue";
 import ExerciseList from "../components/ExerciseList.vue";
-import EquipmentNeeded from "../components/EquipmentNeeded.vue";
+// import EquipmentNeeded from "../components/EquipmentNeeded.vue";
 
 export default {
   name: "Routine",
-  components: { DifficultyLevel, ExerciseList, EquipmentNeeded },
+  components: { DifficultyLevel, ExerciseList,  },
   data() {
     return {
-      rounds: [
-        [
+      rounds: [{
+        name:"warm up",
+        exercises:[
           { name: "ejercicio1" },
           { name: "ejercicio2" },
           { name: "ejercicio3" },
@@ -136,8 +168,9 @@ export default {
           { name: "ejercicio6" },
           { name: "ejercicio7" },
           { name: "ejercicio8" },
-        ],
-        [
+        ],},
+        {name:"round 1",
+        exercises: [
           { name: "ejercicio1" },
           { name: "ejercicio2" },
           { name: "ejercicio3" },
@@ -146,8 +179,9 @@ export default {
           { name: "ejercicio6" },
           { name: "ejercicio7" },
           { name: "ejercicio8" },
-        ],
-        [
+        ],},
+        {name:"round 2",
+        exercises:[
           { name: "ejercicio1" },
           { name: "ejercicio2" },
           { name: "ejercicio3" },
@@ -156,20 +190,12 @@ export default {
           { name: "ejercicio6" },
           { name: "ejercicio7" },
           { name: "ejercicio8" },
-        ],
+        ],},
       ],
-      equipments: [
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-      ],
+
       pressed: false,
+      tab:null,
+      description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius ullam est quibusdam dolorem corrupti rem vero minima veniam delectus tempora et autem accusamus nobis quod placeat excepturi eveniet nisi accusantium aliquid error reiciendis molestias, vel sunt. Quas laborum nisi vero.",
     };
   },
 };
@@ -186,6 +212,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.tab-fmt{
+  background-color:rgb(50, 50, 50);
+  text-decoration-color: white;
+}
+
+.col-pad{
+  padding-left:2px;
+  padding-right:2px;
 }
 .routine-image {
   position: absolute;
@@ -204,12 +240,17 @@ export default {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5);
   .routine-specifications {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 600;
     .type-label {
       font-size: 16px !important;
     }
   }
+}
+
+.row-pad{
+  margin-left:0px;
+  margin-right:0px;
 }
 
 .routine-buttons-container {
@@ -219,7 +260,8 @@ export default {
   backdrop-filter: blur(8px);
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
+  z-index:20;
+
   div {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -251,31 +293,66 @@ export default {
 }
 
 .info-container {
-  width: 60%;
-  margin: auto !important;
+  max-width: $content-container-width;
+  margin: auto;
+  padding: 0px 30px 30px 30px;
+}
+
+.content-container {
+  max-width: $content-container-width - 150px;
+  align-content: center;
+  margin: 0 auto 30px;
+  padding: 30px 30px 30px 30px;
 }
 
 .exercise-container {
   margin: 0;
   padding: 0;
-  width: 60%;
+  width: 750px;
 }
 
 .more-info {
   margin: 0;
   padding: 0;
+  width:300px;
+ 
+}
+
+.rating-fmt{
+  height:100px;
+  background-color: rgb(20, 20, 20);
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  text-align:center;
+  width:100%;
+}
+
+.desc-fmt{
+  min-height:fit-content;
+  background-color: rgb(20, 20, 20);
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  text-align:center;
+  width:100%;
 }
 
 .exercise-list {
   width: 100%;
-  background-color: rgb(66, 66, 66);
+  background-color: rgb(20, 20, 20);
+  min-height:fit-content;
+  padding-bottom: 10px;
 }
 
 .additional-information {
-  background-color: rgb(33, 33, 33);
-  img {
-    width: 100% !important;
-  }
+  background-color: rgb(50, 50, 50);
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  text-align:center;
+  width:100%;
+
 }
 
 .equipment-needed {
