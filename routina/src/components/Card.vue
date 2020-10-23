@@ -8,11 +8,22 @@
         <div class="backdrop-card-image"></div>
         <v-img class="card-image" :src="routineData.image" />
         <div class="card-title white--text">
-          <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
+          <h1 class="my-0 text-uppercase">{{ routineData.routineName }}</h1>
           <p class="user-label my-0">
             by
             <span class="primary--text">{{ routineData.author }}</span>
           </p>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <v-btn
+            class="white black--text"
+            rounded
+            x-small
+            style="font-size: 13px"
+            router
+            to="edit-routine"
+            ><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</v-btn
+          >
         </div>
         <v-row class="routine-info">
           <v-col class="text-uppercase">
