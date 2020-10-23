@@ -3,9 +3,8 @@
     <div class="headers">
       <v-img src="../assets/routine1.jpg" class="routine-image" />
       <div class="routine-info">
-        <v-btn text class="image-button"
-          >Change routine image <v-icon>mdi-image</v-icon></v-btn
-        >
+        <v-file-input class="image-button" v-model="selectedFile"
+          >Change routine image </v-file-input>
         <div style="info-container">
           <h2>Now editing</h2>
           <h1>Routine 1</h1>
@@ -42,6 +41,7 @@
               </div>
               <div class="py-4">
                 <v-btn tile x-large block class="primary black--text"
+                  @click="uploadImage()"
                   >+ Add Exercise</v-btn
                 >
               </div>
@@ -81,7 +81,7 @@
 // @ is an alias to /src
 import ExerciseList from "../components/ExerciseList.vue";
 import EquipmentNeeded from "../components/EquipmentNeeded.vue";
-
+import {Images} from "../services/images.js";
 export default {
   name: "Routine",
   components: { ExerciseList, EquipmentNeeded },
@@ -135,9 +135,34 @@ export default {
         ],
       },
       pressed: false,
+      selectedFile:null,
     };
   },
   methods: {
+    uploadImage:async function(){
+      try{
+      const res = await Images.uploadImage(this.selectedFile);
+      const res2 = await res.text();
+      
+      console.log(res2);
+      const data = JSON.parse(res2).secure_url;
+      console.log(data);
+      }catch(e){
+        console.log(e);
+      }
+    },
+    printFileState(){
+      console.log(this.selectedFile);
+    },
+    onFileSelected(event){
+      console.log("file selected");
+      try {
+        this.selectedFile=event.target.files[0];
+      } catch (error) {
+        console.log(error);
+      }
+      
+    },
     swapUp(item, elements) {
       if (item > 0) {
         this.swap(item, item - 1, elements);
