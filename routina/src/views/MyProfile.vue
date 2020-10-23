@@ -85,33 +85,41 @@ export default {
         try {
           const res = await UserApi.getCurrentUserExecutions();
           const results = res.results;
+          console.log(res);
+          console.log(results);
           this.numberOfExecutions = res.totalCount;
-          this.lastRoutine= results[0];
-          //recorremos todas las executions para ver si hay repetidas
-          let max = [];
-          let actual= 0;
+          if(this.numberOfExecutions==0){
+            this.mostUsedRoutine=null;
+            this.lastRoutine = null;
+          }else{
+            this.lastRoutine= results[0];
+            //recorremos todas las executions para ver si hay repetidas
+            let max = [];
+            let actual= 0;
 
-          results.array.forEach((result,index) => {
-            actual = result.id;
-            max[index] = 0;
+            results.array.forEach((result,index) => {
+              actual = result.id;
+              max[index] = 0;
 
-            results.array.forEach(result2 => {
-              if(actual==result2.id){max[index]++;}
+              results.array.forEach(result2 => {
+                if(actual==result2.id){max[index]++;}
+              });
+              
             });
-            
-          });
-          let maxMax = 0;
-          let index = 0;
-          max.array.forEach((val,i) => {
-            if(val>maxMax){
-              maxMax=val;
-              index = i;
-            }
-          });
-          this.mostUsedRoutine = results[index];
+            let maxMax = 0;
+            let index = 0;
+            max.array.forEach((val,i) => {
+              if(val>maxMax){
+                maxMax=val;
+                index = i;
+              }
+            });
+            this.mostUsedRoutine = results[index];
+          }
+          
 
           
-          console.log(res);
+          
         } catch (error) {
           console.log(error);
         }
