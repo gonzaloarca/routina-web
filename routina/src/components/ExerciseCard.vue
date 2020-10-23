@@ -1,45 +1,12 @@
 <template>
   <div>
-    <div class="routine-container">
-      <v-card class="routine-card" v-on:click="clickEvent" tile>
-        <div class="routine-info">
-          <p class="text-uppercase text-caption font-weight-medium mb-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
-              >ROUTINE TYPE</span
-            >{{ routineData.type }}
-          </p>
-          <p class="font-weight-medium my-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
-              >DURATION</span
-            >
-            <v-icon dense>mdi-timer-outline</v-icon>{{ formatTime }}
-          </p>
-          <p class="text-uppercase text-caption font-weight-medium mb-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
-              >MUSCLE GROUP</span
-            >
-            {{ routineData.muscleGroup }}
-          </p>
-
-          <div>
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
-              >DIFFICULTY</span
-            >
-            <DifficultyLevel
-              class="difficulty-level white--text text-h6"
-              :difficulty="2"
-            />
-          </div>
-        </div>
-        <img :src="routineData.image" class="card-image" />
+    <div class="exercise-container">
+      <v-card class="exercise-card" v-on:click="clickEvent" tile>
+        <img :src="exerciseData.image" class="card-image" />
         <div class="card-title white--text">
-          <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
+          <p class="my-0 text-uppercase">{{ exerciseData.exerciseName }}</p>
           <p class="user-label my-0">
-            by <span class="primary--text">{{ routineData.author }}</span>
+            by <span class="primary--text">{{ exerciseData.author }}</span>
           </p>
         </div>
       </v-card>
@@ -50,8 +17,8 @@
         ><v-icon>mdi-pencil</v-icon></v-btn
       >
     </div>
-    <RoutineOverlay
-      :routine-data="routineData"
+    <ExerciseOverlay
+      :exercise-data="exerciseData"
       v-if="withOverlay"
       v-on:close-overlay="overlay = false"
       :overlay="overlay"
@@ -60,18 +27,17 @@
 </template>
 
 <script>
-import DifficultyLevel from "./DifficultyLevel.vue";
-import RoutineOverlay from "./RoutineOverlay.vue";
+import ExerciseOverlay from "./ExerciseOverlay.vue";
 export default {
-  name: "RoutineCard",
+  name: "ExerciseCard",
   data() {
     return {
       overlay: false,
     };
   },
-  components: { DifficultyLevel, RoutineOverlay },
+  components: { ExerciseOverlay },
   props: {
-    routineData: {
+    exerciseData: {
       type: Object,
       required: true,
     },
@@ -81,15 +47,6 @@ export default {
     },
     editable: {
       type: Boolean,
-    },
-  },
-  computed: {
-    formatTime() {
-      let hours = Math.floor(this.routineData.time / 60);
-      let minutes = this.routineData.time % 60;
-      return `${hours !== 0 ? hours + "h" : ""} ${
-        minutes !== 0 ? minutes + "'" : ""
-      }`;
     },
   },
   methods: {
@@ -106,7 +63,7 @@ $card-height: 150px;
 $card-width: 150px;
 $card-title-height: 34px;
 $card-title-mult: 1.5;
-$routine-info-width: 75px;
+$exercise-info-width: 75px;
 
 .v-slide-group__wrapper {
   contain: none !important;
@@ -123,7 +80,7 @@ $card-height: 150px;
 $card-width: 150px;
 $card-title-height: 34px;
 $card-title-mult: 1.5;
-$routine-info-width: 75px;
+$exercise-info-width: 75px;
 
 .editable {
   display: flex;
@@ -134,12 +91,12 @@ $routine-info-width: 75px;
   margin-bottom: -20px;
 }
 
-.routine-container {
+.exercise-container {
   height: $card-height;
   width: $card-width;
 }
 
-.routine-card {
+.exercise-card {
   z-index: 1;
   height: $card-height;
   width: $card-width;
@@ -158,7 +115,7 @@ $routine-info-width: 75px;
   }
 }
 
-.routine-card:hover {
+.exercise-card:hover {
   $w-mult: 1.2;
   $h-mult: 1.6;
   $center-dx: $card-width * $w-mult * 0.5 - $card-width * 0.5;
@@ -170,8 +127,8 @@ $routine-info-width: 75px;
   width: $card-width * $w-mult;
   transform: translate(-$center-dx, -$center-dy);
 
-  .routine-info {
-    width: $routine-info-width * 1.4;
+  .exercise-info {
+    width: $exercise-info-width * 1.4;
     height: $card-height * $h-mult - $card-title-height * $card-title-mult;
 
     .type-label {
@@ -194,24 +151,7 @@ $routine-info-width: 75px;
     }
   }
 }
-.routine-info {
-  position: absolute;
-  right: 0px;
-  z-index: 1;
 
-  height: $card-height - $card-title-height;
-  width: $routine-info-width;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(3px);
-  padding: 5px;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-  transition-duration: 200ms;
-  transition-property: height, width !important;
-}
 .card-image {
   position: absolute;
   height: ($card-height - $card-title-height) * 1.4;
@@ -236,12 +176,6 @@ $routine-info-width: 75px;
   transition-duration: 200ms;
   transition-property: height !important;
   font-weight: 600;
-}
-
-.difficulty-level {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
 }
 
 .user-label {

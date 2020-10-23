@@ -10,7 +10,6 @@
           My favorite routines
           <v-icon size="90%">mdi-heart</v-icon>
         </h1>
-
         <RoutineSlideGroup />
       </v-card>
       <v-card class="content-container">
@@ -51,6 +50,44 @@
           </div>
         </div>
       </v-card>
+      <v-card class="content-container">
+        <h1 class="title-cont">Exercises created by me</h1>
+        <ExerciseSlideGroup :editable="editing" />
+
+        <div class="centered-div">
+          <div class="centered-div pa-3" style="width: 27%">
+            <v-btn
+              rounded
+              width="100%"
+              color="orange darken-3"
+              light
+              class="button font-weight-bold pa-3"
+            >
+              <v-icon class="icon-fmt" color="black" left>
+                mdi-plus-circle
+              </v-icon>
+              Create new exercise
+            </v-btn>
+          </div>
+          <div class="centered-div pa-3" style="width: 27%">
+            <v-btn
+              rounded
+              width="100%"
+              color="grey darken-2"
+              dark
+              class="button font-weight-bold"
+              @click="editing = !editing"
+            >
+              <v-icon v-if="editing" color="white" left>
+                mdi-exit-to-app
+              </v-icon>
+              <v-icon v-else color="white" left> mdi-pencil </v-icon>
+              <span v-if="editing"> Finish editing </span>
+              <span v-else> Edit exercise </span>
+            </v-btn>
+          </div>
+        </div>
+      </v-card>
     </div>
   </div>
 </template>
@@ -59,10 +96,11 @@
 // @ is an alias to /src
 import RoutinesBanner from "../components/RoutinesBanner";
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
+import ExerciseSlideGroup from "../components/ExerciseSlideGroup";
 
 export default {
   name: "Routines",
-  components: { RoutinesBanner, RoutineSlideGroup },
+  components: { RoutinesBanner, RoutineSlideGroup, ExerciseSlideGroup },
   data() {
     return {
       editing: false,

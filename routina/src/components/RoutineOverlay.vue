@@ -131,7 +131,7 @@
 <script>
 import DifficultyLevel from "./DifficultyLevel.vue";
 export default {
-  name: "overlayCard",
+  name: "RoutineOverlay",
   props: { overlay: Boolean, routineData: Object },
   data() {
     return {

@@ -3,22 +3,35 @@
     <v-sheet class="mx-auto" color="black" max-width="1300">
       <v-slide-group class="pa-4" show-arrows>
         <v-slide-item v-for="routine in routines" :key="routine.routineId">
-          <RoutineCard v-on:click="overlay=true; data=routine" :editable="editable" :routine-data="routine" class="ma-4"/>
+          <RoutineCard
+            v-on:click="
+              overlay = true;
+              data = routine;
+            "
+            :editable="editable"
+            :routine-data="routine"
+            class="ma-4"
+          />
         </v-slide-item>
       </v-slide-group>
     </v-sheet>
-    <Card :routine-data="data"  v-on:close-overlay="updateOverlay" :overlay="overlay" :editable="editable" />
+    <RoutineOverlay
+      :routine-data="data"
+      v-on:close-overlay="updateOverlay"
+      :overlay="overlay"
+      :editable="editable"
+    />
   </div>
 </template>
 
 <script>
 import RoutineCard from "./RoutineCard";
-import Card from "./Card.vue";
+import RoutineOverlay from "./RoutineOverlay.vue";
 
 export default {
   name: "RoutineSlideGroup",
-  props:{editable:Boolean},
-  components: { RoutineCard, Card },
+  props: { editable: Boolean },
+  components: { RoutineCard, RoutineOverlay },
   data() {
     return {
       routines: [
@@ -144,15 +157,15 @@ export default {
           image: require("../assets/routine1.jpg"),
         },
       ],
-      data:{},
-      overlay:false,    
+      data: {},
+      overlay: false,
     };
   },
-  methods:{
-    updateOverlay(){
-      this.overlay=false;
-    }
-  }
+  methods: {
+    updateOverlay() {
+      this.overlay = false;
+    },
+  },
 };
 </script>
 
