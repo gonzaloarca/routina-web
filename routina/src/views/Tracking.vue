@@ -1,12 +1,6 @@
 <template>
   <div class="tracking">
-    <!-- <div class="headers">
-      <v-img src="../assets/tracking.png" class="routine-image" />
-      <div class="image-blur"></div>
-      <div class="title">
-        <h1 class="ma-6">Tracking</h1>
-      </div>
-    </div> -->
+    
     <RoutinesBanner  
       banner-image-url="tracking.jpg"
       banner-title="Tracking"/>
