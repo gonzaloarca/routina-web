@@ -16,16 +16,24 @@
     <v-row class="info-container ma-8">
       <v-col class="exercise-container">
         <div class="mx-2 title-container">
-          <h1>
-            {{ routineData.name }}
-          </h1>
-          <v-btn x-large style="z-index: 10" icon
-            ><v-icon>mdi-pencil</v-icon></v-btn
-          >
+          <div style="width: 250px; margin-top: 10px">
+            <v-text-field
+              style="font-size: 40px"
+              background-color="transparent"
+              :value="routineData.name"
+              append-icon="mdi-pencil"
+              solo
+              hide-details
+              dense
+              flat
+            >
+            </v-text-field>
+          </div>
         </div>
 
         <div class="mx-3 my-4 types-container">
-          <div class="my-2"
+          <div
+            class="my-2"
             style="
               display: flex;
               align-items: center;
@@ -48,7 +56,8 @@
               ></v-select>
             </div>
           </div>
-          <div class="my-2"
+          <div
+            class="my-2"
             style="
               display: flex;
               align-items: center;
@@ -94,10 +103,19 @@
                 >
               </div>
               <div class="primary--text round-title-container">
-                <h1 class="text-capitalize">{{ round.name }}</h1>
-                <v-btn x-large style="z-index: 10" icon
-                  ><v-icon>mdi-pencil</v-icon></v-btn
-                >
+                <div>
+                  <v-text-field
+                    style="width: 200px; font-size: 25px"
+                    background-color="transparent"
+                    :value="round.name"
+                    append-icon="mdi-pencil"
+                    solo
+                    hide-details
+                    dense
+                    rounded
+                  >
+                  </v-text-field>
+                </div>
               </div>
               <div style="height: 300px">
                 <ExerciseList
@@ -142,13 +160,20 @@
               <h3>Description</h3>
               <v-btn x-large icon><v-icon>mdi-pencil</v-icon></v-btn>
             </div>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo,
-              totam inventore animi ratione, odit quia praesentium temporibus
-              culpa hic exercitationem voluptates! Illo ad minus at, minima in
-              et ullam quam praesentium expedita, delectus dolorum vitae. Illum
-              minima fuga repudiandae tempore.
-            </p>
+
+            <v-textarea
+              style="font-size: 17px; margin-bottom:20px; margin-left:20px; margin-right:20px"
+              background-color="black"
+              v-model="routineData.description"
+              solo
+              
+              counter
+              no-resize
+              :rules=" [v => v.length <= 150 || 'Max 150 characters']"
+              flat
+            >
+            </v-textarea>
+
           </div>
         </div>
         <!-- <div class="additional-information">
@@ -184,10 +209,13 @@ export default {
   data() {
     return {
       tab: null,
+      editingRoundName: false,
       typeItems: ["Cardio", "Strength", "Yoga"],
       muscleGroupItems: ["Full body", "Legs", "Arms"],
       routineData: {
         name: "Routine 1",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipircitationem voluppraesentium expedita, delectus dolorum vitae. Illum minima fuga repudiandae tempore.",
         rounds: [
           {
             name: "round 1",
@@ -263,6 +291,19 @@ export default {
   },
 };
 </script>
+
+<style  lang="scss">
+.round-title-container {
+  display: flex;
+  justify-content: center;
+  .v-text-field__slot {
+    input {
+      color: #ff8000 !important;
+      text-transform: uppercase;
+    }
+  }
+}
+</style>
 
 <style scoped  lang="scss">
 .routine {
@@ -417,11 +458,6 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    p {
-      background-color: black;
-      margin-left: 20px;
-      margin-right: 20px;
     }
   }
 }

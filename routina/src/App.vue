@@ -13,9 +13,7 @@ import Navbar from "@/components/Navbar";
 export default {
   name: "App",
   components: { Navbar },
-  data: () => ({
-    
-  }),
+  data: () => ({}),
 };
 </script>
 
@@ -23,8 +21,20 @@ export default {
 @import url("https://fonts.googleapis.com/css family=Raleway&display=swap");
 @import "./sass/variables";
 
-$scrollbar-color-primary:rgb(87, 87, 87);
-$scrollbar-color-secondary:rgb(0, 0, 0);
+$scrollbar-color-primary: rgb(87, 87, 87);
+$scrollbar-color-secondary: rgb(0, 0, 0);
+
+.center-h {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+}
+
+.center-v {
+  display: flex;
+  align-items: center;
+}
 
 .v-application {
   font-family: $body-font-family, sans-serif !important;
