@@ -1,6 +1,9 @@
 <template>
   <div class="Settings">
-    <SettingsBanner />
+    <RoutinesBanner
+      banner-image-url="settings.jpg"
+      banner-title="Settings"
+    />
     <div class="settings-content">
       <v-card class="content-container" tile>
         <div class="tab-format">
@@ -147,12 +150,12 @@
 
 <script>
 // @ is an alias to /src
-import SettingsBanner from "../components/SettingsBanner";
+import RoutinesBanner from "../components/RoutinesBanner";
 import DatePicker from "../components/DatePicker"
 
 export default {
   name: "Settings",
-  components: { SettingsBanner, DatePicker },
+  components: { RoutinesBanner, DatePicker },
   data() {
     return {
       tabs: null,
