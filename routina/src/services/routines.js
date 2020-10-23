@@ -1,6 +1,6 @@
 import { Api } from './api.js';
 
-export { RoutinesApi,Routine,Cycle,Exercise,Rating};
+export { RoutinesApi,Routine,Cycle,Exercise,Rating,ImageModel};
 
 class RoutinesApi {
 
@@ -19,7 +19,7 @@ class RoutinesApi {
          
     }
     static async createRoutine(routine,controller){
-        return await Api.post(`${RoutinesApi.url}=`, true,routine, controller);
+        return await Api.post(`${RoutinesApi.url}`, true,routine, controller);
     }
     
     static async getRoutine(id,controller){
@@ -32,7 +32,7 @@ class RoutinesApi {
     }
 
     static async deleteRoutine(id,controller){
-        return await Api.get(`${RoutinesApi.url}/${id}`, true, controller);
+        return await Api.delete(`${RoutinesApi.url}/${id}`, true, controller);
     }
 
     //------------------------------------------------------------
@@ -109,6 +109,14 @@ class RoutinesApi {
     static async deleteCycleExercise(routineId,cycleId,exerciseId,controller){
         return await Api.delete(`${RoutinesApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}`,true,controller);
     }
+
+    static async createExerciseImage(routineId,cycleId,exerciseId,image,controller){
+        return await Api.post(`${RoutinesApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/images`,true,image,controller);
+    }
+
+    static async getExerciseImages(routineId,cycleId,exerciseId,controller){
+        return await Api.get(`${RoutinesApi.url}/${routineId}/cycles/${cycleId}/exercises/${exerciseId}/images`,true,controller);
+    }
     
 }
 
@@ -146,6 +154,13 @@ class Rating{
     constructor(score,review){
         this.score=score;
         this.review=review;
+    }
+}
+
+class ImageModel{
+    constructor(number,url){
+        this.number=number;
+        this.url=url;
     }
 }
 

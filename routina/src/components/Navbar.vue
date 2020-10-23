@@ -21,6 +21,8 @@
           src="../assets/logo.png"
         />
       </router-link>
+      <v-btn v-on:click="createDatabase">CREATE DB</v-btn>
+      <v-btn v-on:click="deleteDatabase">DELETE DB</v-btn>
       <div></div>
 
       <v-spacer></v-spacer>
@@ -107,7 +109,7 @@
 
 <script>
 import LoginPopOver from "@/components/LoginPopOver";
-
+import {DatabaseCreator} from "../services/creationScript.js"
 import styles from "../sass/variables.scss";
 
 
@@ -141,6 +143,12 @@ export default {
         this.drawer = false;
       }
     },
+    createDatabase(){
+      DatabaseCreator.createDB();
+    },
+    deleteDatabase(){
+      DatabaseCreator.deleteDB();
+    }
   },
   mounted() {
     this.onResize();

@@ -9,19 +9,19 @@ class CategoriesApi{
     }
 
     static async getCategory(id,controller){
-        return await Api.get(`${CategoriesApi.url}/${id}`, false, controller);
+        return await Api.get(`${CategoriesApi.url}/${id}`, true, controller);
     }
 
     static async getCategories(controller){
-        return await Api.get(`${CategoriesApi.url}`, false, controller);
+        return await Api.get(`${CategoriesApi.url}`, true, controller);
     }
 
-    static async createCategory(category){
-        return await Api.get(`${CategoriesApi.url}`, false,category, controller);
+    static async createCategory(category,controller){
+        return await Api.post(`${CategoriesApi.url}`, true,category, controller);
     }
 
-    static async getCategory(id,category,controller){
-        return await Api.put(`${CategoriesApi.url}/${id}`, false, controller);
+    static async deleteCategory(id,controller){
+        return await Api.delete(`${CategoriesApi.url}/${id}`, true, controller);
     }
 
 

@@ -19,6 +19,7 @@
                 background-color="grey darken-4"
                 label="i.e. 'Squats'"
                 :rules="[required]"
+                v-model="exerciseName"
               ></v-text-field>
             </div>
           </div>
@@ -35,6 +36,7 @@
                 counter
                 no-resize
                 maxlength="150"
+                v-model="exerciseDetail"
               ></v-textarea>
             </div>
           </div>
@@ -54,6 +56,7 @@
                 label="Upload image"
                 prepend-icon="mdi-camera"
                 background-color="grey darken-4"
+                v-model="selectedFile"
               ></v-file-input>
             </div>
           </div>
@@ -78,6 +81,7 @@
         </div>
         <div class="button-container">
           <v-btn rounded class="primary black--text font-weight-bold"
+            @click="createExercise"
             >Create exercise</v-btn
           >
           <v-btn
@@ -87,6 +91,23 @@
             style="border-width: 3px; border-color: #ff8000 !important"
             >Discard exercise</v-btn
           >
+          <v-btn
+            rounded
+            outlined
+            class="black font-weight-bold primary--text"
+            style="border-width: 3px; border-color: #ff8000 !important"
+            v-on:click="getCategories"
+            >Get Categories</v-btn
+          >
+          <v-btn
+            rounded
+            outlined
+            class="black font-weight-bold primary--text"
+            style="border-width: 3px; border-color: #ff8000 !important"
+            v-on:click="getRoutines"
+            >get routines</v-btn
+          >
+          <span >{{errorMessage}}</span>
         </div>
       </div>
     </div>
@@ -96,14 +117,98 @@
 
 <script>
 import RoutinesBanner from "@/components/RoutinesBanner";
+import {Images} from "../services/images.js";
+import { RoutinesApi,Routine,Exercise,ImageModel} from "../services/routines.js";
+import {CategoriesApi, Category} from "../services/categories.js";
 export default {
   name: "CreateExercise",
   components: { RoutinesBanner },
   data() {
     return {
       required: (value) => !!value || "Required.",
+      selectedFile:null,
+      exerciseName:"",
+      exerciseDetail:"",
+      errorMessage:"",
     };
   },
+  methods:{
+    printFileState(){
+      console.log(this.selectedFile);
+    },
+    uploadImage:async function(){
+      try{
+        const res = await Images.uploadImage(this.selectedFile);
+        const res2 = await res.text();
+        
+        console.log(res2);
+        const data = JSON.parse(res2).secure_url;
+        console.log(data);
+        return data;
+        //RoutinesApi.createCycleExercise(routineId,cycleId,new Exercise(name,detail,type,duration,repetitions),controller);
+      }catch(e){
+        console.log(e);
+      }
+    },
+    createExercise:async function(){
+      this.errorMessage="";
+      if(this.selectedFile!==null && this.exerciseName!=="" && this.exerciseDetail!==""){
+        const res = await RoutinesApi.createCycleExercise(1,1,new Exercise(this.exerciseName,this.exerciseDetail,"exercise",0,0));
+        const imgUrl = await this.uploadImage();
+        const exerciseId = res.id;
+        const res2 = await RoutinesApi.createExerciseImage(1,1,exerciseId,new ImageModel(1,imgUrl));
+        console.log(res2);
+        console.log("SUCCESS");
+      }else{
+        console.log("te faltan completar datos mostro");
+        this.errorMessage="All Text fields must be filled";
+      }
+    },
+    createInitialRoutine:async function(){
+      try {
+        const res = await RoutinesApi.createRoutine(new Routine("global-exercises","this routine contains a unique cycle with all the exercises",true,"rookie",{id:1}));
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getCategories:async function(){
+      console.log("fetch categoires");
+      try {
+        const res = await CategoriesApi.getCategories();
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getRoutines:async function(){
+      console.log("fetch routines");
+      try {
+        const res = await RoutinesApi.getRoutines();
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    deleteRoutines:async function(){
+      console.log("delete routines");
+      try {
+        const res = await RoutinesApi.deleteRoutine(2);
+        await RoutinesApi.deleteRoutine(3);
+        await RoutinesApi.deleteRoutine(5);
+        await RoutinesApi.deleteRoutine(4);
+        await RoutinesApi.deleteRoutine(6);
+        await RoutinesApi.deleteRoutine(7);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    createCategory:async function(){
+      const res = await CategoriesApi.createCategory(new Category("Equipment","insertar descripcion"));
+      console.log(res);
+    }
+  }
 };
 </script>
 

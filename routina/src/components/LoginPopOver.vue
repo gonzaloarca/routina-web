@@ -299,6 +299,7 @@ export default {
           this.isLoggedIn= false;
         } catch (error) {
           console.log(error);
+          this.isLoggedIn=false;
         }
       },
       
