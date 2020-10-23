@@ -17,10 +17,9 @@
         <RoutineSlideGroup :editable="routineEditing" />
 
         <div class="centered-div">
-          <div class="centered-div pa-3" style="width: 27%">
+          <div class="centered-div pa-3">
             <v-btn
               rounded
-              width="100%"
               color="orange darken-3"
               light
               class="button font-weight-bold pa-3"
@@ -31,10 +30,9 @@
               Create new routine
             </v-btn>
           </div>
-          <div class="centered-div pa-3" style="width: 27%">
+          <div class="centered-div pa-3">
             <v-btn
               rounded
-              width="100%"
               color="grey darken-2"
               dark
               class="button font-weight-bold"
@@ -55,13 +53,14 @@
         <ExerciseSlideGroup :editable="exerciseEditing" />
 
         <div class="centered-div">
-          <div class="centered-div pa-3" style="width: 27%">
+          <div class="centered-div pa-3">
             <v-btn
               rounded
-              width="100%"
               color="orange darken-3"
               light
               class="button font-weight-bold pa-3"
+              router
+              to="create-exercise"
             >
               <v-icon class="icon-fmt" color="black" left>
                 mdi-plus-circle
@@ -69,10 +68,9 @@
               Create new exercise
             </v-btn>
           </div>
-          <div class="centered-div pa-3" style="width: 27%">
+          <div class="centered-div pa-3">
             <v-btn
               rounded
-              width="100%"
               color="grey darken-2"
               dark
               class="button font-weight-bold"
@@ -82,7 +80,7 @@
                 mdi-exit-to-app
               </v-icon>
               <v-icon v-else color="white" left> mdi-pencil </v-icon>
-              <span v-if="exerciseEditing"> FiniexerciseEh editing </span>
+              <span v-if="exerciseEditing"> Finish editing </span>
               <span v-else> Edit exercise </span>
             </v-btn>
           </div>
