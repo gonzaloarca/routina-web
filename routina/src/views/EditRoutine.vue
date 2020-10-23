@@ -28,33 +28,30 @@
             <v-tab-item
               v-for="round in routineData.rounds"
               :key="round.id"
-              class=" mx-2"
+              class="mx-2"
             >
-              <ExerciseList
-                itemHeight="55"
-                height="300"
-                editable
-                v-on:swap-up="(index) => swapUp(index, round)"
-                v-on:swap-down="(index) => swapDown(index, round)"
-                :exercises="round"
-                
-              />
+              <div style="height: 300px">
+                <ExerciseList
+                  itemHeight="55"
+                  height="300"
+                  editable
+                  v-on:swap-up="(index) => swapUp(index, round)"
+                  v-on:swap-down="(index) => swapDown(index, round)"
+                  :exercises="round"
+                />
+              </div>
               <div class="py-4">
-              <v-btn
-                tile
-                x-large
-                block
-                class=" primary black--text"
-                >+ Add Exercise</v-btn
-              >
+                <v-btn tile x-large block class="primary black--text"
+                  >+ Add Exercise</v-btn
+                >
               </div>
             </v-tab-item>
           </v-tabs-items>
-          
         </div>
         <div class="mx-2">
-        <v-btn tile x-large block class="my-4 black white--text"
-            >+ Add Round</v-btn>
+          <v-btn tile x-large block class="my-4 black white--text"
+            >+ Add Round</v-btn
+          >
         </div>
       </v-col>
       <v-col class="more-info">
@@ -95,37 +92,34 @@ export default {
         name: "Routine 1",
         rounds: [
           [
-            "ejercicio1",
-            "ejercicio2",
-            "ejercicio3",
-            "ejercicio4",
-            "ejercicio5",
-            "ejercicio6",
-            "ejercicio7",
-            "ejercicio8",
-            "ejercicio9",
+            { name: "ejercicio1" },
+            { name: "ejercicio2" },
+            { name: "ejercicio3" },
+            { name: "ejercicio4" },
+            { name: "ejercicio5" },
+            { name: "ejercicio6" },
+            { name: "ejercicio7" },
+            { name: "ejercicio8" },
           ],
           [
-            "ejercicio1",
-            "ejercicio2",
-            "ejercicio3",
-            "ejercicio4",
-            "ejercicio5",
-            "ejercicio6",
-            "ejercicio7",
-            "ejercicio8",
-            "ejercicio9",
+            { name: "ejercicio1" },
+            { name: "ejercicio2" },
+            { name: "ejercicio3" },
+            { name: "ejercicio4" },
+            { name: "ejercicio5" },
+            { name: "ejercicio6" },
+            { name: "ejercicio7" },
+            { name: "ejercicio8" },
           ],
           [
-            "ejercicio1",
-            "ejercicio2",
-            "ejercicio3",
-            "ejercicio4",
-            "ejercicio5",
-            "ejercicio6",
-            "ejercicio7",
-            "ejercicio8",
-            "ejercicio9",
+            { name: "ejercicio1" },
+            { name: "ejercicio2" },
+            { name: "ejercicio3" },
+            { name: "ejercicio4" },
+            { name: "ejercicio5" },
+            { name: "ejercicio6" },
+            { name: "ejercicio7" },
+            { name: "ejercicio8" },
           ],
         ],
         equipments: [
@@ -155,9 +149,9 @@ export default {
       }
     },
     swap(id1, id2, elements) {
-      let aux = elements[id1];
-      elements[id1] = elements[id2];
-      elements[id2] = aux;
+      let aux = elements[id1].name;
+      elements[id1].name = elements[id2].name;
+      elements[id2].name = aux;
     },
   },
 };
@@ -259,8 +253,6 @@ export default {
   margin: auto;
   background-color: black !important;
 }
-
-
 
 .additional-information {
   background-color: rgb(33, 33, 33);
