@@ -3,51 +3,55 @@
     
       <v-card  class="registerUserCard" tile> 
         <v-card tile color="grey darken-1" height="12%" class="pa-3" style="align-items:center;">
-          <h2 class="registerUserTitle">CREATE AN ACCOUNT</h2>
+          <h2 class="registerUserTitle" v-if="!login">CREATE AN ACCOUNT</h2>
+          <h2 class="registerUserTitle" v-else>LOG IN</h2>
         </v-card>
        <v-row class="ma-0" style="position:relative; height:88%">
          <v-col class="ma-0 pa-0">
            <v-card tile color="grey darken-4" style="position:relative; height:100%;">
              <div class="divForm">
-                <span class="textFieldLabels">Username</span>
+                <span v-if="!login" class="textFieldLabels">Username *</span>
                 <v-text-field  
+                      ref="userTf"
+                      v-if="!login"
                       placeholder="i.e 'julisicardi' "
                       class="textFieldForm"
                       solo
                       rounded
                       dense
-                      hide-details
+                      :rules="[() => !!username || 'This field is required']"
                       light
                       clearable
                       v-model="username"
                 ></v-text-field>
-                <span class="textFieldLabels" >{{usernameError}}</span>
-                
-                <span class="textFieldLabels">Email Address</span>
+                <span class="textFieldLabels">Email Address *</span>
                 <v-text-field  
+                      ref="mailTf"
                       placeholder="i.e 'jdoe@mymail.com' "
                       class="textFieldForm"
                       solo
                       rounded
                       dense
-                      hide-details
+                      :rules="[() => !!email || 'This field is required']"
                       light
                       clearable
                       v-model="email"
                 ></v-text-field>
               </div>
               <div class="divForm">
-                <span class="textFieldLabels">Password</span>
+                <span class="textFieldLabels">Password *</span>
                 <v-text-field
+                      ref="passTf"
+                      v-model="password"
                       :type="showPassword? 'text' : 'password'"   
                       placeholder="Password"
-                      class="textFieldForm pb-3 "
+                      class="textFieldForm pb-1"
                       solo
                       rounded
                       min-height="10px"
                       height="20px"
                       dense
-                      hide-details
+                      :rules="[() => !!password || 'This field is required']"
                       light
                       clearable
                       :append-icon="showPassword? 'mdi-eye':'mdi-eye-off'"
@@ -56,22 +60,27 @@
                 
               </div>
               <div class="pa-2" width="100%"  >
-                <div width="100%" style="display:flex; align-items:center; justify-content:center;">
+                <div width="100%" style=" display:flex; align-items:center; justify-content:center;">
                   
                   <v-btn
                     rounded
                     width="50%"
                     color="orange darken-3"
                     light
-                    class="button font-weight-bold pa-3"
+                    class="button font-weight-bold pa-3 "
                     v-on:click="createAccount"
                     style="z-index:20;"
-                  >Continue
+                  >
+                  <span v-if="!login">Continue</span>
+                  <span v-else>Log in</span>
                   </v-btn>
                 </div>
                 <div width="100%" style="display:flex; align-items:center; justify-content:center;">
-                  <span class="textFieldLabels ma-1">Already have an account?</span>
-                  <span class="textFieldLabels light-blue--text" >Log in</span>
+                  <span v-if="!login" class="textFieldLabels ma-1">Already have an account?</span>
+                  <span v-else class="textFieldLabels ma-1">Don't have an account?</span>
+                  <v-btn v-if="!login" @click="login=!login" text class="textFieldLabels light-blue--text ma-0 pa-0" style="z-index:20; text-decoration:underline;">Log in</v-btn>
+                  <v-btn v-else text @click="login=!login" class="textFieldLabels light-blue--text ma-0 pa-0" style="z-index:20; text-decoration:underline;">Sign up</v-btn>
+
                 </div>
               </div>
               
@@ -88,8 +97,9 @@
                 :color="prov.color"
                 rounded
                 small
-                style="overflow:hidden;"
+                style="overflow:hidden; z-index:20;"
                 width="230px"
+                @click="provError=!provError"
                 >
                  <div  class="logoContainer">
                       <img :src="require(`../assets/${prov.icon}`)" alt="prov.name" style="height:55%; position:absolute;">
@@ -98,6 +108,7 @@
                   <span class="textFieldLabels ml-5">Continue with {{prov.name}}</span>
                 </v-btn>
              </div>
+             <span v-if="provError" class="textFieldLabels red--text" style="text-align:center;"><p>Unavailable at the moment</p></span>
              </div>
            </v-card>
          </v-col>
@@ -138,6 +149,8 @@ export default {
     emailError:"",
     password:"",
     passwordError:"",
+    login:false,
+    provError:false,
   }),
   methods:{
     createAccount:async function(){
@@ -148,7 +161,14 @@ export default {
           await UserApi.createUser(new User(cred,this.email));
         }else{
           if(this.username===""){
-            this.usernameError="Missing username field";
+            this.usernameError="Username field is required";
+            
+          }
+          if(this.email===""){
+            this.emailError="Email field is required";
+          }
+          if(this.password===""){
+            this.passwordError="Password field is required";
           }
         }
       } catch (error) {
@@ -228,7 +248,7 @@ export default {
   position:relative;
   margin-left: 15%;
   margin-right: 15%;
-  margin-top: 0px;
+  margin-top: 10px;
   margin-bottom: 0px;
 }
 
