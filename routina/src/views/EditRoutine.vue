@@ -434,6 +434,7 @@ export default {
       });
     },
     removeRound(roundIndex) {
+      this.tab--;
       this.routineData.rounds.splice(roundIndex, 1);
     },
     openExercise(roundIndex) {
