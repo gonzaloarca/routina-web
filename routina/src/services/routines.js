@@ -35,6 +35,9 @@ class RoutinesApi {
         return await Api.get(`${RoutinesApi.url}/${id}`, true, controller);
     }
 
+    //------------------------------------------------------------
+    //EXECUTIONS
+    //-----------------------------------------------------------
     static async getRoutineExecutions(id,page,size,orderBy,direction,controller){
         let parameters =parametersFormatter(page,size,orderBy,direction);
         parameters="";
@@ -44,7 +47,9 @@ class RoutinesApi {
     static async createRoutineExecutions(id,duration,controller){
         return await Api.post(`${RoutinesApi.url}/${id}/executions`,true,duration,controller);
     }
-
+    //------------------------------------------------------------
+    //RATING
+    //-----------------------------------------------------------
     static async getRoutineRatings(id,page,size,orderBy,direction,controller){
             let parameters =parametersFormatter(page,size,orderBy,direction);
             parameters="";
@@ -55,6 +60,9 @@ class RoutinesApi {
         return await Api.post(`${RoutinesApi.url}/${id}/ratings`,true,rating,controller);
     }
 
+    //------------------------------------------------------------
+    //CYCLES
+    //-----------------------------------------------------------
     static async getRoutineCycles(id,page,size,orderBy,direction,controller){
         let parameters =parametersFormatter(page,size,orderBy,direction);
         parameters="";
@@ -77,6 +85,9 @@ class RoutinesApi {
         return await Api.delete(`${RoutinesApi.url}/${routineId}/cycles/${cycleId}`,true,controller);
     }
 
+    //------------------------------------------------------------
+    //EXERCISES
+    //-----------------------------------------------------------
     static async getCycleExcercises(routineId,cycleId,page,size,orderBy,direction,controller){
         let parameters =parametersFormatter(page,size,orderBy,direction);
         parameters="";

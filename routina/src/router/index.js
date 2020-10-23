@@ -8,6 +8,8 @@ import Plans from "../views/Plans.vue";
 import Routine from "../views/Routine.vue";
 import EditRoutine from "../views/EditRoutine.vue";
 import RegisterUser from "../views/RegisterUser.vue";
+import Settings from "../views/Settings.vue";
+import MyProfile from "../views/MyProfile.vue";
 
 Vue.use(VueRouter);
 
@@ -51,7 +53,17 @@ const routes = [
     path: "/register",
     name: "RegisterUser",
     component: RegisterUser,
-  }
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: Settings,
+  },
+  {
+    path: "/profile",
+    name: "MyProfile",
+    component: MyProfile,
+  },
 ];
 
 const router = new VueRouter({

@@ -21,9 +21,25 @@
     <div class="divider"></div>
     <div class="container">
       <div class="date-btn-container">
-        <v-menu offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
+
+        <v-select
+          :items="dates.titles"
+          label="Time"
+          dense
+          solo
+          hide-details
+          filled
+          
+          background-color="primary"
+          color="white"
+         
+          tile
+          single-line
+          
+        ></v-select>
+        <!-- <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }"> -->
+            <!-- <v-btn
               tile
               color="primary black--text"
               dark
@@ -31,9 +47,9 @@
               v-on="on"
             >
               Time <v-icon>mdi-menu-down</v-icon>
-            </v-btn>
-          </template>
-          <v-list>
+            </v-btn> -->
+          <!-- </template> -->
+          <!-- <v-list>
             <v-list-item v-for="(item, index) in dates" :key="index">
               <v-list-item-title
                 ><v-btn text tile block>{{
@@ -41,8 +57,8 @@
                 }}</v-btn></v-list-item-title
               >
             </v-list-item>
-          </v-list>
-        </v-menu>
+          </v-list> -->
+        <!-- </v-menu> -->
       </div>
       <div class="data-container">
         <div class="title">
@@ -87,12 +103,9 @@ export default {
   data() {
     return {
       overlayGraph: false,
-      dates: [
-        { title: "Last Week" },
-        { title: "Last Month" },
-        { title: "Last Year" },
-        { title: "Ever" },
-      ],
+      dates: {
+        titles: ["Last Week" , "Last Month", "Last Year", "Ever"],
+      },
       stats: [
         {
           date: "Mar. 17 2020",
@@ -200,6 +213,11 @@ export default {
   width: 50%;
   background-color: rgb(33, 33, 33);
   height: fit-content;
+}
+
+.select-fmt{
+  color:$primary;
+  text-decoration-color: black;
 }
 
 .routine-history-scroller {

@@ -1,17 +1,13 @@
 <template>
   <div class="tracking">
-    <div class="headers">
-      <v-img src="../assets/tracking.png" class="routine-image" />
-      <div class="image-blur"></div>
-      <div class="title">
-        <h1 class="ma-6">Tracking</h1>
-      </div>
-    </div>
+    
+    <RoutinesBanner  
+      banner-image-url="tracking.jpg"
+      banner-title="Tracking"/>
     <div class="tabs-container">
       <v-tabs class="tabs" v-model="tab">
         <v-tab class="tab-title"> Weight </v-tab>
         <v-tab class="tab-title"> Workout stats </v-tab>
-        <!-- <v-tab class="tab-title"> Goals </v-tab> -->
       </v-tabs>
     </div>
     <v-tabs-items class="tab-items my-5" v-model="tab">
@@ -28,12 +24,13 @@
 <script>
 import Stats from "../components/Tracking/Stats.vue";
 import Weights from "../components/Tracking/Weights.vue";
+import RoutinesBanner from "../components/RoutinesBanner.vue"
 
 // import Goals from "../components/Tracking/Goals.vue";
 
 export default {
   name: "Tracking",
-  components: { Weights, Stats },
+  components: { Weights, Stats, RoutinesBanner },
   data() {
     return {
       tab: null,

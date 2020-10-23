@@ -19,6 +19,9 @@
               <v-btn v-on:click="swapDown(item)" x-small class="ma-0 pa-0" icon
                 ><v-icon class="ma-0 pa-0">mdi-arrow-down</v-icon></v-btn
               >
+              <v-btn v-on:click="remove(item)" x-small class="ma-0 pa-0" icon
+                ><v-icon class="ma-0 pa-0">mdi-close</v-icon></v-btn
+              >
             </v-col>
           </v-row>
         </v-list-item>
@@ -52,6 +55,12 @@ export default {
       await this.$emit("swap-down", actualIndex);
       item.rerender++;
     },
+    async remove(item) {
+      let actualIndex = this.exercises.indexOf(item);
+      await this.$emit("remove", actualIndex);
+      item.rerender++;
+    },
+
   },
 };
 </script>

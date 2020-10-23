@@ -75,7 +75,8 @@
       <!-- <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn> -->
-      <LoginPopOver/>
+      <LoggedInPopOver v-if="loggedIn"/>
+      <LoginPopOver v-else/>
     </v-app-bar>
 
     <!-- Navigation drawer -->
@@ -106,7 +107,9 @@
 
 <script>
 import LoginPopOver from "@/components/LoginPopOver";
+import LoggedInPopOver from "./LoggedInPopOver";
 import styles from "../sass/variables.scss";
+
 
 export default {
   data() {
@@ -125,8 +128,8 @@ export default {
       navBarHeight: styles.navBarHeight,
       drawer: false,
       searchOpen: false,
-      searchInput: "",
-      
+      searchInput: "",    
+      loggedIn:true,
     };
   },
   methods: {
@@ -149,7 +152,7 @@ export default {
 
     window.removeEventListener("resize", this.onResize);
   },
-  components:{LoginPopOver},
+  components:{LoginPopOver, LoggedInPopOver},
 };
 </script>
 
