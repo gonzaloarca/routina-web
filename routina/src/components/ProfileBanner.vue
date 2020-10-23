@@ -7,12 +7,12 @@
            <v-card class="big-card" tile>
              <div class="avat-format pa-4">
                 <v-avatar size="120" color="white" class="my-4">
-                    <img :src="require(`../assets/avatar.jpg`)"/>
+                    <img :src="user.avatarUrl"/>
                 </v-avatar>
              </div>
              <div style="width:284px; text-align:left; margin-left:20px;">
-               <div style="display:flex;"><h1 class="txt-caps">{{user.firstName}}</h1><div style="width:10px;"></div><h1 class="txt-caps">{{user.lastName}}</h1></div>
-               <h2 class="orange-text">{{user.userName}}</h2>
+               <div style="display:flex;"><h1 class="txt-caps">{{user.fullName}}</h1></div>
+               <h2 class="orange-text">{{user.username}}</h2>
              </div>
             </v-card >
            <div class="row-fmt">

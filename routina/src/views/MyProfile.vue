@@ -1,26 +1,34 @@
 <template>
-<div class="Profile">
-  <ProfileBanner :user="userDemo"/>
-  <div class="profile-content">
-      <v-card v-for="sg in slidegroups" :key="sg.name" class="content-container">
-        <h1>{{sg.name}}</h1>
+  <div class="Profile">
+    <ProfileBanner :user="user" />
+    <div class="profile-content">
+      <v-card
+        v-for="sg in slidegroups"
+        :key="sg.name"
+        class="content-container"
+      >
+        <h1>{{ sg.name }}</h1>
         <RoutineSlideGroup />
       </v-card>
+    </div>
   </div>
-</div>  
 </template>
 <script>
 import ProfileBanner from "../components/ProfileBanner";
-import RoutineSlideGroup from "../components/RoutineSlideGroup"
+import RoutineSlideGroup from "../components/RoutineSlideGroup";
+import {UserApi} from "../services/user.js";
 export default {
+    created(){
+      this.current();
+      this.analyzeExecutions();
+    },
     name:"MyProfile",
     components:{ProfileBanner, RoutineSlideGroup},
     data(){
       return{
         userDemo:{
-          firstName:"el",
-          lastName:"Beto",
-          userName:"MBEEEEH",
+          fullName:"Beto",
+          username:"MBEEEEH",
           lastAct:"5 hours ago",
           memSince:"1 Mar 2020",
           latestWork:{
@@ -50,15 +58,71 @@ export default {
           {name:"Recently Used"}, 
           {name:"Routines created by me"}, 
           {name:"Exercises created by me"}],
+        user:{},
+        numberOfExecutions:0,
+        lastRoutine:{},
+        mostUsedRoutine:{},
+      }
+    },
+    methods:{
+      current:async function(){
+        try {
+          this.user= await UserApi.getCurrentUser();
+          if(this.user==null){
+            console.log("USER IS NULL");
+          }
+          console.log("CURRENT USER = " + `${JSON.stringify(this.user)}`);
+          console.log(this.user);
+          return true;
+        } catch (error) {
+          console.log(error);
+          this.user=null;
+          this.isLoggedIn=false;
+          return false;
+        }
+      },
+      analyzeExecutions:async function(){
+        try {
+          const res = await UserApi.getCurrentUserExecutions();
+          const results = res.results;
+          this.numberOfExecutions = res.totalCount;
+          this.lastRoutine= results[0];
+          //recorremos todas las executions para ver si hay repetidas
+          let max = [];
+          let actual= 0;
+
+          results.array.forEach((result,index) => {
+            actual = result.id;
+            max[index] = 0;
+
+            results.array.forEach(result2 => {
+              if(actual==result2.id){max[index]++;}
+            });
+            
+          });
+          let maxMax = 0;
+          let index = 0;
+          max.array.forEach((val,i) => {
+            if(val>maxMax){
+              maxMax=val;
+              index = i;
+            }
+          });
+          this.mostUsedRoutine = results[index];
+
+          
+          console.log(res);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
 }
 </script>
 <style scoped lang="scss">
-  @import "../sass/variables";
+@import "../sass/variables";
 
-
-  .profile-content {
+.profile-content {
   max-width: $content-container-width;
   margin: auto;
   padding: 30px 30px 30px 30px;
@@ -71,7 +135,7 @@ export default {
   padding: 30px 30px 30px 30px;
 }
 
-.Profile{
-  background-color:black;
+.Profile {
+  background-color: black;
 }
 </style>

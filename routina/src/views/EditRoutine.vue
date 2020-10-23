@@ -90,7 +90,23 @@
         </div>
 
         <div class="exercise-list">
-          <v-tabs background-color="black" v-model="tab">
+          <div
+            class="center-v center-h"
+            style="background-color: black; height: 300px"
+            v-if="routineData.rounds.length == 0"
+          >
+            <div>
+              <div class="center-h center-v"><h2>ADD A NEW ROUND!</h2></div>
+              <div class="center-h center-v">
+                <v-btn v-on:click="addRound" icon rounded
+                  ><v-icon class="primary--text"
+                    >mdi-plus-circle</v-icon
+                  ></v-btn
+                >
+              </div>
+            </div>
+          </div>
+          <v-tabs v-else background-color="black" v-model="tab">
             <v-tab
               v-for="round in routineData.rounds"
               v-model="round.name"
@@ -101,7 +117,7 @@
           </v-tabs>
           <v-tabs-items class="black" v-model="tab">
             <v-tab-item
-              v-for="(round,index) in routineData.rounds"
+              v-for="(round, index) in routineData.rounds"
               :key="round.id"
               class="mx-2"
             >
@@ -113,7 +129,11 @@
                   small
                   ><v-icon>mdi-plus-circle</v-icon>ADD ROUND</v-btn
                 >
-                <v-btn v-on:click="removeRound(index)" class="red darken-2 black--text ma-2" rounded small
+                <v-btn
+                  v-on:click="removeRound(index)"
+                  class="red darken-2 black--text ma-2"
+                  rounded
+                  small
                   ><v-icon>mdi-delete</v-icon>REMOVE ROUND</v-btn
                 >
               </div>
@@ -135,20 +155,66 @@
                   itemHeight="55"
                   height="300"
                   editable
-                   v-on:remove="(itemIndex) => removeExercise(index,itemIndex)"
-                  v-on:swap-up="(itemIndex) => swapUp(itemIndex, round.exercises)"
-                  v-on:swap-down="(itemIndex) => swapDown(itemIndex, round.exercises)"
+                  v-on:remove="(itemIndex) => removeExercise(index, itemIndex)"
+                  v-on:swap-up="
+                    (itemIndex) => swapUp(itemIndex, round.exercises)
+                  "
+                  v-on:swap-down="
+                    (itemIndex) => swapDown(itemIndex, round.exercises)
+                  "
                   :exercises="round.exercises"
                 />
               </div>
               <div class="py-4" style="display: flex; justify-content: center">
                 <v-btn
-                  v-on:click="addExercise(index)"
+                  v-on:click="openExercise(index)"
                   class="primary black--text ma-2"
                   rounded
                   small
                   ><v-icon>mdi-plus-circle</v-icon>ADD EXERCISE</v-btn
                 >
+
+                <v-overlay style="z-index: 100" :value="addingExercise">
+                  <v-card>
+                    <div style="display: flex">
+                      <v-btn
+                        v-on:click="addingExercise = false"
+                        icon
+                        style="margin-left: auto"
+                        ><v-icon>mdi-close</v-icon></v-btn
+                      >
+                    </div>
+                    <v-card-title>
+                      <v-text-field
+                        style="padding-top: 0"
+                        v-model="search"
+                        append-icon="mdi-magnify"
+                        label="Search"
+                        single-line
+                        hide-details
+                      ></v-text-field>
+                    </v-card-title>
+                    <v-data-table
+                      v-model="selected"
+                      :headers="headers"
+                      :items="exercises"
+                      item-key="name"
+                      :search="search"
+                      :singleSelect="true"
+                      :showSelect="true"
+                      :items-per-page="10"
+                    ></v-data-table>
+                    <div class="center-h">
+                      <v-btn
+                        class="title primary black--text ma-2"
+                        v-on:click="addExercise"
+                        rounded
+                        small
+                        >ADD</v-btn
+                      >
+                    </div>
+                  </v-card>
+                </v-overlay>
               </div>
             </v-tab-item>
           </v-tabs-items>
@@ -233,16 +299,33 @@ export default {
   data() {
     return {
       tab: null,
+      search: null,
+      selected: [],
+      roundIndex: 0,
       editingRoundName: false,
+      addingExercise: false,
       typeItems: ["Cardio", "Strength", "Yoga"],
       muscleGroupItems: ["Full body", "Legs", "Arms"],
+
+      headers: [{ text: "Name", value: "name" }],
+      exercises: [
+        { name: "ejercicio1" },
+        { name: "ejercicio2" },
+        { name: "ejercicio3" },
+        { name: "ejercicio4" },
+        { name: "ejercicio5" },
+        { name: "ejercicio6" },
+        { name: "ejercicio7" },
+        { name: "ejercicio8" },
+      ],
+
       routineData: {
         name: null,
         type: null,
         difficultyLevel: null,
         muscleGroup: null,
         description: "",
-        rounds: [{ name: "round", exercises:[] }],
+        rounds: [{ name: "round", exercises: [] }],
       },
       // routineData: {
       //   name: "Routine 1",
@@ -346,21 +429,29 @@ export default {
     },
     addRound() {
       this.routineData.rounds.push({
-        name: "round " + (this.routineData.rounds.length +1),
+        name: "round " + (this.routineData.rounds.length + 1),
         exercises: [],
       });
     },
-    removeRound(roundIndex){
-       this.routineData.rounds.remove(roundIndex);
+    removeRound(roundIndex) {
+      this.routineData.rounds.splice(roundIndex, 1);
     },
-    addExercise(roundIndex) {
-      let cycle = this.routineData.rounds[roundIndex];
-      cycle.exercises.push({ name: "exercise " +  (cycle.exercises.length +1) });
+    openExercise(roundIndex) {
+      this.addingExercise = true;
+      this.roundIndex = roundIndex;
+      this.selected = [];
     },
-    removeExercise(roundIndex,exerciseIndex){
+    addExercise() {
+      this.addingExercise = false;
+      let cycle = this.routineData.rounds[this.roundIndex];
+      cycle.exercises.push({
+        name: this.selected[0].name,
+      });
+    },
+    removeExercise(roundIndex, exerciseIndex) {
       let cycle = this.routineData.rounds[roundIndex];
-      cycle.exercises.splice(exerciseIndex,1);
-    }
+      cycle.exercises.splice(exerciseIndex, 1);
+    },
   },
 };
 </script>

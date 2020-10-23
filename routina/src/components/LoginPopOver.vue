@@ -144,7 +144,7 @@
       <div v-else>
           <v-card>
         <v-list>
-          <v-list-item router to="/MyProfile">
+          <v-list-item router to="/profile">
             <v-icon left class="pa-1">
               mdi-account
             </v-icon>
@@ -164,7 +164,7 @@
             <v-icon left class="pa-1">
               mdi-exit-to-app
             </v-icon>
-            <v-list-item-content>
+            <v-list-item-content >
               <v-list-item-title>Log out</v-list-item-title>
             </v-list-item-content>
           </v-list-item>

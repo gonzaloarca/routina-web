@@ -110,6 +110,7 @@ class UserApi {
         if(concatenate == true){
             parameters+="&";
         }
+        parameters=`size=100&orderBy="date"`;
         return await Api.get(`${UserApi.url}/current/routines/executions?${parameters}`,true,controller);
         
     }
