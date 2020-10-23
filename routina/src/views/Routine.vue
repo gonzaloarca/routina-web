@@ -83,19 +83,15 @@
             Exercise List
           </h1>
 
-          <div class="mx-12 list-container">
-            <h2>Round 1</h2>
-            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
-          </div>
-
-          <div class="mx-12 list-container">
-            <h2>Round 2</h2>
-            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
-          </div>
-
-          <div class="mx-12 list-container">
-            <h2>Round 3</h2>
-            <ExerciseList itemHeight="55" height="300" :exercises="exercises" />
+          <div
+            v-for="round in rounds"
+            :key="round.id"
+            class="mx-12 list-container"
+          >
+            <h2>Round {{ rounds.indexOf(round) + 1 }}</h2>
+            <div style="height: 300px">
+              <ExerciseList itemHeight="55" height="300" :exercises="round" />
+            </div>
           </div>
         </div>
       </v-col>
@@ -130,16 +126,37 @@ export default {
   components: { DifficultyLevel, ExerciseList, EquipmentNeeded },
   data() {
     return {
-      exercises: [
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
+      rounds: [
+        [
+          { name: "ejercicio1" },
+          { name: "ejercicio2" },
+          { name: "ejercicio3" },
+          { name: "ejercicio4" },
+          { name: "ejercicio5" },
+          { name: "ejercicio6" },
+          { name: "ejercicio7" },
+          { name: "ejercicio8" },
+        ],
+        [
+          { name: "ejercicio1" },
+          { name: "ejercicio2" },
+          { name: "ejercicio3" },
+          { name: "ejercicio4" },
+          { name: "ejercicio5" },
+          { name: "ejercicio6" },
+          { name: "ejercicio7" },
+          { name: "ejercicio8" },
+        ],
+        [
+          { name: "ejercicio1" },
+          { name: "ejercicio2" },
+          { name: "ejercicio3" },
+          { name: "ejercicio4" },
+          { name: "ejercicio5" },
+          { name: "ejercicio6" },
+          { name: "ejercicio7" },
+          { name: "ejercicio8" },
+        ],
       ],
       equipments: [
         "equipo",

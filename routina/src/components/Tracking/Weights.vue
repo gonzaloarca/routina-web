@@ -5,9 +5,20 @@
       class="my-0 center"
     >
       <div class="my-4">
-        <div style="font-size: 20px" class="grey">
+        <div
+          style="
+            position: relative;
+            text-transform: uppercase;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+          class="grey darken-2"
+        >
           <span class="font-weight-black mx-10"
-            ><v-icon>mdi-scale-bathroom</v-icon> Latest Weightings Records</span
+            ><v-icon class="icon-left">mdi-scale-bathroom</v-icon> Latest
+            Weightings Records</span
           >
         </div>
         <div class="weight-container center"><span>65.1kg</span></div>
@@ -16,6 +27,7 @@
             x-big
             rounded
             class="my-6 primary black--text font-weight-black"
+            @click="clickWeightings"
             ><span>Add New Weighting</span></v-btn
           >
         </div>
@@ -27,63 +39,120 @@
       class="my-0 center"
     >
       <div style="width: 95%" class="my-4">
-        <div style="font-size: 20px" class="grey">
+        <div
+          style="
+            position: relative;
+            text-transform: uppercase;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+          "
+          class="grey darken-2"
+        >
           <span class="font-weight-black mx-10"
-            ><v-icon>mdi-history</v-icon> Weighting History</span
+            ><v-icon class="icon-left">mdi-history</v-icon> Weighting
+            History</span
           >
         </div>
         <div class="center">
-          <v-virtual-scroll
-            :items="weightings"
-            :item-height="60"
-            :height="240"
-            style="background-color: rgb(23, 23, 23)"
-          >
-            <template v-slot="{ item }">
-              <v-list-item
-                style="
-                  position: relative;
-                  margin: auto;
-                  margin-top: 10px;
-                  background-color: rgb(66, 66, 66);
-                  width: 80%;
-                "
+          <div class="scroller">
+            <v-list-item
+              v-for="item in graphData.value"
+              :key="item.id"
+              style="
+                position: relative;
+                margin: auto;
+                margin-top: 10px;
+                background-color: rgb(66, 66, 66);
+                width: 80%;
+              "
+            >
+              <div
+                class="white black--text"
+                style="left: 0; position: absolute"
               >
-                <div
-                  class="white black--text"
-                  style="left: 0; position: absolute"
-                >
-                  Mar 10 <br />
-                  2020
-                </div>
-                <div style="position: absolute; right: 0; margin-right: 3px">
-                  <span><v-icon>mdi-scale-bathroom</v-icon>{{ item }} kg</span>
-                </div>
-              </v-list-item>
-            </template>
-          </v-virtual-scroll>
+                Mar 10 <br />
+                2020
+              </div>
+              <div style="position: absolute; right: 0; margin-right: 3px">
+                <span><v-icon>mdi-scale-bathroom</v-icon>{{ item }} kg</span>
+              </div>
+            </v-list-item>
+          </div>
         </div>
         <div>
           <v-btn
             x-big
             rounded
             class="my-6 primary black--text font-weight-black"
+            v-on:click="clickGraph"
             ><span>SHOW GRAPH</span></v-btn
           >
         </div>
       </div>
     </div>
+    <OverlayWeighting
+      v-if="overlayWeight"
+      v-on:close-overlay-weight="overlayWeight = false"
+      :overlayWeightings="overlayWeight"
+    >
+    </OverlayWeighting>
+    <OverlayGraph
+      :value="overlayGraph"
+      v-on:close-graph="overlayGraph = false"
+      :data="weightings.map((item) => item.weight)"
+      :labels="weightings.map((item) => item.date)"
+      label="Weight"
+    >
+    </OverlayGraph>
   </div>
 </template>
 
 <script>
+import OverlayWeighting from "./OverlayWeighting.vue";
+import OverlayGraph from "./OverlayGraph.vue";
+
 export default {
   name: "Weights",
-  props: { weightings: Array },
+  components: { OverlayWeighting, OverlayGraph },
+  props: {
+    weightings: Array,
+    withOverlay: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      overlayWeight: false,
+      overlayGraph: false,
+      graphData: {
+        value: this.weightings.map((item) => item.weight),
+      },
+    };
+  },
+  methods: {
+    clickWeightings(event) {
+      this.overlayWeight = true;
+      this.$emit("click-weight", event);
+    },
+    clickGraph(event) {
+      this.overlayGraph = true;
+      this.$emit("click-graph", event);
+    },
+  },
 };
 </script>
 
 <style scoped>
+.scroller {
+  height: 240px;
+  overflow-x: auto;
+  overflow-y: scroll;
+  background-color: rgb(23, 23, 23);
+  position: relative;
+  width: 100%;
+}
 .weight-container {
   background-color: rgb(23, 23, 23);
   height: 150px;
@@ -98,14 +167,14 @@ export default {
   vertical-align: middle;
   margin: auto;
 }
-
-::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
+.icon-left {
+  position: absolute;
+  left: 0px;
+  padding: 3px 3px 3px 3px;
 }
 
-.divider{
-  width:10px;
-  background-color: black ;
+.divider {
+  width: 10px;
+  background-color: black;
 }
 </style>

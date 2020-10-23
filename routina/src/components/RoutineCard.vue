@@ -45,7 +45,7 @@
       </v-card>
     </div>
     <div v-if="editable" class="editable">
-      <v-btn class="red darken-3" tile small><v-icon>mdi-delete-alert</v-icon></v-btn
+      <v-btn class="red darken-3" tile small><v-icon>mdi-delete</v-icon></v-btn
       ><v-btn router to="edit-routine" tile small><v-icon>mdi-pencil</v-icon></v-btn>
     </div>
     <Card

@@ -1,31 +1,30 @@
 <template>
-  <v-virtual-scroll
-    :items="exercises"
-    :height="height"
-    :item-height="itemHeight"
-    class="scroller"
-  >
-    <template v-slot="{ item }">
-      <v-list-item class="item" :key="rerender">
-        <v-row class="excercise-row">
-          <v-col class="ma-0 pa-0"><img src="../assets/routine1.jpg" /></v-col>
-          <v-col> duration </v-col>
-          <v-col> {{ item }} </v-col>
-          <v-col v-if="editable" class="editable ma-0 pa-0">
-            <v-btn x-small class="ma-0 pa-0" icon
-              ><v-icon class="ma-0 pa-0">mdi-pencil</v-icon></v-btn
-            >
-            <v-btn v-on:click="swapUp(item)" x-small class="ma-0 pa-0" icon
-              ><v-icon class="ma-0 pa-0">mdi-arrow-up</v-icon></v-btn
-            >
-            <v-btn v-on:click="swapDown(item)" x-small class="ma-0 pa-0" icon
-              ><v-icon class="ma-0 pa-0">mdi-arrow-down</v-icon></v-btn
-            >
-          </v-col>
-        </v-row>
-      </v-list-item>
-    </template>
-  </v-virtual-scroll>
+  <div class="scroller-container">
+    <div class="scroller">
+      <transition-group name="swap" tag="div">
+        <v-list-item v-for="item in exercises" class="item" :key="item.name">
+          <v-row class="excercise-row">
+            <v-col class="ma-0 pa-0"
+              ><img src="../assets/routine1.jpg"
+            /></v-col>
+            <v-col> duration </v-col>
+            <v-col> {{ item.name }} </v-col>
+            <v-col v-if="editable" class="editable ma-0 pa-0">
+              <v-btn x-small class="ma-0 pa-0" icon
+                ><v-icon class="ma-0 pa-0">mdi-pencil</v-icon></v-btn
+              >
+              <v-btn v-on:click="swapUp(item)" x-small class="ma-0 pa-0" icon
+                ><v-icon class="ma-0 pa-0">mdi-arrow-up</v-icon></v-btn
+              >
+              <v-btn v-on:click="swapDown(item)" x-small class="ma-0 pa-0" icon
+                ><v-icon class="ma-0 pa-0">mdi-arrow-down</v-icon></v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-list-item>
+      </transition-group>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -46,26 +45,43 @@ export default {
     async swapUp(item) {
       let actualIndex = this.exercises.indexOf(item);
       await this.$emit("swap-up", actualIndex);
-      this.rerender--;
+      item.rerender--;
     },
     async swapDown(item) {
       let actualIndex = this.exercises.indexOf(item);
       await this.$emit("swap-down", actualIndex);
-      this.rerender++;
+      item.rerender++;
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.swap-move {
+  transition: transform 0.3s;
+}
+
+// .fade-enter-active{
+//   transition: all 0.5s;
+// }
+// .fade-enter{
+//   opacity: 0;
+//   //transform:translateX(-1000px);
+// }
+
+.scroller-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 .scroller {
   background-color: black !important;
   border-bottom: 5px solid black;
 }
-::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
-}
+
 .item {
   position: relative;
   padding: 0;

@@ -61,10 +61,7 @@ export default {
   background-color: black !important;
   border-bottom: 5px solid black;
 }
-::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
-}
+
 .item {
   position: relative;
   height: 100%;
