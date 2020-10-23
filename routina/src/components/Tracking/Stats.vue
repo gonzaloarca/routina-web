@@ -21,25 +21,24 @@
     <div class="divider"></div>
     <div class="container">
       <div class="date-btn-container">
-
-        <v-select
-          :items="dates.titles"
-          label="Time"
-          dense
-          solo
-          hide-details
-          filled
-          
-          background-color="primary"
-          color="white"
-         
-          tile
-          single-line
-          
-        ></v-select>
+        <div style="margin-left:auto">
+          <v-select
+            :items="dates.titles"
+            label="Time"
+            dense
+            solo
+            hide-details
+            filled
+            background-color="primary"
+            color="black"
+            tile
+            light
+            single-line
+          ></v-select>
+        </div>
         <!-- <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }"> -->
-            <!-- <v-btn
+        <!-- <v-btn
               tile
               color="primary black--text"
               dark
@@ -48,8 +47,8 @@
             >
               Time <v-icon>mdi-menu-down</v-icon>
             </v-btn> -->
-          <!-- </template> -->
-          <!-- <v-list>
+        <!-- </template> -->
+        <!-- <v-list>
             <v-list-item v-for="(item, index) in dates" :key="index">
               <v-list-item-title
                 ><v-btn text tile block>{{
@@ -104,7 +103,7 @@ export default {
     return {
       overlayGraph: false,
       dates: {
-        titles: ["Last Week" , "Last Month", "Last Year", "Ever"],
+        titles: ["Last Week", "Last Month", "Last Year", "Ever"],
       },
       stats: [
         {
@@ -215,8 +214,8 @@ export default {
   height: fit-content;
 }
 
-.select-fmt{
-  color:$primary;
+.select-fmt {
+  color: $primary;
   text-decoration-color: black;
 }
 

@@ -48,17 +48,17 @@
                        <div class="centered-div">
                            <span class="span-fmt">
                                <h3>First name</h3>
-                               <v-text-field style="width:80%;"
-                               :readonly="!editingFirstName"
-                               :value="user.firstName"
-                               append-icon="mdi-pencil"
-                               @click:append="editingFirstName=!editingFirstName"
-                               solo 
-                               hide-details
-                               dense
-                               rounded
-                               light> 
-                               </v-text-field>
+                               <div style="display:flex; width:80%;">
+                                  <v-text-field
+                                  clearable
+                                  :value="user.firstName"
+                                  solo 
+                                  hide-details
+                                  dense
+                                  rounded
+                                  light> 
+                                  </v-text-field>
+                               </div>
                             </span>
                            <span class="span-fmt">
                                <h3>Gender</h3>
@@ -81,17 +81,18 @@
                        <div class="centered-div">
                            <span class="span-fmt">
                                <h3>Last name</h3>
-                               <v-text-field style="width:80%;"
-                               :readonly="!editingLastName"
-                               :value="user.lastName"
-                                append-icon="mdi-pencil"
-                               @click:append="editingLastName=!editingLastName"
-                               solo 
-                               hide-details
-                               dense
-                               rounded
-                               light>
-                               </v-text-field>
+                               <div style="display:flex; width:80%;">
+                                  <v-text-field 
+                                    clearable
+                                    :value="user.lastName"
+                                    solo 
+                                    hide-details
+                                    dense
+                                    rounded
+                                    light>
+                                    </v-text-field>
+                                  
+                               </div>
                             </span>
                            <span class="span-fmt">
                                <h3>Birth date</h3>
@@ -159,8 +160,6 @@ export default {
   data() {
     return {
       tabs: null,
-      editingFirstName: false,
-      editingLastName: false,
       user:{
           firstName:"el",
           lastName:"Beto",

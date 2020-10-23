@@ -10,6 +10,7 @@ import EditRoutine from "../views/EditRoutine.vue";
 import RegisterUser from "../views/RegisterUser.vue";
 import Settings from "../views/Settings.vue";
 import MyProfile from "../views/MyProfile.vue";
+import CreateExercise from "../views/CreateExercise.vue";
 
 Vue.use(VueRouter);
 
@@ -63,6 +64,11 @@ const routes = [
     path: "/profile",
     name: "MyProfile",
     component: MyProfile,
+  },
+  {
+    path: "/create-exercise",
+    name: "CreateExercise",
+    component: CreateExercise,
   },
 ];
 

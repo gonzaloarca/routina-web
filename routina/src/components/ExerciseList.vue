@@ -79,6 +79,8 @@ export default {
 // }
 
 .scroller-container {
+  padding-top:5px;
+  padding-bottom:5px;
   position: relative;
   height: 100%;
   width: 100%;
