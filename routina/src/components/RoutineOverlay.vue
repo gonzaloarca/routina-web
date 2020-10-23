@@ -99,7 +99,48 @@
           </v-btn>
         </div>
       </v-row>
-      <v-row class="scrollers">
+      <v-row style="display:flex; align-items:center; justify-content:center;">
+      <v-col class="exercise-container">
+        <div class="exercise-list" style="margin-top:10px;">
+          <div style="width:100%; background-color:grey darken-5; ">
+            <v-tabs class="tab-fmt" v-model="tab" :fixed-tabs="true">
+            <v-tab
+              v-for="round in rounds"
+              v-model="round.name"
+              :key="round.name"
+              class="tab-fmt"
+              
+            >
+              {{ round.name }}
+            </v-tab>
+          </v-tabs>
+          <div class="ma-5" style="background-color:rgb(30, 30, 30);">
+            <v-tabs-items class="black" v-model="tab">
+            <v-tab-item
+              v-for="round in rounds"
+              :key="round.name"
+              class="mx-2"
+            >
+              <div style="height: 250px">
+                <ExerciseList
+                  itemHeight="55"
+                  height="300"
+                  
+                  v-on:swap-up="(index) => swapUp(index, round.exercises)"
+                  v-on:swap-down="(index) => swapDown(index, round.exercises)"
+                  :exercises="round.exercises"
+                />
+              </div>
+            
+            </v-tab-item>
+          </v-tabs-items>  
+          </div>
+          </div>  
+          
+        </div>
+      </v-col>
+      </v-row>
+      <!-- <v-row class="scrollers">
         <v-col class="scroller-container">
           <h4>Exercise List</h4>
           <div class="scroller">
@@ -115,7 +156,7 @@
           </div>
         </v-col>
 
-        <!-- <v-col class="scroller-container">
+         <v-col class="scroller-container">
           <h4>Equipment needed</h4>
           <v-virtual-scroll
             :items="equipments"
@@ -133,33 +174,59 @@
             </template>
           </v-virtual-scroll>
         </v-col> -->
-      </v-row>
+      <!-- </v-row> --> 
     </div>
   </v-overlay>
 </template>
 
 <script>
 import DifficultyLevel from "./DifficultyLevel.vue";
+import ExerciseList from "./ExerciseList.vue";
 export default {
   name: "RoutineOverlay",
   props: { overlay: Boolean, routineData: Object },
   data() {
     return {
-      excercises: [
-        "exercise",
-        "exercise",
-        "exercise",
-        "exercise",
-        "exercise",
-        "exercise",
-        "exercise",
-        "exercise",
-        "exercise",
+      rounds: [{
+        name:"warm up",
+        exercises:[
+          { name: "ejercicio1" },
+          { name: "ejercicio2" },
+          { name: "ejercicio3" },
+          { name: "ejercicio4" },
+          { name: "ejercicio5" },
+          { name: "ejercicio6" },
+          { name: "ejercicio7" },
+          { name: "ejercicio8" },
+        ],},
+        {name:"round 1",
+        exercises: [
+          { name: "ejercicio1" },
+          { name: "ejercicio2" },
+          { name: "ejercicio3" },
+          { name: "ejercicio4" },
+          { name: "ejercicio5" },
+          { name: "ejercicio6" },
+          { name: "ejercicio7" },
+          { name: "ejercicio8" },
+        ],},
+        {name:"round 2",
+        exercises:[
+          { name: "ejercicio1" },
+          { name: "ejercicio2" },
+          { name: "ejercicio3" },
+          { name: "ejercicio4" },
+          { name: "ejercicio5" },
+          { name: "ejercicio6" },
+          { name: "ejercicio7" },
+          { name: "ejercicio8" },
+        ],},
       ],
+      tab:null,
       pressed: false,
     };
   },
-  components: { DifficultyLevel },
+  components: { DifficultyLevel, ExerciseList },
   computed: {
     formatTime() {
       let hours = Math.floor(this.routineData.time / 60);
@@ -223,13 +290,18 @@ export default {
   overflow-x: hidden;
   overflow-y: scroll;
 }
-
+.exercise-list {
+  width: 700px;
+  background-color: rgb(20, 20, 20);
+  min-height:fit-content;
+  margin-bottom: 10px;
+}
 .scroller-container {
   padding: 0;
   margin-top: 10px;
   margin-bottom: 10px;
-  margin-right: 50px;
-  margin-left: 50px;
+  // margin-right: 50px;
+  // margin-left: 50px;
   white-space: nowrap;
 }
 
@@ -257,7 +329,11 @@ export default {
   position: relative;
   height: fit-content;
 }
-
+.tab-fmt{
+  background-color:rgb(50, 50, 50);
+  text-decoration-color: white;
+  
+}
 .card-image {
   z-index: -2;
   position: absolute;
@@ -372,5 +448,22 @@ export default {
 
 .goto-button:hover {
   background-color: white !important;
+}
+
+.content-container {
+  max-width: $content-container-width - 150px;
+  align-content: center;
+  margin: 0 auto 30px;
+  padding: 30px 30px 30px 30px;
+}
+
+.exercise-container {
+  margin: 0;
+  padding: 0;
+  width: 700px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 </style>
