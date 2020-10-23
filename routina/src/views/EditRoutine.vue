@@ -15,9 +15,17 @@
     </div>
     <v-row class="info-container ma-8">
       <v-col class="exercise-container">
-        <h1>
-          {{ routineData.name }}
-        </h1>
+        <div class="mx-2 title-container">
+          <h1>
+            {{ routineData.name }}
+          </h1>
+          <v-btn x-large style="z-index: 10" icon
+            ><v-icon>mdi-pencil</v-icon></v-btn
+          >
+        </div>
+
+        <div class="types-container"></div>
+
         <div class="exercise-list">
           <v-tabs background-color="black" v-model="tab">
             <v-tab v-for="round in routineData.rounds" :key="round.id">
@@ -30,32 +38,68 @@
               :key="round.id"
               class="mx-2"
             >
+              <div class="round-buttons-container">
+                <v-btn class="primary black--text ma-2" rounded small
+                  ><v-icon>mdi-plus-circle</v-icon>ADD ROUND</v-btn
+                >
+                <v-btn class="red darken-2 black--text ma-2" rounded small
+                  ><v-icon>mdi-delete</v-icon>REMOVE ROUND</v-btn
+                >
+              </div>
+              <div class="primary--text round-title-container">
+                <h1 class="text-capitalize">{{ round.name }}</h1>
+                <v-btn x-large style="z-index: 10" icon
+                  ><v-icon>mdi-pencil</v-icon></v-btn
+                >
+              </div>
               <div style="height: 300px">
                 <ExerciseList
                   itemHeight="55"
                   height="300"
                   editable
-                  v-on:swap-up="(index) => swapUp(index, round)"
-                  v-on:swap-down="(index) => swapDown(index, round)"
-                  :exercises="round"
+                  v-on:swap-up="(index) => swapUp(index, round.exercises)"
+                  v-on:swap-down="(index) => swapDown(index, round.exercises)"
+                  :exercises="round.exercises"
                 />
               </div>
-              <div class="py-4">
-                <v-btn tile x-large block class="primary black--text"
-                  >+ Add Exercise</v-btn
+              <div class="py-4" style="display: flex; justify-content: center">
+                <v-btn class="primary black--text ma-2" rounded small
+                  ><v-icon>mdi-plus-circle</v-icon>ADD EXERCISE</v-btn
                 >
               </div>
             </v-tab-item>
           </v-tabs-items>
         </div>
-        <div class="mx-2">
-          <v-btn tile x-large block class="my-4 black white--text"
-            >+ Add Round</v-btn
+        <div class="mx-2" style="display:flex; justify-content:center">
+          <v-btn class=" title primary black--text ma-2" rounded small
+            >SAVE CHANGES</v-btn
+          >
+          <v-btn outlined style="border-color:rgb(255,128,0) !important;border-width:2px" class=" title black primary--text ma-2" rounded small
+            >DISCARD CHANGES</v-btn
           >
         </div>
       </v-col>
       <v-col class="more-info">
-        <div class="additional-information">
+        <div class="description-container">
+          <div class="time-container">
+            <v-icon>mdi-timer-outline</v-icon>
+            <h3>Estimated Duration Time: 45 minutes</h3>
+          </div>
+          <div class="description">
+            <div class="description-title">
+              <h3>Description</h3>
+              <v-btn x-large icon><v-icon>mdi-pencil</v-icon></v-btn>
+            </div>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo,
+              totam inventore animi ratione, odit quia praesentium temporibus
+              culpa hic exercitationem voluptates! Illo ad minus at, minima in
+              et ullam quam praesentium expedita, delectus dolorum vitae. Illum
+              minima fuga repudiandae tempore.
+            </p>
+          </div>
+        </div>
+        <!-- <div class="additional-information">
           <h1 style="text-align: center">Additional Information</h1>
           <img src="../assets/additional-info.png" />
         </div>
@@ -71,7 +115,7 @@
             v-on:swap-down="(index) => swapDown(index, routineData.equipments)"
             :equipments="routineData.equipments"
           />
-        </div>
+        </div> -->
       </v-col>
     </v-row>
   </div>
@@ -80,47 +124,56 @@
 <script>
 // @ is an alias to /src
 import ExerciseList from "../components/ExerciseList.vue";
-import EquipmentNeeded from "../components/EquipmentNeeded.vue";
+//import EquipmentNeeded from "../components/EquipmentNeeded.vue";
 
 export default {
   name: "Routine",
-  components: { ExerciseList, EquipmentNeeded },
+  components: { ExerciseList },
   data() {
     return {
       tab: null,
       routineData: {
         name: "Routine 1",
         rounds: [
-          [
-            { name: "ejercicio1" },
-            { name: "ejercicio2" },
-            { name: "ejercicio3" },
-            { name: "ejercicio4" },
-            { name: "ejercicio5" },
-            { name: "ejercicio6" },
-            { name: "ejercicio7" },
-            { name: "ejercicio8" },
-          ],
-          [
-            { name: "ejercicio1" },
-            { name: "ejercicio2" },
-            { name: "ejercicio3" },
-            { name: "ejercicio4" },
-            { name: "ejercicio5" },
-            { name: "ejercicio6" },
-            { name: "ejercicio7" },
-            { name: "ejercicio8" },
-          ],
-          [
-            { name: "ejercicio1" },
-            { name: "ejercicio2" },
-            { name: "ejercicio3" },
-            { name: "ejercicio4" },
-            { name: "ejercicio5" },
-            { name: "ejercicio6" },
-            { name: "ejercicio7" },
-            { name: "ejercicio8" },
-          ],
+          {
+            name: "round 1",
+            exercises: [
+              { name: "ejercicio1" },
+              { name: "ejercicio2" },
+              { name: "ejercicio3" },
+              { name: "ejercicio4" },
+              { name: "ejercicio5" },
+              { name: "ejercicio6" },
+              { name: "ejercicio7" },
+              { name: "ejercicio8" },
+            ],
+          },
+          {
+            name: "round 2",
+            exercises: [
+              { name: "ejercicio1" },
+              { name: "ejercicio2" },
+              { name: "ejercicio3" },
+              { name: "ejercicio4" },
+              { name: "ejercicio5" },
+              { name: "ejercicio6" },
+              { name: "ejercicio7" },
+              { name: "ejercicio8" },
+            ],
+          },
+          {
+            name: "round 3",
+            exercises: [
+              { name: "ejercicio1" },
+              { name: "ejercicio2" },
+              { name: "ejercicio3" },
+              { name: "ejercicio4" },
+              { name: "ejercicio5" },
+              { name: "ejercicio6" },
+              { name: "ejercicio7" },
+              { name: "ejercicio8" },
+            ],
+          },
         ],
         equipments: [
           "equipo1",
@@ -236,6 +289,11 @@ export default {
   margin: auto !important;
 }
 
+.title-container {
+  display: flex;
+  align-items: center;
+}
+
 .exercise-container {
   margin: 0;
   padding: 0;
@@ -246,6 +304,7 @@ export default {
 .more-info {
   margin: 0;
   padding: 0;
+  height: fit-content;
 }
 
 .exercise-list {
@@ -265,5 +324,47 @@ export default {
   height: 400px;
   width: 100%;
   background-color: rgb(33, 33, 33);
+}
+
+.description-container {
+  display: grid;
+  background-color: rgb(33, 33, 33);
+  .time-container {
+    display: flex;
+    background-color: rgb(116, 116, 116);
+    .v-icon {
+      color: black;
+      font-size: 60px;
+      padding: 10px;
+      background-color: white;
+    }
+    h3 {
+      margin: auto;
+    }
+  }
+
+  .description {
+    height: fit-content;
+    .description-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    p {
+      background-color: black;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+  }
+}
+
+.round-buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+.round-title-container {
+  display: flex;
+  justify-content: center;
 }
 </style>
