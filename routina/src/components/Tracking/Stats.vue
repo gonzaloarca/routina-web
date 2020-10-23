@@ -5,19 +5,17 @@
         <div class="title">
           <v-icon>mdi-history</v-icon><span>Routine History</span>
         </div>
-        <v-virtual-scroll :items="stats" :item-height="70" height="400">
-          <template v-slot:default="{ item }">
-            <div class="item-container">
-              <div class="date-container">{{ item.date }}</div>
-              <div class="name-container">
-                <span class="routine-name">{{ item.name }}</span>
-                <span class="routine-author">
-                  by <span class="primary--text">{{ item.author }}</span></span
-                >
-              </div>
+        <div class="scroller">
+          <div class="item-container" v-for="item in stats" :key="item.id">
+            <div class="date-container">{{ item.date }}</div>
+            <div class="name-container">
+              <span class="routine-name">{{ item.name }}</span>
+              <span class="routine-author">
+                by <span class="primary--text">{{ item.author }}</span></span
+              >
             </div>
-          </template>
-        </v-virtual-scroll>
+          </div>
+        </div>
       </div>
     </div>
     <div class="divider"></div>
@@ -85,7 +83,7 @@
 import OverlayGraph from "./OverlayGraph.vue";
 export default {
   name: "Stats",
-  components:{OverlayGraph},
+  components: { OverlayGraph },
   data() {
     return {
       overlayGraph: false,
@@ -231,6 +229,12 @@ export default {
   }
 }
 
+.scroller {
+  height: 400px;
+  overflow-x: auto;
+  overflow-y: scroll;
+}
+
 .data-container {
   margin: 20px;
 }
@@ -276,10 +280,6 @@ export default {
   align-items: center;
 }
 
-::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
-}
 .divider {
   width: 10px;
   background-color: black;

@@ -139,9 +139,4 @@ export default {
     //background-color: rgba(33, 33, 33);
   }
 }
-
-::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
-}
 </style>

@@ -55,35 +55,30 @@
           >
         </div>
         <div class="center">
-          <v-virtual-scroll
-            :items="graphData.value"
-            :item-height="60"
-            :height="240"
-            style="background-color: rgb(23, 23, 23)"
-          >
-            <template v-slot="{ item }">
-              <v-list-item
-                style="
-                  position: relative;
-                  margin: auto;
-                  margin-top: 10px;
-                  background-color: rgb(66, 66, 66);
-                  width: 80%;
-                "
+          <div class="scroller">
+            <v-list-item
+              v-for="item in graphData.value"
+              :key="item.id"
+              style="
+                position: relative;
+                margin: auto;
+                margin-top: 10px;
+                background-color: rgb(66, 66, 66);
+                width: 80%;
+              "
+            >
+              <div
+                class="white black--text"
+                style="left: 0; position: absolute"
               >
-                <div
-                  class="white black--text"
-                  style="left: 0; position: absolute"
-                >
-                  Mar 10 <br />
-                  2020
-                </div>
-                <div style="position: absolute; right: 0; margin-right: 3px">
-                  <span><v-icon>mdi-scale-bathroom</v-icon>{{ item }} kg</span>
-                </div>
-              </v-list-item>
-            </template>
-          </v-virtual-scroll>
+                Mar 10 <br />
+                2020
+              </div>
+              <div style="position: absolute; right: 0; margin-right: 3px">
+                <span><v-icon>mdi-scale-bathroom</v-icon>{{ item }} kg</span>
+              </div>
+            </v-list-item>
+          </div>
         </div>
         <div>
           <v-btn
@@ -150,6 +145,14 @@ export default {
 </script>
 
 <style scoped>
+.scroller {
+  height: 240px;
+  overflow-x: auto;
+  overflow-y: scroll;
+  background-color: rgb(23, 23, 23);
+  position: relative;
+  width: 100%;
+}
 .weight-container {
   background-color: rgb(23, 23, 23);
   height: 150px;
@@ -168,11 +171,6 @@ export default {
   position: absolute;
   left: 0px;
   padding: 3px 3px 3px 3px;
-}
-
-::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
 }
 
 .divider {

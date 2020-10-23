@@ -65,14 +65,11 @@
       <v-row class="scrollers">
         <v-col class="scroller-container">
           <h4>Excercise List</h4>
-          <v-virtual-scroll
-            :items="excercises"
-            height="300"
-            item-height="55"
+          <div
             class="scroller"
           >
-            <template v-slot="{ item }">
-              <v-list-item class="item">
+            
+              <v-list-item class="item" v-for="item in excercises" :key="item.id">
                 <v-row class="excercise-row">
                   <v-col class="ma-0 pa-0"
                     ><img :src="routineData.image"
@@ -81,8 +78,8 @@
                   <v-col> {{ item }} </v-col>
                 </v-row>
               </v-list-item>
-            </template>
-          </v-virtual-scroll>
+            
+          </div>
         </v-col>
 
         <v-col class="scroller-container">
@@ -173,10 +170,6 @@ export default {
   justify-content: center;
 }
 
-::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
-}
 .item {
   padding: 0;
   background-color: rgba(255, 255, 255, 0.07);
@@ -199,6 +192,9 @@ export default {
 .scroller {
   background-color: black !important;
   border-bottom: 5px solid black;
+  height:300px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .scroller-container {

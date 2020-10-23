@@ -69,22 +69,19 @@ export default {
 //   //transform:translateX(-1000px);
 // }
 
-.scroller-container{
+.scroller-container {
   position: relative;
   height: 100%;
   width: 100%;
-  overflow-x:hidden;
-  overflow-y: scroll ;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .scroller {
   background-color: black !important;
   border-bottom: 5px solid black;
 }
-::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
-}
+
 .item {
   position: relative;
   padding: 0;
