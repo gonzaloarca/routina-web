@@ -5,33 +5,44 @@
        <div class="row-fmt">
          <div>
            <v-card class="big-card" tile>
-             hola
-           </v-card >
+             <div class="avat-format pa-4">
+                <v-avatar size="120" color="white" class="my-4">
+                    <img :src="require(`../assets/avatar.jpg`)"/>
+                </v-avatar>
+             </div>
+             <div style="width:284px; text-align:left; margin-left:20px;">
+               <div style="display:flex;"><h1>{{user.firstName}}</h1><div style="width:10px;"></div><h1>{{user.lastName}}</h1></div>
+               <h2 class="orange-text">{{user.userName}}</h2>
+             </div>
+            </v-card >
            <div class="row-fmt">
              <v-card class="small-card" tile>
-             hola
+               <h2 class="small-title">Last Active</h2>
+               <h3>{{user.lastAct}}</h3>
             </v-card >
             <v-card class="small-card" tile>
-             hola
+             <h2 class="small-title">Member Since</h2>
+             <h3>{{user.memSince}}</h3>
             </v-card >
-            <v-card class="small-card" tile>
-             hola
-            </v-card >
+         
            </div>
          </div>
          <v-card tile class="medium-card">
            <h3 class="medium-title">Latest workout</h3>
+           <div class="pt-4"><RoutineCard :routineData="user.latestWork"></RoutineCard></div>
          </v-card>
          <v-card tile class="medium-card">
-           <h2 class="medium-title">Most used routine</h2>
+           <h3 class="medium-title">Most used routine</h3>
+           <div class="pt-4"><RoutineCard :routineData="user.mostUsed"></RoutineCard></div>
          </v-card>
        </div>
         
-        <div class="row-fmt">
+        <div class="row-fmt mt-3">
         <v-btn
               rounded
               color="black"
               class="button font-weight-bold"
+              to="/settings"
             ><h3 class="primary--text">Edit profile</h3>
         </v-btn>
       </div> 
@@ -43,9 +54,20 @@
 
 <script>
 
+import RoutineCard from "./RoutineCard";
 
 export default {
   name: "ProfileBanner",
+  props:{
+    user:{
+      type:Object,
+      required: true,
+    
+    },
+    
+  },
+  components:{RoutineCard},
+
 };
 </script>
 
@@ -65,6 +87,9 @@ $height: $banner-height+200px;
   padding:10px 10px 10px 10px;
 }
 
+.orange-text{
+  color: $primary;
+}
 .row-format{
   display:flex;
   flex-direction:row;
@@ -78,26 +103,30 @@ $height: $banner-height+200px;
   margin-left:20px;
   margin-right:20px;
   margin-top:10px;
-  margin-bottom:30px;
+  margin-bottom:10px;
   text-align: center;
   padding-left:70px;
   padding-right:70px;
   .medium-title{
     text-transform:uppercase;
     color: grey;
-    font-size: 16px;
+    font-size: 18px;
     padding:10px 10px 10px 10px;
   }
 
 }
 
 .big-card{
-  width:500px;
-  height:200px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:424px;
+  text-align:left;
+  height:180px;
   margin-left:20px;
   margin-right:20px;
   margin-top:10px;
-  margin-bottom:30px;
+  margin-bottom:10px;
   text-align: center;
   padding-left:30px;
   padding-right:30px;
@@ -111,19 +140,19 @@ $height: $banner-height+200px;
 }
 
 .small-card{
-  width:150px;
-  height:70px;
+  width:200px;
+  height:100px;
   margin-left:12px;
   margin-right:12px;
   margin-top:10px;
-  margin-bottom:30px;
+  margin-bottom:10px;
   text-align: center;
-  padding-left:15px;
-  padding-right:15px;
-  .big-title{
+  padding-left:5px;
+  padding-right:5px;
+  .small-title{
     text-transform:uppercase;
     color: grey;
-    font-size: 36px;
+    font-size: 14px;
     padding:10px 10px 10px 10px;
   }
 
@@ -171,6 +200,10 @@ $height: $banner-height+200px;
   }
 }
 
+.avat-fmt{
+  position:absolute;
+  width: 140px;
+}
 
 
 </style>
