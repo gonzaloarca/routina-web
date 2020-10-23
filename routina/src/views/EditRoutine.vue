@@ -164,10 +164,12 @@
             <v-textarea
               style="font-size: 17px; margin-bottom:20px; margin-left:20px; margin-right:20px"
               background-color="black"
-              :value="routineData.description"
+              v-model="routineData.description"
               solo
-              hide-details
-              dense
+              
+              counter
+              no-resize
+              :rules=" [v => v.length <= 150 || 'Max 150 characters']"
               flat
             >
             </v-textarea>
@@ -213,7 +215,7 @@ export default {
       routineData: {
         name: "Routine 1",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo, totam inventore animi ratione, odit quia praesentium temporibus culpa hic exercitationem voluptates! Illo ad minus at, minima in et ullam quam praesentium expedita, delectus dolorum vitae. Illum minima fuga repudiandae tempore.",
+          "Lorem ipsum dolor sit amet, consectetur adipircitationem voluppraesentium expedita, delectus dolorum vitae. Illum minima fuga repudiandae tempore.",
         rounds: [
           {
             name: "round 1",
