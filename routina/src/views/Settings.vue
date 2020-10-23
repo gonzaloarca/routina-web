@@ -17,6 +17,13 @@
           <v-tabs-items v-model="tabs">
             <v-tab-item>
               <v-card tile flat>
+                <div class="dark-grey-card">
+                    <div class="pl-5 ml-5" style="display:flex; " >
+                        <h1>Username: </h1>
+                        <div style="width:5px;"></div>
+                        <h1 class="primary--text ">{{user.userName}}</h1>
+                    </div>
+                </div>  
                 <div class="light-grey-card">
                   <div class="pl-5 ml-5">
                     <h1>Avatar</h1>
@@ -27,7 +34,7 @@
                           <img :src="require(`../assets/avatar.jpg`)"/>
                       </v-avatar></div>
                   <div class="centered-div pa-4">
-                      <v-btn color="grey darken-2" class="black--text" rounded><h4>Upload new image</h4></v-btn>
+                      <v-btn color="grey darken-1" class="black--text" rounded><h4>Upload new image</h4></v-btn>
                   </div>
                 </div>
                 <div class="dark-grey-card">
@@ -44,6 +51,7 @@
                                append-icon="mdi-pencil"
                                @click:append="editingFirstName=!editingFirstName"
                                solo 
+                               hide-details
                                dense
                                rounded
                                light> 
@@ -52,18 +60,18 @@
                            <span class="span-fmt">
                                <h3>Gender</h3>
                                <v-select
-                                style="width:80%"
+                                class="white"
+                                style="width:80%;"
                                 v-model="user.gender"
                                 :items="genders"
                                 single-line
-                                :readonly="!false"
-                                append-outer-icon="mdi-pencil"
-                                @click:append="editingGender=!editingGender"
-                                :menu-props="{ offsetY: true, light }"
+                                hide-details
                                 light
                                 dense
+                                rounded
                                 filled
                                 solo
+                                :menu-props="{light:true}"
                                 ></v-select>
                            </span>
                        </div>
@@ -76,21 +84,26 @@
                                 append-icon="mdi-pencil"
                                @click:append="editingLastName=!editingLastName"
                                solo 
+                               hide-details
                                dense
                                rounded
                                light>
                                </v-text-field>
                             </span>
-                           <span class="span-fmt"><h3>Birth date</h3></span>
+                           <span class="span-fmt">
+                               <h3>Birth date</h3>
+                               <DatePicker :dateNum="user.date"/>
+                           </span>
                        </div>
                     </div>
-                    <div class="centered-div light-grey-card pa-4">
-                        <div class="pa-4" style="width:25%"><v-btn color="grey darken-3" class="black--text " rounded ><h4>Discard Changes</h4></v-btn></div>
-                        <div class="pa-4" style="width:25%"><v-btn color="primary" class="white--text " rounded ><h4>Save Changes</h4></v-btn></div>
-                    </div>
+                   
                       
                      
-                </div>  
+                </div>
+                 <div class="centered-div light-grey-card pa-4">
+                        <div class="pa-4" style="width:25%"><v-btn color="grey darken-3" class="black--text " rounded ><h4>Discard Changes</h4></v-btn></div>
+                        <div class="pa-4" style="width:25%"><v-btn color="primary" class="white--text " rounded ><h4>Save Changes</h4></v-btn></div>
+                    </div>  
               </v-card>
             </v-tab-item>
             <v-tab-item>
@@ -135,25 +148,30 @@
 <script>
 // @ is an alias to /src
 import SettingsBanner from "../components/SettingsBanner";
+import DatePicker from "../components/DatePicker"
 
 export default {
   name: "Settings",
-  components: { SettingsBanner },
+  components: { SettingsBanner, DatePicker },
   data() {
     return {
       tabs: null,
       editingFirstName: false,
-      editingLastName: false, 
-      editingGender: false, 
+      editingLastName: false,
       user:{
           firstName:"el",
           lastName:"Beto",
-          gender:"Male"
+          gender:"Male",
+          userName:"Byte",
+          //ojo que el mes empieza en cero
+          date: new Date("2000","10","01"),
       },
       genders:["Male", "Female", "Other"],
 
     };
-  }
+  },
+  
+
 };
 </script>
 
@@ -174,10 +192,15 @@ export default {
 
 .dark-grey-card{
     background-color: rgb(29, 29, 29);
+    margin-bottom:10px;
 }
 .tab-format {
   width: 20%;
   background-color: rgb(15, 15, 15);
+}
+
+.v-input__slot:hover, .v-input:hover {
+    background-color:white !important;
 }
 
 
