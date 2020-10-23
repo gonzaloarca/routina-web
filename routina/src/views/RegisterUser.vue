@@ -8,12 +8,10 @@
        <v-row class="ma-0" style="position:relative; height:88%">
          <v-col class="ma-0 pa-0">
            <v-card tile color="grey darken-4" style="position:relative; height:100%;">
-             <div class="divForm"
-                v-for="tf in formTextfields"
-                :key="tf.name">
-                <span class="textFieldLabels">{{tf.name}}</span>
+             <div class="divForm">
+                <span class="textFieldLabels">Username</span>
                 <v-text-field  
-                      :placeholder="tf.example"
+                      placeholder="i.e 'julisicardi' "
                       class="textFieldForm"
                       solo
                       rounded
@@ -21,6 +19,21 @@
                       hide-details
                       light
                       clearable
+                      v-model="username"
+                ></v-text-field>
+                <span class="textFieldLabels" >{{usernameError}}</span>
+                
+                <span class="textFieldLabels">Email Address</span>
+                <v-text-field  
+                      placeholder="i.e 'jdoe@mymail.com' "
+                      class="textFieldForm"
+                      solo
+                      rounded
+                      dense
+                      hide-details
+                      light
+                      clearable
+                      v-model="email"
                 ></v-text-field>
               </div>
               <div class="divForm">
@@ -51,12 +64,14 @@
                     color="orange darken-3"
                     light
                     class="button font-weight-bold pa-3"
+                    v-on:click="createAccount"
+                    style="z-index:20;"
                   >Continue
                   </v-btn>
                 </div>
                 <div width="100%" style="display:flex; align-items:center; justify-content:center;">
                   <span class="textFieldLabels ma-1">Already have an account?</span>
-                  <span class="textFieldLabels light-blue--text">Log in</span>
+                  <span class="textFieldLabels light-blue--text" >Log in</span>
                 </div>
               </div>
               
@@ -105,22 +120,42 @@
 
 <script>
 // @ is an alias to /src
-
+import {User,UserApi,Credentials} from "../services/user.js";
 export default {
   name: "RegisterUser",
   data: () => ({
-    formTextfields: [
-        { name: "First Name",example:"i.e 'John'" },
-        { name: "Last Name", example:"i.e 'Doe'" },
-        { name: "Email Address", example:"i.e 'jdoe@mymail.com' " },
-      ],
     signInProvs: [
         { name: "Google", icon:"google.png", color:"blue darken-2" },
         { name: "Facebook", icon:"facebook.png", color:"blue darken-4" },
         { name: "Twitter", icon:"twitter.png", color:"light-blue darken-1"},
       ],
     showPassword:false,
+    username:"",
+    usernamePlaceholder:"Username",
+    usernameError:"",
+    email:"",
+    emailPlaceholder:"Email Address",
+    emailError:"",
+    password:"",
+    passwordError:"",
   }),
+  methods:{
+    createAccount:async function(){
+      try {
+        console.log(`username= ${this.username}, email = ${this.email}, password = ${this.password}`);
+        if(this.username!=="" && this.email!=="" && this.password!==""){
+          const cred= new Credentials(this.username,this.password);
+          await UserApi.createUser(new User(cred,this.email));
+        }else{
+          if(this.username===""){
+            this.usernameError="Missing username field";
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
   
 };
 </script>

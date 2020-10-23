@@ -10,8 +10,8 @@ class UserApi {
         return `${Api.baseUrl}/user`;
     }
 
-    static async createUser(credential,controller){
-        const result = await Api.post(`${UserApi.url}/login`, false, new User(credential), controller);
+    static async createUser(user,controller){
+        const result = await Api.post(`${UserApi.url}/login`, false, user, controller);
         return result;
     }
 
@@ -150,7 +150,7 @@ class FullUser{
 }
 
 class User{
-    constructor(credential,fullName,gender,birthdate,email,avatarUrl,phone){
+    constructor(credential,email,fullName,gender,birthdate,avatarUrl,phone){
         this.username = credential.username;
         this.password = credential.password;
         this.fullName = fullName;
