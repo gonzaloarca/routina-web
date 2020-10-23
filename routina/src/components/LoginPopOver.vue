@@ -81,15 +81,7 @@
               v-on:click="login()"
             >Log in
             </v-btn>
-            <v-btn
-              rounded
-              width="50%"
-              color="orange darken-3"
-              light
-              class="button font-weight-bold"
-              v-on:click="current()"
-            >Current User
-            </v-btn>
+            
           </div>
         </template>
         <v-row align-content="center" >
@@ -150,7 +142,35 @@
         </v-card>
       </div>
       <div v-else>
-        <v-card color="grey darken-3" >
+          <v-card>
+        <v-list>
+          <v-list-item router to="/MyProfile">
+            <v-icon left class="pa-1">
+              mdi-account
+            </v-icon>
+            <v-list-item-content>
+              <v-list-item-title>My Profile</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item router to="/Settings">
+            <v-icon left class="pa-1">
+              mdi-cog
+            </v-icon>
+            <v-list-item-content>
+              <v-list-item-title>Settings</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item @click="logout()">
+            <v-icon left class="pa-1">
+              mdi-exit-to-app
+            </v-icon>
+            <v-list-item-content>
+              <v-list-item-title>Log out</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>        
+      </v-card>
+        <!-- <v-card color="grey darken-3" >
         <v-row>
           <v-spacer></v-spacer>
           <v-col cols="auto" class="py-0" >
@@ -165,7 +185,11 @@
             <p class="--text ma-0" style="text-align:center;">{{user.id}}</p>
             
           </div>
-        </v-card-text>
+      
+    menuOpts:[
+          {name: "My Profile", icon:"mdi-account", route:""},
+          {name: "Settings", icon:"mdi-cog", route:"/settings"},
+          {name: "Log Out", icon:"mdi-exit-to-app", route:""},],  </v-card-text>
         <v-container class="py-2">
           <v-row align-start 
                   no-gutters
@@ -188,7 +212,7 @@
             </v-btn>
           </div>
         </template>
-        </v-card>
+        </v-card> -->
       </div>
     </v-menu>
   </div>
@@ -223,12 +247,14 @@ export default {
       isLoggedIn:false,
       user:null,
       navLink: {label: "RegisterUser", route: "/register"},
+
     }),
     offset:true,
     options:{
       shouldStayLoggedIn:true,
       isLoggingIn:true,
     },
+
     methods:{
       current:async function(){
         try {

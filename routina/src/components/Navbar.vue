@@ -126,6 +126,7 @@ export default {
       drawer: false,
       searchOpen: false,
       searchInput: "",
+      
     };
   },
   methods: {
