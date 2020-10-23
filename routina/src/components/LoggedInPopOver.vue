@@ -35,7 +35,7 @@ export default {
     data(){
       return{
         options:[
-          {name: "My Profile", icon:"mdi-account", route:""},
+          {name: "My Profile", icon:"mdi-account", route:"/profile"},
           {name: "Settings", icon:"mdi-cog", route:"/settings"},
           {name: "Log Out", icon:"mdi-exit-to-app", route:""},],
     
