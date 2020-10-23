@@ -14,7 +14,7 @@
       </v-card>
       <v-card class="content-container">
         <h1 class="title-cont">Routines created by me</h1>
-        <RoutineSlideGroup :editable="editing" />
+        <RoutineSlideGroup :editable="routineEditing" />
 
         <div class="centered-div">
           <div class="centered-div pa-3" style="width: 27%">
@@ -38,13 +38,13 @@
               color="grey darken-2"
               dark
               class="button font-weight-bold"
-              @click="editing = !editing"
+              @click="routineEditing = !routineEditing"
             >
-              <v-icon v-if="editing" color="white" left>
+              <v-icon v-if="routineEditing" color="white" left>
                 mdi-exit-to-app
               </v-icon>
               <v-icon v-else color="white" left> mdi-pencil </v-icon>
-              <span v-if="editing"> Finish editing </span>
+              <span v-if="routineEditing"> Finish editing </span>
               <span v-else> Edit routine </span>
             </v-btn>
           </div>
@@ -52,7 +52,7 @@
       </v-card>
       <v-card class="content-container">
         <h1 class="title-cont">Exercises created by me</h1>
-        <ExerciseSlideGroup :editable="editing" />
+        <ExerciseSlideGroup :editable="exerciseEditing" />
 
         <div class="centered-div">
           <div class="centered-div pa-3" style="width: 27%">
@@ -76,13 +76,13 @@
               color="grey darken-2"
               dark
               class="button font-weight-bold"
-              @click="editing = !editing"
+              @click="exerciseEditing = !exerciseEditing"
             >
-              <v-icon v-if="editing" color="white" left>
+              <v-icon v-if="exerciseEditing" color="white" left>
                 mdi-exit-to-app
               </v-icon>
               <v-icon v-else color="white" left> mdi-pencil </v-icon>
-              <span v-if="editing"> Finish editing </span>
+              <span v-if="exerciseEditing"> FiniexerciseEh editing </span>
               <span v-else> Edit exercise </span>
             </v-btn>
           </div>
@@ -103,7 +103,8 @@ export default {
   components: { RoutinesBanner, RoutineSlideGroup, ExerciseSlideGroup },
   data() {
     return {
-      editing: false,
+      routineEditing: false,
+      exerciseEditing: false,
     };
   },
 };
