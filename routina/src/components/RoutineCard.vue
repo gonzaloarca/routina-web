@@ -142,6 +142,8 @@ $routine-info-width: 75px;
   height: $card-height;
   width: $card-width;
   overflow: hidden;
+  position:relative;
+  display:grid;
   transition-duration: 200ms;
   transition-property: width, height, transform !important;
 

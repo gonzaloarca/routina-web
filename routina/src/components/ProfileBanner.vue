@@ -11,7 +11,7 @@
                 </v-avatar>
              </div>
              <div style="width:284px; text-align:left; margin-left:20px;">
-               <div style="display:flex;"><h1>{{user.firstName}}</h1><div style="width:10px;"></div><h1>{{user.lastName}}</h1></div>
+               <div style="display:flex;"><h1 class="txt-caps">{{user.firstName}}</h1><div style="width:10px;"></div><h1 class="txt-caps">{{user.lastName}}</h1></div>
                <h2 class="orange-text">{{user.userName}}</h2>
              </div>
             </v-card >
@@ -29,11 +29,11 @@
          </div>
          <v-card tile class="medium-card">
            <h3 class="medium-title">Latest workout</h3>
-           <div class="pt-4"><RoutineCard :routineData="user.latestWork"></RoutineCard></div>
+           <div class="pt-4"><RoutineCard :routineData="user.latestWork" :withOverlay="true"></RoutineCard></div>
          </v-card>
          <v-card tile class="medium-card">
            <h3 class="medium-title">Most used routine</h3>
-           <div class="pt-4"><RoutineCard :routineData="user.mostUsed"></RoutineCard></div>
+           <div class="pt-4"><RoutineCard :routineData="user.mostUsed" :withOverlay="true"></RoutineCard></div>
          </v-card>
        </div>
         
@@ -94,6 +94,10 @@ $height: $banner-height+200px;
   display:flex;
   flex-direction:row;
   width:100%;
+}
+
+.txt-caps{
+  text-transform: capitalize;
 }
 
 
