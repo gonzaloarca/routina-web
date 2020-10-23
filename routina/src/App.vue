@@ -23,6 +23,9 @@ export default {
 @import url("https://fonts.googleapis.com/css family=Raleway&display=swap");
 @import "./sass/variables";
 
+$scrollbar-color-primary:rgb(87, 87, 87);
+$scrollbar-color-secondary:rgb(0, 0, 0);
+
 .v-application {
   font-family: $body-font-family, sans-serif !important;
   .title {
@@ -37,5 +40,22 @@ export default {
   position: absolute;
   top: -$nav-bar-height;
   width: 100vw;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: $scrollbar-color-primary $scrollbar-color-secondary;
+}
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+*::-webkit-scrollbar-track {
+  background: $scrollbar-color-secondary;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: $scrollbar-color-primary;
+  border-radius: 20px;
+  border: 3px solid $scrollbar-color-secondary;
 }
 </style>
