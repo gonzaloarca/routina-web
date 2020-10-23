@@ -8,28 +8,39 @@
         <div class="backdrop-card-image"></div>
         <v-img class="card-image" :src="routineData.image" />
         <div class="card-title white--text">
-          <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
-          <p class="user-label my-0">
+          <h1 class="my-0 text-uppercase">{{ routineData.routineName }}</h1>
+          <p class="user-label">
             by
             <span class="primary--text">{{ routineData.author }}</span>
           </p>
+        </div>
+        <div style="display: flex; justify-content: center">
+          <v-btn
+            class="white black--text"
+            rounded
+            x-small
+            style="font-size: 13px"
+            router
+            to="edit-routine"
+            ><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</v-btn
+          >
         </div>
         <v-row class="routine-info">
           <v-col class="text-uppercase">
             <span class="type-label">ROUTINE TYPE</span>
             <br />
-            {{ routineData.type }}
+            <span class="data-display">{{ routineData.type }}</span>
           </v-col>
           <v-col class="text-uppercase">
             <span class="type-label">DURATION</span>
             <br />
             <v-icon dense>mdi-timer-outline</v-icon>
-            {{ formatTime }}
+            <span class="data-display">{{ formatTime }}</span>
           </v-col>
           <v-col class="text-uppercase">
             <span class="type-label">MUSCLE GROUP</span>
             <br />
-            {{ routineData.muscleGroup }}
+            <span class="data-display">{{ routineData.muscleGroup }}</span>
           </v-col>
           <v-col>
             <span class="type-label">DIFFICULTY</span>
@@ -52,7 +63,7 @@
         <v-row class="description-container">
           <div class="description">
             <h3>DESCRIPTION</h3>
-            <p>
+            <p class="description-content">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius
               ullam est quibusdam dolorem corrupti rem vero minima veniam
               delectus tempora et autem accusamus nobis quod placeat excepturi
@@ -65,7 +76,6 @@
       <v-row class="card-buttons-container"
         ><div class="card-buttons">
           <v-btn
-            x-small
             style="
               margin-top: auto !important;
               margin-bottom: auto !important;
@@ -74,7 +84,7 @@
             rounded
             router
             to="routine"
-            class="goto-button ma-0 primary black--text font-weight-black"
+            class="goto-button ma-0 primary black--text font-weight-bold"
             >GO TO ROUTINE</v-btn
           >
           <v-btn
@@ -91,7 +101,7 @@
       </v-row>
       <v-row class="scrollers">
         <v-col class="scroller-container">
-          <h4>Excercise List</h4>
+          <h4>Exercise List</h4>
           <div class="scroller">
             <v-list-item class="item" v-for="item in excercises" :key="item.id">
               <v-row class="excercise-row">
@@ -136,26 +146,15 @@ export default {
   data() {
     return {
       excercises: [
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-        "ejercicio",
-      ],
-      equipments: [
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
-        "equipo",
+        "exercise",
+        "exercise",
+        "exercise",
+        "exercise",
+        "exercise",
+        "exercise",
+        "exercise",
+        "exercise",
+        "exercise",
       ],
       pressed: false,
     };
@@ -220,7 +219,7 @@ export default {
 .scroller {
   background-color: black !important;
   border-bottom: 5px solid black;
-  height: 300px;
+  height: 200px;
   overflow-x: hidden;
   overflow-y: scroll;
 }
@@ -236,7 +235,7 @@ export default {
 
 .card {
   position: relative;
-  width: 45vw;
+  width: 800px;
   z-index: 2;
   margin: auto;
   background: rgb(33, 33, 33);
@@ -277,8 +276,19 @@ export default {
 
 .type-label {
   font-size: 12px;
+  font-weight: 600;
+  opacity: 0.5;
 }
 
+.data-display {
+  margin-top: -20px;
+  font-weight: 600;
+}
+
+.user-label {
+  margin-top: -7px;
+  margin-bottom: 2px;
+}
 .routine-info {
   margin: 0;
   padding: 0;
@@ -295,10 +305,26 @@ export default {
   margin: 0;
   backdrop-filter: brightness(0.8);
   .description {
+    $y-margin: 10px;
+
+    margin-top: $y-margin;
+    margin-bottom: $y-margin;
+
     h3 {
-      opacity: 0.4;
+      opacity: 0.5;
+      font-weight: 600;
+      font-size: 15px;
     }
-    font-size: 12px;
+
+    .description-content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 600px;
+      white-space: nowrap;
+      height: 30px;
+      font-weight: 600;
+      font-size: 15px;
+    }
   }
 }
 

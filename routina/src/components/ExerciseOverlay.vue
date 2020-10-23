@@ -19,7 +19,7 @@
         <v-row class="description-container">
           <div class="description">
             <p class="data-label">DESCRIPTION</p>
-            <p class="mt-5">
+            <p class="description-content">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio sint
               dolores deleniti fuga quo exercitationem laudantium commodi
               repellendus mollitia quae.
@@ -150,28 +150,29 @@ export default {
   margin: 0;
   backdrop-filter: brightness(0.7);
   .description {
-    $x-padding: 70px;
     $y-margin: 10px;
-    padding-left: $x-padding;
-    padding-right: $x-padding;
     margin-top: $y-margin;
     margin-bottom: $y-margin;
-
-    font-weight: 600;
-    font-size: 15px;
+    .description-content {
+      font-weight: 600;
+      font-size: 15px;
+      width: 700px;
+      height: 50px;
+      word-wrap: break-word;
+    }
   }
 }
 
 .video-container {
   position: relative;
-  height: 350px;
+  height: 330px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   .video-player {
-    $player-width: 500px;
+    $player-width: 450px;
     height: $player-width * (9/16);
     width: $player-width;
     background-color: black;
