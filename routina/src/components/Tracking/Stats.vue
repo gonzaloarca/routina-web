@@ -3,11 +3,11 @@
     <div class="container">
       <div class="routine-history-scroller">
         <div class="title">
-          <v-icon>mdi-history</v-icon><span>Routine History</span>
+          <v-icon class="ma-2">mdi-history</v-icon><span><h3>Routine History</h3></span>
         </div>
         <div class="scroller">
           <div class="item-container" v-for="item in stats" :key="item.id">
-            <div class="date-container">{{ item.date }}</div>
+            <div class="date-container"><h3>{{ item.date }}</h3></div>
             <div class="name-container">
               <span class="routine-name">{{ item.name }}</span>
               <span class="routine-author">
@@ -34,52 +34,33 @@
             tile
             light
             single-line
+            class="black --text"
+          
           ></v-select>
         </div>
-        <!-- <v-menu offset-y>
-          <template v-slot:activator="{ on, attrs }"> -->
-        <!-- <v-btn
-              tile
-              color="primary black--text"
-              dark
-              v-bind="attrs"
-              v-on="on"
-            >
-              Time <v-icon>mdi-menu-down</v-icon>
-            </v-btn> -->
-        <!-- </template> -->
-        <!-- <v-list>
-            <v-list-item v-for="(item, index) in dates" :key="index">
-              <v-list-item-title
-                ><v-btn text tile block>{{
-                  item.title
-                }}</v-btn></v-list-item-title
-              >
-            </v-list-item>
-          </v-list> -->
-        <!-- </v-menu> -->
+        
       </div>
       <div class="data-container">
-        <div class="title">
-          <v-icon>mdi-history</v-icon>
-          <span>AVERAGE TIME SPENT WORKING OUT PER DAY</span>
+        <div class="title-big">
+          <v-icon class="ma-2">mdi-history</v-icon>
+          <span><h3 class="ml-10">AVERAGE TIME SPENT WORKING OUT PER DAY</h3></span>
         </div>
-        <div class="description">32.7 minutos</div>
+        <div class="description" style="display:flex; align-items:center; justify-content:center; height:90px;">32.7 minutos</div>
       </div>
       <div class="data-container">
-        <div class="title">
-          <v-icon>mdi-history</v-icon>
-          <span>TOTAL TIME SPENT WORKING OUT</span>
+        <div class="title-big">
+          <v-icon class="ma-2">mdi-history</v-icon>
+          <span><h3 class="ml-10">TOTAL TIME SPENT WORKING OUT</h3></span>
         </div>
-        <div class="description">5 hours, 30.1 minutes</div>
+        <div class="description" style="display:flex; align-items:center; justify-content:center; height:90px;">5 hours, 30.1 minutes</div>
       </div>
       <div class="btn-container">
         <v-btn
           v-on:click="overlayGraph = true"
           rounded
           class="primary black--text"
-          small
-          >Show Graph</v-btn
+          
+          ><h3>Show Graph</h3></v-btn
         >
       </div>
     </div>
@@ -208,15 +189,17 @@ export default {
   padding: 0;
 }
 
+
+
 .container {
   width: 50%;
   background-color: rgb(33, 33, 33);
-  height: fit-content;
+  
 }
 
 .select-fmt {
   color: $primary;
-  text-decoration-color: black;
+  
 }
 
 .routine-history-scroller {
@@ -232,15 +215,20 @@ export default {
       color: black;
       display: flex;
       align-items: center;
+      padding-left: 5px;
+      padding-bottom: 5px;
+      padding-top: 5px;
+      padding-right: 5px;
+
     }
     .name-container {
-      margin-left: auto;
+      margin-left: 120px;
       margin-right: 10px;
       .routine-name {
-        font-size: 35px;
+        font-size: 20px;
       }
       .routine-author {
-        font-size: 25px;
+        font-size: 18px;
       }
     }
   }
@@ -264,11 +252,32 @@ export default {
   align-items: center;
   text-align: center;
   justify-content: center;
+  height:45px;
+  min-height:fit-content;
+  text-transform:uppercase;
   .v-icon {
     position: absolute;
     left: 0;
   }
 }
+
+.title-big {
+  background-color: rgb(100, 100, 100);
+  position: relative;
+  font-size: 15px !important;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  height:60px;
+  min-height:fit-content;
+  text-transform:uppercase;
+  .v-icon {
+    position: absolute;
+    left: 0;
+  }
+}
+
 
 .description {
   background-color: rgb(23, 23, 23);
@@ -280,8 +289,9 @@ export default {
   margin: 20px;
 
   .v-btn {
-    margin-left: auto;
+    // margin-left: auto;
     margin-right: 0;
+    width:50%;
   }
 }
 
@@ -298,7 +308,9 @@ export default {
 }
 
 .divider {
-  width: 10px;
-  background-color: black;
+  width: 3px;
+  margin-top:20px;
+  margin-bottom:20px;
+  background-color: rgb(20, 20, 20);
 }
 </style>
