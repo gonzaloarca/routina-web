@@ -1,19 +1,6 @@
 <template>
   <div class="Home">
-    <v-carousel
-      cycle
-      height="350"
-      hide-delimiter-background
-      show-arrows-on-hover
-    >
-      <v-carousel-item v-for="(slide, i) in slides" :key="i">
-        <v-sheet :color="colors[i]" height="100%">
-          <v-row class="fill-height" align="center" justify="center">
-            <div class="display-3 font-weight-bold">{{ slide }} Slide</div>
-          </v-row>
-        </v-sheet>
-      </v-carousel-item>
-    </v-carousel>
+    <RoutinesBanner banner-image-url="banner-2.jpg" banner-title="Home" />
 
     <!-- banner viejo -->
     <!-- <section class="exhibitor">
@@ -53,11 +40,12 @@
 <script>
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
 import SpecialRoutineBanner from "../components/SpecialRoutineBanner";
+import RoutinesBanner from "../components/RoutinesBanner";
 // @ is an alias to /src
 
 export default {
   name: "Home",
-  components: { RoutineSlideGroup, SpecialRoutineBanner },
+  components: { RoutineSlideGroup, SpecialRoutineBanner, RoutinesBanner },
   data() {
     return {
       colors: [
@@ -108,7 +96,6 @@ export default {
   align-content: center;
   margin: 0 auto 30px;
 }
-
 
 /* 
 Del Carousel Viejo
