@@ -2,7 +2,7 @@
   <div class="Explore">
     <ExploreBanner />
     <div class="explore-content">
-      <v-card class="content-container">
+      <div class="content-container">
         <h1 class="title-container">Explore routines by:</h1>
         <v-tabs
           v-model="explore_tabs"
@@ -19,17 +19,21 @@
           </v-tab>
         </v-tabs>
         <v-row>
-          <v-card
-            color="orange darken-2"
-            height="30px"
-            width="100%"
-            tile
-            class="content-container"
-          >
-            <h2 class="text-color" v-if="showingRoutines">
+          <div class="orange-bar">
+            <v-btn
+              v-if="showingRoutines"
+              @click="showingRoutines = false"
+              icon
+              color="black"
+              style="flex: 1"
+            >
+              <v-icon>mdi-arrow-left</v-icon>
+            </v-btn>
+            <h2 class="text-color" style="flex: 30" v-if="showingRoutines">
               {{ this.tabName }}
             </h2>
-          </v-card>
+            <v-spacer v-if="showingRoutines" style="flex: 1"></v-spacer>
+          </div>
         </v-row>
         <v-tabs-items v-if="!showingRoutines" v-model="explore_tabs">
           <v-tab-item v-for="tab in tabs" :key="tab.name">
@@ -60,7 +64,7 @@
           :categories="routines"
           width="100%"
         ></ExploreGrid>
-      </v-card>
+      </div>
     </div>
   </div>
 </template>
@@ -294,11 +298,23 @@ export default {
   width: 20%;
 }
 .content-container {
-  max-width: $content-container-width - 150px;
+  width: $content-container-width - 150px;
+  background-color: #1e1e1e;
   align-items: center;
   justify-content: center;
   margin: 0 auto 30px;
   // padding: 30px 30px 30px 30px;
+}
+
+.orange-bar {
+  background-color: #ff8000 !important;
+  margin: auto;
+  width: $content-container-width - 150px;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
 }
 
 .text-color {
