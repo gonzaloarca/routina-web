@@ -42,7 +42,7 @@
               background-color="white"
               color="white"
               :readonly="true"
-              :value="3"
+              :value="routineData.rating"
             ></v-rating>
           </div>
         </div>
@@ -171,7 +171,7 @@ $routine-info-width: 75px;
 
 .routine-card:hover {
   $w-mult: 1.2;
-  $h-mult: 1.7;
+  $h-mult: 1.67;
   $center-dx: $card-width * $w-mult * 0.5 - $card-width * 0.5;
   $center-dy: $card-height * $h-mult * 0.5 - $card-height * 0.5;
 
