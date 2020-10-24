@@ -296,9 +296,9 @@ export default {
         console.log(
           `username= ${this.username}, email = ${this.email}, password = ${this.password}`
         );
-        if (this.username !== "" && this.email !== "" && this.password !== "") {
+        if (this.username !== "" && this.email !== "" && this.password !== "" && this.fullName!== null && this.gender!==null) {
           const cred = new Credentials(this.username, this.password);
-          await UserApi.createUser(new User(cred, this.email));
+          await UserApi.createUser(new User(cred,this.email,this.fullName,this.gender));
         } else {
           if (this.username === "") {
             this.usernameError = "Username field is required";

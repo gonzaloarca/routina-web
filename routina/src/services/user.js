@@ -1,7 +1,7 @@
 import { Api } from './api.js';
 import {Cookies} from './cookies.js';
 
-export { UserApi, Credentials,FullUser,User };
+export { UserApi, Credentials,FullUser,User,FullWeighting };
 
 class UserApi {
 
@@ -75,6 +75,39 @@ class UserApi {
         
     }
 
+    static async geUserFavouriteRoutines(userId,page,size,orderBy,direction,controller){
+        let parameters = "";
+        let concatenate = false;
+        if(page instanceof Number && page>=0){
+            parameters+=`page=${page}`;
+        }
+        if(concatenate == true){
+            parameters+="&";
+        }
+        if(size instanceof Number && size>=0){
+            parameters+=`size=${size}`;
+        }
+        if(concatenate == true){
+            parameters+="&";
+        }
+        if(orderBy!==null && orderBy!==''){
+            parameters+=`orderBy=${orderBy}`;
+        }
+        if(concatenate == true){
+            parameters+="&";
+        }
+        if(direction!==null && direction!==''){
+            parameters+=`direction=${direction}`;
+        }
+        if(concatenate == true){
+            parameters+="&";
+        }
+        return await Api.get(`${UserApi.url}/${userId}/routines/favourites?${parameters}`,true,controller);
+        
+    }
+
+
+
     static async addRoutineToUserFavourites(id,controller){
         return await Api.post(`${UserApi.url}/current/routines/${id}/favourites`,true,controller);
     }
@@ -82,6 +115,19 @@ class UserApi {
     static async removeRoutineToUserFavourites(id,controller){
         return await Api.delete(`${UserApi.url}/current/routines/${id}/favourites`,true,controller);
     }
+
+    static async addWeightingToUser(weight, controller){
+        return await Api.post(`${UserApi.url}/current/weightings/`,true, weight,controller);
+    }
+
+    static async getWeightingFromUser(controller){
+        return await Api.get(`${UserApi.url}/current/weightings/`,true,controller);
+    }
+
+    static async removeWeightingFromUser(weightingId, controller){
+        return await Api.delete(`${UserApi.url}/current/weightings/${weightingId}`,true,controller);
+    }
+
 
     static async getCurrentUserExecutions(page,size,orderBy,direction,controller){
         let parameters = "";
@@ -163,3 +209,10 @@ class User{
     }
 
 } 
+
+class FullWeighting{
+    constructor( weight, height){
+        this.weight=weight;
+        this.height=height;
+    }
+}

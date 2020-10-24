@@ -58,6 +58,7 @@
             <div class="select-container">
               <v-select
                 :items="muscleGroupItems"
+                v-model="routineData.muscleGroup"
                 label="Muscle Group"
                 return-object
                 single-line
@@ -76,6 +77,7 @@
                 :items="[1, 2, 3, 4]"
                 label="level"
                 return-object
+                v-model="routineData.difficultyLevel"
                 single-line
                 class="primary black--text"
                 color="black"
@@ -228,7 +230,6 @@
                       :items="exercises"
                       item-key="name"
                       :search="search"
-                      :singleSelect="true"
                       :showSelect="true"
                       :items-per-page="5"
                     >
@@ -254,7 +255,7 @@
           </v-tabs-items>
         </div>
         <div class="mx-2" style="display: flex; justify-content: center">
-          <v-btn class="title primary black--text ma-2" rounded small
+          <v-btn v-on:click="createRoutine" class="title primary black--text ma-2" rounded small
             >SAVE CHANGES</v-btn
           >
           <v-btn
@@ -271,7 +272,7 @@
         <div class="description-container">
           <div class="time-container">
             <v-icon>mdi-timer-outline</v-icon>
-            <h3>Estimated Duration Time: 45 minutes</h3>
+            <h3>Estimated Duration Time: {{this.routineData.duration}} minutes</h3>
           </div>
           <div class="description">
             <div class="description-title">
@@ -371,13 +372,38 @@ export default {
       selectedFile: null,
     };
   },
-  async created() {
+  async mounted() {
     console.log(
       "GEEEEEEEEEEEEET   EXERCISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEES"
     );
     this.exercises = await this.getExercises();
 
+    
+
+    let id = this.$route.params.id;
+    console.log(id);
+    let routine = await RoutinesApi.getFullRoutine(id);
+    console.log(routine);
+    this.routineData.name = routine.name;
+    this.routineData.type=routine.type;
+    this.routineData.muscleGroup = routine.muscleGroup;
+    this.routineData.difficultyLevel = routine.difficultyLevel;
+    this.routineData.rounds=[];
+    this.routineData.duration=0;
+    for(let round = 0; round<routine.cycles.length; round++){
+      let cycle = routine.cycles[round];
+      this.routineData.rounds[round]={name:cycle.name, exercises:[]};
+      for(let exercise = 0; exercise<cycle.exercises.length; exercise++){
+          this.routineData.duration += cycle.exercises[exercise].duration;
+          let ex = cycle.exercises[exercise];
+          this.routineData.exercises[exercise] ={idGiver:this.idGiver, name:ex.name, duration:ex.duration, image:ex.image};
+          this.routineData.exercises[exercise].idGiver = this.idGiver;
+          this.idGiver++;
+      }
+    }
     await this.getExercisesImages();
+
+
   },
   methods: {
     getExercisesImages: async function () {
@@ -413,49 +439,49 @@ export default {
       }
       return result;
     },
-    createRoutine: async function () {
-      //primero validar que haya al menos una rutina
-
-      //crear la rutina
-      
-      const routine = new Routine(
-        this.routineData.name,
-        `${this.routineData.detail} | ${this.routineData.muscleGroup} | ${this.setDuration(this.routineData.duration)}`,
-        true,
-        this.routineData.difficultyLevel,
-        this.typeItems.indexOf(this.routineData.type)+2
-      );
-      const res = await RoutinesApi.createRoutine(routine);
-      
-      const routineId = res.id;
-      //crear los ciclos
-      for (const cycle in this.routineData.rounds) {
-        let index = this.routineData.rounds.indexOf(cycle);
-        const cycleResponse = await RoutinesApi.createRoutineCycle(
-          routineId,
-          new Cycle(cycle.name, "", "exercise", index,1)
+    
+  async createRoutine() {
+        //primero validar que haya al menos una rutina
+        //crear la rutina
+        let levels=["rookie","beginner","intermediate","advanced","expert"];
+        const routine = new Routine(
+            this.routineData.name,
+            `${this.routineData.description}|${this.routineData.muscleGroup}|${this.setDuration(this.duration)}`,
+            true,
+            levels[this.routineData.difficultyLevel],
+            {id:this.typeItems.indexOf(this.routineData.type)}
         );
-        
-        const cycleId = cycleResponse.id;
-        //crear los ejercicios de cada cycle
-        for (const exercise in cycle.exercises) {
-          const exerciseResponse = await RoutinesApi.createCycleExercise(
-            routineId,
-            cycleId,
-            new Exercise(exercise)
-          );
-          console.log(exerciseResponse);
-          const exerciseId = exerciseResponse.id;
-          //subir las imagenes de cada ejercicio
-          await RoutinesApi.createExerciseImage(
-            routineId,
-            cycleId,
-            exerciseId,
-            new ImageModel(1, exercise.image)
-          );
+        const res = await RoutinesApi.createRoutine(routine);
+        const routineId = res.id;
+        //crear los ciclos
+        for (const cycle of this.routineData.rounds) {
+            let index = this.routineData.rounds.indexOf(cycle);
+            const cycleResponse = await RoutinesApi.createRoutineCycle(
+                routineId,
+                new Cycle(cycle.name, "detail", "exercise", index+1, 1)
+            );
+
+            const cycleId = cycleResponse.id;
+            //crear los ejercicios de cada cycle
+            for (const exercise of cycle.exercises) {
+                const exerciseResponse = await RoutinesApi.createCycleExercise(
+                    routineId,
+                    cycleId,
+                    new Exercise(exercise.name,"", "exercise", exercise.duration, 0)
+                );
+                const exerciseId = exerciseResponse.id;
+                //subir las imagenes de cada ejercicio
+                await RoutinesApi.createExerciseImage(
+                    routineId,
+                    cycleId,
+                    exerciseId,
+                    new ImageModel(1, exercise.image)
+                );
+            }
         }
-      }
+      console.log(res);
     },
+    
     swapUp(item, elements) {
       if (item > 0) {
         this.swap(item, item - 1, elements);
@@ -501,14 +527,18 @@ export default {
     addExercise() {
       this.addingExercise = false;
       let cycle = this.routineData.rounds[this.roundIndex];
-      let ex = Object.assign({}, this.selected[0]);
-      ex.idGiver=this.idGiver;
-      this.idGiver++;
-      console.log(ex);
-      cycle.exercises.push(ex);
+      this.selected.forEach(exercise =>{
+        this.routineData.duration+=exercise.duration;
+        let ex = Object.assign({}, exercise);
+        ex.idGiver=this.idGiver;
+        this.idGiver++;
+        cycle.exercises.push(ex);
+      });
+      
     },
     removeExercise(roundIndex, exerciseIndex) {
       let cycle = this.routineData.rounds[roundIndex];
+      this.routineData.duration -= cycle.exercises[exerciseIndex];
       cycle.exercises.splice(exerciseIndex, 1);
     },
     editExercise(roundIndex, exerciseIndex) {
@@ -520,6 +550,7 @@ export default {
     },
     saveExercise() {
       this.edittingExercise=false;
+      this.routineData.duration += this.sliderDuration - this.exerciseForEdit.duration;
       this.exerciseForEdit.duration = this.sliderDuration;
     },
   },

@@ -21,7 +21,7 @@
             x-small
             style="font-size: 13px"
             router
-            :to="'routine/' + routineData.id +'/edit-routine'"
+            :to="'/routine/' + routineData.id +'/edit-routine'"
             ><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</v-btn
           >
         </div>

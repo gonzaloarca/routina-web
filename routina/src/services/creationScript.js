@@ -43,7 +43,7 @@ class DatabaseCreator {
         //crear la rutina
         const routine = new Routine(
             name,
-            `${detail} | ${muscleGroup} | ${duration}`,
+            `${detail}|${muscleGroup}|${duration}`,
             true,
             difficultyLevel,
             {id:type}

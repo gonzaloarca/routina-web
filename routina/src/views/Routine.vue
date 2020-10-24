@@ -61,7 +61,7 @@
             <v-icon class="pa-1" >mdi-pencil</v-icon>
             </span>
           </v-btn>
-          <v-btn class="primary--text" v-on:click="pressed = !pressed" style="z-index:50;" icon>
+          <v-btn class="primary--text" v-on:click="markFav" style="z-index:50;" icon>
             <v-icon v-if="pressed" class="like-icon"  dark> mdi-heart </v-icon>
             <v-icon v-if="!pressed" class="like-icon"  dark>
               mdi-heart-outline
@@ -151,6 +151,7 @@
 import DifficultyLevel from "../components/DifficultyLevel.vue";
 import ExerciseList from "../components/ExerciseList.vue";
 import {RoutinesApi} from "../services/routines.js";
+import {UserApi} from "../services/user.js";
 
 export default {
   name: "Routine",
@@ -207,6 +208,13 @@ export default {
     };
     
   },
+  methods:{
+    markFav(){
+      this.pressed = !this.pressed; 
+      if(this.pressed) UserApi.addRoutineToUserFavorites(this.id)
+      else UserApi.removeRoutineToUserFavorites(this.id)
+    },
+  }
 };
 </script>
 

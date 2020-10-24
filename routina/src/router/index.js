@@ -4,7 +4,7 @@ import Home from "../views/Home.vue";
 import Explore from "../views/Explore.vue";
 import Tracking from "../views/Tracking.vue";
 import Routines from "../views/Routines.vue";
-import Plans from "../views/Plans.vue";
+
 import Routine from "../views/Routine.vue";
 import EditRoutine from "../views/EditRoutine.vue";
 import RegisterUser from "../views/RegisterUser.vue";
@@ -31,11 +31,6 @@ const routes = [
     path: "/routines",
     name: "Routines",
     component: Routines,
-  },
-  {
-    path: "/plans",
-    name: "Plans",
-    component: Plans,
   },
   {
     path: "/tracking",

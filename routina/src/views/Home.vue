@@ -22,6 +22,9 @@
     </section>-->
 
     <!-- Cuerpo principal con rutinas y contenido -->
+    <div>
+      <v-btn @click="getFullRoutine(2)">Get Full ROUTINE</v-btn>
+    </div>
     <div class="home-content">
       <v-card class="content-container">
         <h1>Recommended routines</h1>
@@ -87,6 +90,14 @@ export default {
     async getRouts(){
       const res = await RoutinesApi.getRoutines();
       return await res.results; //hay que convertirlo al tipo de datos de slide-group
+    },
+    getFullRoutine:async function(id){
+      try {
+        const res = await RoutinesApi.getFullRoutine(id);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 };

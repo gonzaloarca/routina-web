@@ -37,6 +37,7 @@
               light
               clearable
               style="width: 300px"
+              v-model="weighting"
             ></v-text-field>
           </span>
           <div class="centered-div">
@@ -45,6 +46,7 @@
               rounded
               width="20%"
               class="ma-3 primary black--text font-weight-bold"
+              @click="addWeighting"
               ><span>Add</span></v-btn
             >
             <v-btn
@@ -66,16 +68,25 @@
 </template>
 
 <script>
-export default {
+import {UserApi,FullWeighting} from "@/services/user.js";
+ export default {
   name: "overlayWeight",
   props: {
     overlayWeightings: Boolean,
   },
-
+  data(){
+    return{
+      weighting:"",
+    }
+  },
   methods: {
     closeOverlayWeight() {
       this.$emit("close-overlay-weight", false);
       return;
+    },
+    
+    async addWeighting(){
+      return await UserApi.addWeightingToUser(new FullWeighting(this.weighting, 1.5),);
     },
   },
 };
@@ -83,6 +94,7 @@ export default {
 
 <style scoped lang="scss">
 @import "~vuetify/src/styles/styles.sass";
+
 
 .close-button {
   position: absolute;
