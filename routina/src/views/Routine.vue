@@ -208,8 +208,8 @@ export default {
   methods:{
     markFav(){
       this.pressed = !this.pressed; 
-      if(this.pressed) UserApi.addRoutineToUserFavorites(this.id)
-      else UserApi.removeRoutineToUserFavorites(this.id)
+      if(this.pressed) UserApi.addRoutineToUserFavourites(this.id)
+      else UserApi.removeRoutineToUserFavourites(this.id)
     },
   },
   async created() {

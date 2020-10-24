@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css family=Open+Sans&display=swap");
 @import "./sass/variables";
 
 $scrollbar-color-primary: rgb(87, 87, 87);
@@ -37,9 +37,9 @@ $scrollbar-color-secondary: rgb(0, 0, 0);
 }
 
 .v-application {
-  font-family: $body-font-family, sans-serif !important;
+  font-family: $body-font-family !important;
   .title {
-    font-family: $title-font, sans-serif !important;
+    font-family: $title-font !important;
   }
 }
 

@@ -1,12 +1,12 @@
-$body-font-family: 'Raleway';
-$title-font: 'Raleway';
+$body-font-family: "Open Sans", sans-serif;
+$title-font: $body-font-family;
+$heading-font-family: $body-font-family;
 $nav-bar-height: 70px;
-$banner-height:250px;
+$banner-height: 250px;
 $content-container-width: 1366px;
 $primary: #ff8000;
 
-
-:export{
-    navBarHeight: $nav-bar-height;
-    contentContainerWidth: $content-container-width;
+:export {
+  navBarHeight: $nav-bar-height;
+  contentContainerWidth: $content-container-width;
 }

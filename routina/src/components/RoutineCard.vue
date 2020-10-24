@@ -3,36 +3,47 @@
     <div class="routine-container">
       <v-card class="routine-card" v-on:click="clickEvent" tile>
         <div class="routine-info">
-          <p class="text-uppercase text-caption font-weight-medium mb-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
+          <p class="text-uppercase mb-0">
+            <span class="type-label grey--text my-0"
               >ROUTINE TYPE</span
             >{{ routineData.type}}
           </p>
-          <p class="font-weight-medium my-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
+          <p class="my-0">
+            <span class="type-label grey--text my-0"
               >DURATION</span
             >
             <v-icon dense>mdi-timer-outline</v-icon>{{ routineData.duration }}
           </p>
-          <p class="text-uppercase text-caption font-weight-medium mb-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
+          <p class="text-uppercase mb-0">
+            <span class="type-label grey--text  my-0"
               >MUSCLE GROUP</span
             >
             {{ routineData.muscleGroup }}
           </p>
 
           <div>
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
+            <span class="type-label grey--text my-0"
               >DIFFICULTY</span
             >
             <DifficultyLevel
               class="difficulty-level white--text text-h6"
               :difficulty="2"
             />
+          </div>
+          <div>
+            <span class="type-label grey--text my-0">
+              RATING
+            </span>
+            <v-rating
+              class="rating"
+              :length="5"
+              :size="10"
+              dense
+              background-color="white"
+              color="white"
+              :readonly="true"
+              :value="routineData.rating"
+            ></v-rating>
           </div>
         </div>
         <img :src="routineData.image" class="card-image" />
@@ -103,10 +114,6 @@ export default {
 
 <style lang="scss">
 $card-height: 150px;
-$card-width: 150px;
-$card-title-height: 34px;
-$card-title-mult: 1.5;
-$routine-info-width: 75px;
 
 .v-slide-group__wrapper {
   contain: none !important;
@@ -119,11 +126,11 @@ $routine-info-width: 75px;
 
 <style scoped lang="scss">
 @import "~vuetify/src/styles/styles.sass";
-$card-height: 150px;
-$card-width: 150px;
+$card-height: 170px;
+$card-width: 170px;
 $card-title-height: 34px;
 $card-title-mult: 1.5;
-$routine-info-width: 75px;
+$routine-info-width: 80px;
 
 .editable {
   display: flex;
@@ -144,15 +151,17 @@ $routine-info-width: 75px;
   height: $card-height;
   width: $card-width;
   overflow: hidden;
-  position:relative;
-  display:grid;
+  position: absolute;
+  display: grid;
   transition-duration: 200ms;
   transition-property: width, height, transform !important;
-
+  font-weight: 600 !important;
   .type-label {
     display: block;
     visibility: hidden;
     opacity: 0;
+    font-size: 12px;
+    font-weight: 500;
     letter-spacing: -3px !important;
     max-height: 0;
     transition-duration: 200ms;
@@ -162,7 +171,7 @@ $routine-info-width: 75px;
 
 .routine-card:hover {
   $w-mult: 1.2;
-  $h-mult: 1.6;
+  $h-mult: 1.67;
   $center-dx: $card-width * $w-mult * 0.5 - $card-width * 0.5;
   $center-dy: $card-height * $h-mult * 0.5 - $card-height * 0.5;
 
@@ -175,12 +184,16 @@ $routine-info-width: 75px;
   .routine-info {
     width: $routine-info-width * 1.4;
     height: $card-height * $h-mult - $card-title-height * $card-title-mult;
-
+    font-weight: 600 !important;
     .type-label {
       opacity: 1;
       visibility: visible;
       letter-spacing: 0px !important;
       max-height: 20px;
+    }
+
+    .rating {
+      margin-top: -5px;
     }
   }
   .card-image {
@@ -200,7 +213,7 @@ $routine-info-width: 75px;
   position: absolute;
   right: 0px;
   z-index: 1;
-
+  font-size:12px;
   height: $card-height - $card-title-height;
   width: $routine-info-width;
   background-color: rgba(0, 0, 0, 0.7);
@@ -253,5 +266,11 @@ $routine-info-width: 75px;
   transition-duration: 200ms;
   transition-property: max-height, visibility, opacity !important;
   font-size: 80%;
+}
+
+.rating {
+  margin-top: -3px;
+  transition-duration: 200ms;
+  transition-property: margin-top !important;
 }
 </style>

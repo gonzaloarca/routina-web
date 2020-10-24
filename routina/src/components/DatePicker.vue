@@ -24,7 +24,13 @@
           :rules="[required]"
         ></v-text-field>
       </template>
-      <v-date-picker v-model="date" no-title scrollable color="primary">
+      <v-date-picker
+        v-model="date"
+        no-title
+        scrollable
+        color="primary"
+        :max="new Date().toISOString().substr(0, 10)"
+      >
         <v-spacer></v-spacer>
         <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
         <v-btn text color="primary" @click="$refs.menu.save(date)"> OK </v-btn>

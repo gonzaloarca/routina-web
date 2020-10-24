@@ -11,7 +11,15 @@
           <h1 class="my-0 text-uppercase">{{ data.name }}</h1>
           <p class="user-label">
             by
-            <v-btn text class="btn-fmt primary--text" router :to="'/generic-profile/'+data.routineId"><span class="primary--text">{{ data.creator.username }}</span></v-btn>
+            <v-btn
+              text
+              class="btn-fmt primary--text"
+              router
+              :to="'/generic-profile/' + data.routineId"
+              ><span class="primary--text">{{
+                data.creator.username
+              }}</span></v-btn
+            >
           </p>
         </div>
         <div style="display: flex; justify-content: center">
@@ -21,7 +29,7 @@
             x-small
             style="font-size: 13px"
             router
-            :to="'/routine/' + data.id +'/edit-routine'"
+            :to="'/routine/' + data.id + '/edit-routine'"
             ><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</v-btn
           >
         </div>
@@ -48,7 +56,7 @@
             <DifficultyLevel style="display: inline" :difficulty="2" />
           </v-col>
           <v-col class="text-uppercase">
-            <span class="type-label">Ratings</span>
+            <span class="type-label">Rating</span>
             <v-rating
               :length="5"
               :size="18"
@@ -83,7 +91,7 @@
             "
             rounded
             router
-            :to="'routine/'+data.routineId"
+            :to="'routine/' + data.routineId"
             class="goto-button ma-0 primary black--text font-weight-bold"
             >GO TO ROUTINE</v-btn
           >
@@ -91,7 +99,6 @@
             v-on:click="pressed = !pressed"
             icon
             class="like-button primary--text"
-    
           >
             <v-icon v-if="pressed" class="like-icon" dark> mdi-heart </v-icon>
             <v-icon v-if="!pressed" class="like-icon" dark>
@@ -100,44 +107,43 @@
           </v-btn>
         </div>
       </v-row>
-      <v-row style="display:flex; align-items:center; justify-content:center;">
-      <v-col class="exercise-container">
-        <div class="exercise-list" style="margin-top:10px;">
-          <div style="width:100%; background-color:grey darken-5; ">
-            <v-tabs class="tab-fmt" v-model="tab" :fixed-tabs="true">
-            <v-tab
-              v-for="round in data.cycles"
-              v-model="round.name"
-              :key="round.name"
-              class="tab-fmt"
-              
-            >
-              {{ round.name }}
-            </v-tab>
-          </v-tabs>
-          <div class="ma-5" style="background-color:rgb(30, 30, 30);">
-            <v-tabs-items class="black" v-model="tab">
-            <v-tab-item
-              v-for="round in data.cycles"
-              :key="round.name"
-              class="mx-2"
-            >
-              <div style="height: 250px">
-                <ExerciseList
-                  itemHeight="55"
-                  height="300"
-                  :transition="false"
-                  :exercises="round.exercises"
-                />
+      <v-row
+        style="display: flex; align-items: center; justify-content: center"
+      >
+        <v-col class="exercise-container">
+          <div class="exercise-list" style="margin-top: 10px">
+            <div style="width: 100%; background-color: grey darken-5">
+              <v-tabs class="tab-fmt" v-model="tab" :fixed-tabs="true">
+                <v-tab
+                  v-for="round in data.cycles"
+                  v-model="round.name"
+                  :key="round.name"
+                  class="tab-fmt"
+                >
+                  {{ round.name }}
+                </v-tab>
+              </v-tabs>
+              <div class="ma-5" style="background-color: rgb(30, 30, 30)">
+                <v-tabs-items class="black" v-model="tab">
+                  <v-tab-item
+                    v-for="round in data.cycles"
+                    :key="round.name"
+                    class="mx-2"
+                  >
+                    <div style="height: 250px">
+                      <ExerciseList
+                        itemHeight="55"
+                        height="300"
+                        :transition="false"
+                        :exercises="round.exercises"
+                      />
+                    </div>
+                  </v-tab-item>
+                </v-tabs-items>
               </div>
-            
-            </v-tab-item>
-          </v-tabs-items>  
+            </div>
           </div>
-          </div>  
-          
-        </div>
-      </v-col>
+        </v-col>
       </v-row>
       <!-- <v-row class="scrollers">
         <v-col class="scroller-container">
@@ -173,13 +179,13 @@
             </template>
           </v-virtual-scroll>
         </v-col> -->
-      <!-- </v-row> --> 
+      <!-- </v-row> -->
     </div>
   </v-overlay>
 </template>
 
 <script>
-import {RoutinesApi} from "../services/routines.js";
+import { RoutinesApi } from "../services/routines.js";
 import DifficultyLevel from "./DifficultyLevel.vue";
 import ExerciseList from "./ExerciseList.vue";
 export default {
@@ -187,15 +193,15 @@ export default {
   props: { overlay: Boolean, routineData: Object },
   data() {
     return {
-      tab:null,
+      tab: null,
       pressed: false,
-      data:{
-        creator:{
-          id:0,
-          username:""
-        }
-      }
-    }
+      data: {
+        creator: {
+          id: 0,
+          username: "",
+        },
+      },
+    };
   },
   components: { DifficultyLevel, ExerciseList },
   computed: {
@@ -214,15 +220,15 @@ export default {
       return;
     },
   },
-  watch:{
-    overlay: async function (newPressed, oldPressed){
-      if(newPressed == true && oldPressed==false){
+  watch: {
+    overlay: async function (newPressed, oldPressed) {
+      if (newPressed == true && oldPressed == false) {
         this.data = await RoutinesApi.getFullRoutine(this.routineData.id);
         this.data.image = this.routineData.image;
         console.log(this.data);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -235,11 +241,10 @@ export default {
   z-index: 10;
 }
 
-.btn-fmt{
-
+.btn-fmt {
   text-transform: none;
-  font-size:16px;
-  font-weight:600;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .card-buttons-container {
@@ -280,7 +285,7 @@ export default {
 .exercise-list {
   width: 700px;
   background-color: rgb(20, 20, 20);
-  min-height:fit-content;
+  min-height: fit-content;
   margin-bottom: 10px;
 }
 .scroller-container {
@@ -316,10 +321,9 @@ export default {
   position: relative;
   height: fit-content;
 }
-.tab-fmt{
-  background-color:rgb(50, 50, 50);
+.tab-fmt {
+  background-color: rgb(50, 50, 50);
   text-decoration-color: white;
-  
 }
 .card-image {
   z-index: -2;
@@ -448,9 +452,9 @@ export default {
   margin: 0;
   padding: 0;
   width: 700px;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -41,21 +41,6 @@ export default {
   },
   data() {
     return {
-      
-      // routines: [
-      //   //time esta en minutos
-      //   {
-      //     routineName: "Routine 1",
-      //     routineId: 1,
-      //     author: "Julian Sicardi",
-      //     type: "Cardio",
-      //     difficulty: 2,
-      //     muscleGroup: "Legs",
-      //     time: 45,
-      //     image: require("../assets/routine1.jpg"),
-      //   },
-     
-      // ],
       data: {},
       overlay: false,
       
