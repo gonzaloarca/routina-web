@@ -3,36 +3,47 @@
     <div class="routine-container">
       <v-card class="routine-card" v-on:click="clickEvent" tile>
         <div class="routine-info">
-          <p class="text-uppercase text-caption font-weight-medium mb-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
+          <p class="text-uppercase text-caption mb-0">
+            <span class="type-label grey--text text--lighten-1 my-0"
               >ROUTINE TYPE</span
             >{{ routineData.type }}
           </p>
-          <p class="font-weight-medium my-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
+          <p class="my-0">
+            <span class="type-label grey--text text--lighten-1 my-0"
               >DURATION</span
             >
             <v-icon dense>mdi-timer-outline</v-icon>{{ formatTime }}
           </p>
-          <p class="text-uppercase text-caption font-weight-medium mb-0">
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
+          <p class="text-uppercase text-caption mb-0">
+            <span class="type-label grey--text text--lighten-1 my-0"
               >MUSCLE GROUP</span
             >
             {{ routineData.muscleGroup }}
           </p>
 
           <div>
-            <span
-              class="type-label text-caption grey--text text--lighten-1 my-0"
+            <span class="type-label grey--text text--lighten-1 my-0"
               >DIFFICULTY</span
             >
             <DifficultyLevel
               class="difficulty-level white--text text-h6"
               :difficulty="2"
             />
+          </div>
+          <div>
+            <span class="type-label grey--text text--lighten-1 my-0">
+              RATING
+            </span>
+            <v-rating
+              class="rating"
+              :length="5"
+              :size="10"
+              dense
+              background-color="white"
+              color="white"
+              :readonly="true"
+              :value="3"
+            ></v-rating>
           </div>
         </div>
         <img :src="routineData.image" class="card-image" />
@@ -103,10 +114,6 @@ export default {
 
 <style lang="scss">
 $card-height: 150px;
-$card-width: 150px;
-$card-title-height: 34px;
-$card-title-mult: 1.5;
-$routine-info-width: 75px;
 
 .v-slide-group__wrapper {
   contain: none !important;
@@ -153,6 +160,8 @@ $routine-info-width: 75px;
     display: block;
     visibility: hidden;
     opacity: 0;
+    font-size: 12px;
+    font-weight: 600;
     letter-spacing: -3px !important;
     max-height: 0;
     transition-duration: 200ms;
@@ -162,7 +171,7 @@ $routine-info-width: 75px;
 
 .routine-card:hover {
   $w-mult: 1.2;
-  $h-mult: 1.6;
+  $h-mult: 1.7;
   $center-dx: $card-width * $w-mult * 0.5 - $card-width * 0.5;
   $center-dy: $card-height * $h-mult * 0.5 - $card-height * 0.5;
 
@@ -181,6 +190,10 @@ $routine-info-width: 75px;
       visibility: visible;
       letter-spacing: 0px !important;
       max-height: 20px;
+    }
+
+    .rating {
+      margin-top: -8px;
     }
   }
   .card-image {
@@ -253,5 +266,11 @@ $routine-info-width: 75px;
   transition-duration: 200ms;
   transition-property: max-height, visibility, opacity !important;
   font-size: 80%;
+}
+
+.rating {
+  margin-top: -3px;
+  transition-duration: 200ms;
+  transition-property: margin-top !important;
 }
 </style>

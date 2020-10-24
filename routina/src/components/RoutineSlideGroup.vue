@@ -44,6 +44,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -54,6 +55,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -64,6 +66,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -74,6 +77,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -84,6 +88,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -94,6 +99,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -104,6 +110,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -114,6 +121,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -124,6 +132,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -134,6 +143,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -144,6 +154,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
         {
@@ -154,6 +165,7 @@ export default {
           difficulty: 2,
           muscleGroup: "Legs",
           time: 45,
+          rating: 3,
           image: require("../assets/routine1.jpg"),
         },
       ],

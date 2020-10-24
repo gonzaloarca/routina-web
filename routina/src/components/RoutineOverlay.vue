@@ -48,7 +48,7 @@
             <DifficultyLevel style="display: inline" :difficulty="2" />
           </v-col>
           <v-col class="text-uppercase">
-            <span class="type-label">Ratings</span>
+            <span class="type-label">Rating</span>
             <v-rating
               :length="5"
               :size="18"
@@ -99,46 +99,46 @@
           </v-btn>
         </div>
       </v-row>
-      <v-row style="display:flex; align-items:center; justify-content:center;">
-      <v-col class="exercise-container">
-        <div class="exercise-list" style="margin-top:10px;">
-          <div style="width:100%; background-color:grey darken-5; ">
-            <v-tabs class="tab-fmt" v-model="tab" :fixed-tabs="true">
-            <v-tab
-              v-for="round in rounds"
-              v-model="round.name"
-              :key="round.name"
-              class="tab-fmt"
-              
-            >
-              {{ round.name }}
-            </v-tab>
-          </v-tabs>
-          <div class="ma-5" style="background-color:rgb(30, 30, 30);">
-            <v-tabs-items class="black" v-model="tab">
-            <v-tab-item
-              v-for="round in rounds"
-              :key="round.name"
-              class="mx-2"
-            >
-              <div style="height: 250px">
-                <ExerciseList
-                  itemHeight="55"
-                  height="300"
-                  
-                  v-on:swap-up="(index) => swapUp(index, round.exercises)"
-                  v-on:swap-down="(index) => swapDown(index, round.exercises)"
-                  :exercises="round.exercises"
-                />
+      <v-row
+        style="display: flex; align-items: center; justify-content: center"
+      >
+        <v-col class="exercise-container">
+          <div class="exercise-list" style="margin-top: 10px">
+            <div style="width: 100%; background-color: grey darken-5">
+              <v-tabs class="tab-fmt" v-model="tab" :fixed-tabs="true">
+                <v-tab
+                  v-for="round in rounds"
+                  v-model="round.name"
+                  :key="round.name"
+                  class="tab-fmt"
+                >
+                  {{ round.name }}
+                </v-tab>
+              </v-tabs>
+              <div class="ma-5" style="background-color: rgb(30, 30, 30)">
+                <v-tabs-items class="black" v-model="tab">
+                  <v-tab-item
+                    v-for="round in rounds"
+                    :key="round.name"
+                    class="mx-2"
+                  >
+                    <div style="height: 250px">
+                      <ExerciseList
+                        itemHeight="55"
+                        height="300"
+                        v-on:swap-up="(index) => swapUp(index, round.exercises)"
+                        v-on:swap-down="
+                          (index) => swapDown(index, round.exercises)
+                        "
+                        :exercises="round.exercises"
+                      />
+                    </div>
+                  </v-tab-item>
+                </v-tabs-items>
               </div>
-            
-            </v-tab-item>
-          </v-tabs-items>  
+            </div>
           </div>
-          </div>  
-          
-        </div>
-      </v-col>
+        </v-col>
       </v-row>
       <!-- <v-row class="scrollers">
         <v-col class="scroller-container">
@@ -174,7 +174,7 @@
             </template>
           </v-virtual-scroll>
         </v-col> -->
-      <!-- </v-row> --> 
+      <!-- </v-row> -->
     </div>
   </v-overlay>
 </template>
@@ -187,42 +187,48 @@ export default {
   props: { overlay: Boolean, routineData: Object },
   data() {
     return {
-      rounds: [{
-        name:"warm up",
-        exercises:[
-          { name: "ejercicio1" },
-          { name: "ejercicio2" },
-          { name: "ejercicio3" },
-          { name: "ejercicio4" },
-          { name: "ejercicio5" },
-          { name: "ejercicio6" },
-          { name: "ejercicio7" },
-          { name: "ejercicio8" },
-        ],},
-        {name:"round 1",
-        exercises: [
-          { name: "ejercicio1" },
-          { name: "ejercicio2" },
-          { name: "ejercicio3" },
-          { name: "ejercicio4" },
-          { name: "ejercicio5" },
-          { name: "ejercicio6" },
-          { name: "ejercicio7" },
-          { name: "ejercicio8" },
-        ],},
-        {name:"round 2",
-        exercises:[
-          { name: "ejercicio1" },
-          { name: "ejercicio2" },
-          { name: "ejercicio3" },
-          { name: "ejercicio4" },
-          { name: "ejercicio5" },
-          { name: "ejercicio6" },
-          { name: "ejercicio7" },
-          { name: "ejercicio8" },
-        ],},
+      rounds: [
+        {
+          name: "warm up",
+          exercises: [
+            { name: "ejercicio1" },
+            { name: "ejercicio2" },
+            { name: "ejercicio3" },
+            { name: "ejercicio4" },
+            { name: "ejercicio5" },
+            { name: "ejercicio6" },
+            { name: "ejercicio7" },
+            { name: "ejercicio8" },
+          ],
+        },
+        {
+          name: "round 1",
+          exercises: [
+            { name: "ejercicio1" },
+            { name: "ejercicio2" },
+            { name: "ejercicio3" },
+            { name: "ejercicio4" },
+            { name: "ejercicio5" },
+            { name: "ejercicio6" },
+            { name: "ejercicio7" },
+            { name: "ejercicio8" },
+          ],
+        },
+        {
+          name: "round 2",
+          exercises: [
+            { name: "ejercicio1" },
+            { name: "ejercicio2" },
+            { name: "ejercicio3" },
+            { name: "ejercicio4" },
+            { name: "ejercicio5" },
+            { name: "ejercicio6" },
+            { name: "ejercicio7" },
+            { name: "ejercicio8" },
+          ],
+        },
       ],
-      tab:null,
+      tab: null,
       pressed: false,
     };
   },
@@ -293,7 +299,7 @@ export default {
 .exercise-list {
   width: 700px;
   background-color: rgb(20, 20, 20);
-  min-height:fit-content;
+  min-height: fit-content;
   margin-bottom: 10px;
 }
 .scroller-container {
@@ -329,10 +335,9 @@ export default {
   position: relative;
   height: fit-content;
 }
-.tab-fmt{
-  background-color:rgb(50, 50, 50);
+.tab-fmt {
+  background-color: rgb(50, 50, 50);
   text-decoration-color: white;
-  
 }
 .card-image {
   z-index: -2;
@@ -461,9 +466,9 @@ export default {
   margin: 0;
   padding: 0;
   width: 700px;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
