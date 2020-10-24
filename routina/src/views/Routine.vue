@@ -3,8 +3,8 @@
     <div class="headers">
       <v-img src="../assets/routine1.jpg" class="routine-image" />
       <div class="routine-info">
-        <h1>{{routineData.routineName}}</h1>
-        <h2>by <v-btn text flat class="btn-fmt primary--text" router :to="'/generic-profile/'+routineData.author.id"><span>{{routine.author.name}}</span></v-btn></h2>
+        <h1>{{routineData.name}}</h1>
+        <h2>by <v-btn text class="btn-fmt primary--text" router :to="'/generic-profile/'+routineData.creator.id"><span>{{routineData.creator.username}}</span></v-btn></h2>
         <div style="height:15px; width:100%;"></div>
         <v-row class=" row-pad routine-specifications">
           <v-col class="col-pad text-uppercase">
@@ -21,13 +21,13 @@
           <v-col class="col-pad text-uppercase">
             <span class="type-label">MUSCLE GROUP</span>
             <br />
-            {{routine.muscleGroup}}
+            {{routineData.muscleGroup}}
           </v-col>
 
           <v-col class="col-pad text-uppercase">
             <span class="type-label">DIFFICULTY</span>
             <br />
-            <DifficultyLevel style="display: inline" :difficulty="routineData.difficulty" />
+            <DifficultyLevel style="display: inline" :difficulty="routineData.difficultyLevel" />
           </v-col>
 
           <v-col class="col-pad text-uppercase">
@@ -53,7 +53,7 @@
             x-big
             rounded
             router
-            :to="'/routine/'+this.id+'/edit-routine'"
+            :to="'/routine/'+id+'/edit-routine'"
             class="ma-0 black--text font-weight-black"
             color="white"
             ><span 
@@ -93,7 +93,7 @@
           <div class="ma-5" style="background-color:rgb(30, 30, 30);">
             <v-tabs-items class="black" v-model="tab">
             <v-tab-item
-              v-for="round in routineData.cycles"
+              v-for="round in routineData.rounds"
               :key="round.name"
               class="mx-2"
             >
@@ -101,9 +101,6 @@
                 <ExerciseList
                   itemHeight="55"
                   height="300"
-                  
-                  v-on:swap-up="(index) => swapUp(index, round.exercises)"
-                  v-on:swap-down="(index) => swapDown(index, round.exercises)"
                   :exercises="round.exercises"
                 />
               </div>
@@ -159,7 +156,13 @@ export default {
   data() {
     return {
       id:this.$route.params.id,
-      routineData:{},
+      idGiver:0,
+      routineData:{
+        creator:{
+          id:0
+        },
+        difficultyLevel:0
+      },
       // rounds: [{
       //   name:"warm up",
       //   exercises:[
@@ -198,13 +201,7 @@ export default {
 
       pressed: false,
       tab:null,
-      description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius ullam est quibusdam dolorem corrupti rem vero minima veniam delectus tempora et autem accusamus nobis quod placeat excepturi eveniet nisi accusantium aliquid error reiciendis molestias, vel sunt. Quas laborum nisi vero.",
-      created(){
-        RoutinesApi.getFullRoutine(this.id).then(function(data){
-            this.routineData=data.body;
-        });
-    },
-    
+      description:"Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius ullam est quibusdam dolorem corrupti rem vero minima veniam delectus tempora et autem accusamus nobis quod placeat excepturi eveniet nisi accusantium aliquid error reiciendis molestias, vel sunt. Quas laborum nisi vero.",  
     };
     
   },
@@ -214,6 +211,35 @@ export default {
       if(this.pressed) UserApi.addRoutineToUserFavorites(this.id)
       else UserApi.removeRoutineToUserFavorites(this.id)
     },
+  },
+  async created() {
+    let id=this.$route.params.id;
+    if(id==-1){
+      return;
+    }
+    let routine = await RoutinesApi.getFullRoutine(id);
+    this.routineData = routine;
+    console.log(routine);
+    this.routineData.name = routine.name;
+    this.routineData.type = routine.type;
+    this.routineData.muscleGroup = routine.muscleGroup;
+    this.routineData.difficultyLevel = routine.difficultyLevel;
+    this.routineData.rounds = [];
+    this.routineData.description=routine.detail;
+    this.routineData.duration = 0;
+    for (let round = 0; round < routine.cycles.length; round++) {
+      let cycle = routine.cycles[round];
+      let tmpRound = { name: cycle.name, exercises: [] };
+      for (let exercise = 0; exercise < cycle.exercises.length; exercise++) {
+        this.routineData.duration += cycle.exercises[exercise].duration;
+        let ex = Object.assign({}, cycle.exercises[exercise]);
+        ex.idGiver = this.idGiver;
+        tmpRound.exercises.push(ex);
+        this.idGiver += 2;
+      }
+      this.routineData.rounds.push(tmpRound);
+    }
+    console.log(this.routineData);
   }
 };
 </script>
