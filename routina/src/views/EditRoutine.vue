@@ -152,7 +152,6 @@
                   itemHeight="55"
                   height="300"
                   editable
-                  v-on:mounted="fetchDB"
                   v-on:remove="(itemIndex) => removeExercise(index, itemIndex)"
                   v-on:edit="(itemIndex) => editExercise(index, itemIndex)"
                   v-on:swap-up="
@@ -205,7 +204,7 @@
                 >
 
                 <v-overlay style="z-index: 100" :value="addingExercise">
-                  <v-card style="max-height: 70vh; overflow-y: scroll">
+                  <v-card >
                     <div style="display: flex">
                       <v-btn
                         v-on:click="addingExercise = false"
@@ -227,6 +226,7 @@
                     <v-data-table
                       v-model="selected"
                       :headers="headers"
+                      :footer-props="{disableItemsPerPage:true}"
                       :items="exercises"
                       item-key="name"
                       :search="search"
@@ -267,6 +267,7 @@
             style="border-color: rgb(255, 128, 0) !important; border-width: 2px"
             class="title black primary--text ma-2"
             rounded
+            v-on:click="$router.go(-1)"
             small
             >DISCARD CHANGES</v-btn
           >
@@ -356,7 +357,7 @@ export default {
       exerciseForEdit: null,
       idGiver: 0,
       sliderDuration: 1,
-      typeItems: ["Cardio", "Strength", "HIIT", "Yoga", "Pilates"],
+      typeItems: ["CARDIO", "STRENGTH", "HIIT", "YOGA", "PILATES"],
       muscleGroupItems: ["Full body", "Legs", "Arms"],
 
       headers: [
@@ -378,33 +379,36 @@ export default {
       selectedFile: null,
     };
   },
-  methods: {
-    async fetchDB() {
-      this.exercises = await this.getExercises();
-
-      let id = this.$route.params.id;
-      let routine = await RoutinesApi.getFullRoutine(id);
-      this.routineData.name = routine.name;
-      this.routineData.type = routine.type;
-      this.routineData.muscleGroup = routine.muscleGroup;
-      this.routineData.difficultyLevel = routine.difficultyLevel;
-      this.routineData.rounds = [];
-      this.routineData.duration = 0;
-      for (let round = 0; round < routine.cycles.length; round++) {
-        let cycle = routine.cycles[round];
-        let tmpRound = { name: cycle.name, exercises: [] };
-        for (let exercise = 0; exercise < cycle.exercises.length; exercise++) {
-          this.routineData.duration += cycle.exercises[exercise].duration;
-          let ex = Object.assign({}, cycle.exercises[exercise]);
-          ex.idGiver=this.idGiver;
-          tmpRound.exercises.push(ex);
-          this.idGiver += 2;
-        }
-        this.routineData.rounds.push(tmpRound);
+  async mounted() {
+    this.exercises = await this.getExercises();
+    await this.getExercisesImages();
+    let id = this.$route.params.id;
+    if(id==-1){
+      return;
+    }
+    let routine = await RoutinesApi.getFullRoutine(id);
+    this.routineData.name = routine.name;
+    this.routineData.type = routine.type;
+    this.routineData.muscleGroup = routine.muscleGroup;
+    this.routineData.difficultyLevel = routine.difficultyLevel;
+    this.routineData.rounds = [];
+    this.routineData.description=routine.detail;
+    this.routineData.duration = 0;
+    for (let round = 0; round < routine.cycles.length; round++) {
+      let cycle = routine.cycles[round];
+      let tmpRound = { name: cycle.name, exercises: [] };
+      for (let exercise = 0; exercise < cycle.exercises.length; exercise++) {
+        this.routineData.duration += cycle.exercises[exercise].duration;
+        let ex = Object.assign({}, cycle.exercises[exercise]);
+        ex.idGiver = this.idGiver;
+        tmpRound.exercises.push(ex);
+        this.idGiver += 2;
       }
-      await this.getExercisesImages();
-    },
+      this.routineData.rounds.push(tmpRound);
+    }
+  },
 
+  methods: {
     getExercisesImages: async function () {
       try {
         for (const exercise of this.exercises) {
@@ -436,6 +440,15 @@ export default {
       return result;
     },
 
+    getDuration() {
+      this.routineData.duration = 0;
+      this.routineData.rounds.forEach((round) => {
+        round.exercises.forEach((exercise) => {
+          this.routineData.duration += exercise.duration;
+        });
+      });
+    },
+
     async createRoutine() {
       //primero validar que haya al menos una rutina
       //crear la rutina
@@ -447,7 +460,7 @@ export default {
         }|${this.setDuration(this.duration)}`,
         true,
         levels[this.routineData.difficultyLevel],
-        { id: this.typeItems.indexOf(this.routineData.type) }
+        { id: this.typeItems.indexOf(this.routineData.type)+1 }
       );
       const res = await RoutinesApi.createRoutine(routine);
       const routineId = res.id;
@@ -477,6 +490,10 @@ export default {
           );
         }
       }
+     
+     console.log(routineId);
+
+     this.$router.replace('/routine/'+routineId);
     },
 
     swapUp(item, elements) {
@@ -505,8 +522,9 @@ export default {
       });
     },
     removeRound(roundIndex) {
-      this.tab--;
+      this.tab=0;
       this.routineData.rounds.splice(roundIndex, 1);
+      this.getDuration();
     },
     openExercise(roundIndex) {
       this.addingExercise = true;
