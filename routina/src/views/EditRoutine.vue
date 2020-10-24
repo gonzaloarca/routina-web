@@ -5,84 +5,107 @@
       <div class="routine-info">
         <div style="info-container">
           <h2>Now editing</h2>
-          <h1>{{ routineData.name }}</h1>
-          <h2>Originally made by<v-btn text class="btn-fmt primary--text" router :to="'/generic-profile/'+routineData.creator.id"><span>{{routineData.creator.username}}</span></v-btn></h2>
+          <h1
+            style="
+              width: 900px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            "
+          >
+            {{ routineData.name }}
+          </h1>
+          <div v-if="!routineData.name" style="height: 42px"></div>
+          <h2>
+            Originally made by<v-btn
+              text
+              class="btn-fmt primary--text"
+              router
+              :to="'/generic-profile/' + routineData.creator.id"
+              ><span>{{ routineData.creator.username }}</span></v-btn
+            >
+          </h2>
         </div>
       </div>
     </div>
-    <v-row class="info-container ma-8">
-      <v-col class="exercise-container">
+    <v-row class="info-container ma-8" justify="center">
+      <v-col cols="6" class="exercise-container">
         <div class="mx-2 title-container">
-          <div style="width: 250px; margin-top: 10px">
+          <div style="width: 550px; margin-top: 10px">
             <div class="ma-0 pa-0" style="background-color: rgba(0, 0, 0, 0.4)">
               <v-text-field
                 style="
-                  font-size: 30px;
-                  font-weight: 600;
-                  margin-left: 10px;
-                  margin-right: 10px;
+                  font-size: 25px;
+                  font-weight: 500;
+                  padding: 15px;
+                  padding-bottom: 5px;
                 "
                 background-color="transparent"
                 v-model="routineData.name"
-                placeholder="routine name"
+                label="Routine Name"
+                counter
+                maxlength="50"
                 append-icon="mdi-pencil"
-                hide-details
-                dense
               >
               </v-text-field>
             </div>
           </div>
         </div>
 
-        <div class="mx-3 my-4 types-container">
-          <div class="my-2 center-v">
-            <h3 class="mx-2">Type</h3>
+        <div
+          class="mx-6 my-6"
+          style="display: flex; justify-content: space-between"
+        >
+          <div>
+            <h4 class="mx-2">Type</h4>
             <div class="select-container">
               <v-select
                 :items="typeItems"
-                label="Type"
+                label="Select Type"
                 v-model="routineData.type"
                 return-object
                 single-line
-                class="primary black--text"
-                color="black"
-                light
+                filled
                 dense
-                hide-details="true"
+                background-color="primary"
+                class="black--text"
+                light
               ></v-select>
             </div>
           </div>
-          <div class="my-2 center-v">
-            <h3 class="mx-2">Muscle Group</h3>
+
+          <div>
+            <h4 class="mx-2">Muscle Group</h4>
             <div class="select-container">
               <v-select
                 :items="muscleGroupItems"
                 v-model="routineData.muscleGroup"
-                label="Muscle Group"
+                label="Select Group"
                 return-object
                 single-line
-                class="primary black--text"
-                color="black"
-                light
+                class="black--text"
+                background-color="primary"
+                filled
                 dense
-                hide-details="true"
+                light
               ></v-select>
             </div>
           </div>
-          <div class="my-2 center-v">
-            <h3 class="mx-2">Difficulty Level</h3>
+          <div>
+            <h4 class="mx-2">Difficulty Level</h4>
             <div class="select-container">
               <v-select
                 :items="[1, 2, 3, 4]"
-                label="level"
+                label="Select Level"
                 return-object
                 v-model="routineData.difficultyLevel"
                 single-line
-                class="primary black--text"
+                class="black--text"
                 color="black"
+                background-color="primary"
                 light
+                filled
                 dense
-                hide-details="true"
               ></v-select>
             </div>
           </div>
@@ -95,7 +118,7 @@
             v-if="routineData.rounds.length == 0"
           >
             <div>
-              <div class="center-h center-v"><h2>ADD A NEW ROUND!</h2></div>
+              <div class="center-h center-v"><h3>Add a new round!</h3></div>
               <div class="center-h center-v">
                 <v-btn v-on:click="addRound" icon rounded
                   ><v-icon class="primary--text">mdi-plus-circle</v-icon></v-btn
@@ -120,18 +143,16 @@
             >
               <div class="round-buttons-container">
                 <v-btn
-                  class="primary black--text ma-2"
+                  class="primary black--text ma-2 font-weight-bold"
                   v-on:click="addRound"
                   rounded
-                  small
-                  ><v-icon>mdi-plus-circle</v-icon>ADD ROUND</v-btn
+                  ><v-icon left>mdi-plus-circle</v-icon>ADD ROUND</v-btn
                 >
                 <v-btn
                   v-on:click="removeRound(index)"
-                  class="red darken-2 black--text ma-2"
+                  class="red darken-2 black--text font-weight-bold ma-2"
                   rounded
-                  small
-                  ><v-icon>mdi-delete</v-icon>REMOVE ROUND</v-btn
+                  ><v-icon left>mdi-delete</v-icon>REMOVE ROUND</v-btn
                 >
               </div>
               <div class="primary--text round-title-container">
@@ -140,9 +161,11 @@
                     v-model="round.name"
                     placeholder="round name"
                     style="width: 200px; font-size: 25px"
-                    background-color="transparent"
+                    background-color="grey darken-4"
                     append-icon="mdi-pencil"
-                    dense
+                    counter
+                    maxlength="100"
+                    class="my-2"
                   >
                   </v-text-field>
                 </div>
@@ -164,7 +187,7 @@
                 />
 
                 <v-overlay :value="edittingExercise">
-                  <v-card style="z-index=30">
+                  <v-card style="z-index=3">
                     <div>
                       <v-btn icon v-on:click="edittingExercise = false"
                         ><v-icon>mdi-close</v-icon></v-btn
@@ -197,14 +220,13 @@
               <div class="py-4" style="display: flex; justify-content: center">
                 <v-btn
                   v-on:click="openExercise(index)"
-                  class="primary black--text ma-2"
+                  class="primary black--text ma-2 font-weight-bold"
                   rounded
-                  small
-                  ><v-icon>mdi-plus-circle</v-icon>ADD EXERCISE</v-btn
+                  ><v-icon left>mdi-plus-circle</v-icon>ADD EXERCISE</v-btn
                 >
 
-                <v-overlay style="z-index: 100" :value="addingExercise">
-                  <v-card >
+                <v-overlay style="z-index: 5" :value="addingExercise">
+                  <v-card>
                     <div style="display: flex">
                       <v-btn
                         v-on:click="addingExercise = false"
@@ -226,7 +248,7 @@
                     <v-data-table
                       v-model="selected"
                       :headers="headers"
-                      :footer-props="{disableItemsPerPage:true}"
+                      :footer-props="{ disableItemsPerPage: true }"
                       :items="exercises"
                       item-key="name"
                       :search="search"
@@ -241,10 +263,9 @@
                     </v-data-table>
                     <div class="center-h">
                       <v-btn
-                        class="title primary black--text ma-2"
+                        class="primary black--text ma-2 font-weight-bold"
                         v-on:click="addExercise"
                         rounded
-                        small
                         >ADD</v-btn
                       >
                     </div>
@@ -254,26 +275,27 @@
             </v-tab-item>
           </v-tabs-items>
         </div>
-        <div class="mx-2" style="display: flex; justify-content: center">
+        <div
+          class="mx-2"
+          style="display: flex; justify-content: center; margin: 20px"
+        >
           <v-btn
             v-on:click="createRoutine"
-            class="title primary black--text ma-2"
+            class="title primary black--text ma-2 font-weight-bold"
             rounded
-            small
             >SAVE CHANGES</v-btn
           >
           <v-btn
             outlined
             style="border-color: rgb(255, 128, 0) !important; border-width: 2px"
-            class="title black primary--text ma-2"
+            class="title black primary--text ma-2 font-weight-bold"
             rounded
             v-on:click="$router.go(-1)"
-            small
             >DISCARD CHANGES</v-btn
           >
         </div>
       </v-col>
-      <v-col class="more-info">
+      <v-col cols="5" class="more-info">
         <div class="description-container">
           <div class="time-container">
             <v-icon>mdi-timer-outline</v-icon>
@@ -282,9 +304,8 @@
             </h3>
           </div>
           <div class="description">
-            <div class="description-title">
+            <div class="description-title my-3">
               <h3>Description</h3>
-              <v-btn x-large icon><v-icon>mdi-pencil</v-icon></v-btn>
             </div>
 
             <v-textarea
@@ -294,11 +315,12 @@
                 margin-left: 20px;
                 margin-right: 20px;
               "
-              placeholder="Enter here your description"
+              placeholder="Add a description"
               background-color="black"
               v-model="routineData.description"
               solo
               counter
+              maxlength="100"
               no-resize
               :rules="[(v) => v.length <= 150 || 'Max 150 characters']"
               flat
@@ -325,6 +347,7 @@
         </div> -->
       </v-col>
     </v-row>
+    <v-footer color="black" height="100"></v-footer>
   </div>
 </template>
 
@@ -357,8 +380,8 @@ export default {
       exerciseForEdit: null,
       idGiver: 0,
       sliderDuration: 1,
-      typeItems: ["CARDIO", "STRENGTH", "HIIT", "YOGA", "PILATES"],
-      muscleGroupItems: ["Full body", "Legs", "Arms"],
+      typeItems: ["Cardio", "Strength", "HIIT", "Yoga", "Pilates"],
+      muscleGroupItems: ["Full Body", "Legs", "Arms"],
 
       headers: [
         { text: "Name", value: "name" },
@@ -372,9 +395,9 @@ export default {
         muscleGroup: null,
         description: "",
         duration: 0,
-        creator:{
-          id:0,
-          username:"",
+        creator: {
+          id: 0,
+          username: "",
         },
         repeats: 0,
         rounds: [{ name: "round 1", exercises: [] }],
@@ -387,17 +410,17 @@ export default {
     this.exercises = await this.getExercises();
     await this.getExercisesImages();
     let id = this.$route.params.id;
-    if(id==-1){
+    if (id == -1) {
       return;
     }
     let routine = await RoutinesApi.getFullRoutine(id);
-    this.routineData.creator=routine.creator;
+    this.routineData.creator = routine.creator;
     this.routineData.name = routine.name;
     this.routineData.type = routine.type;
     this.routineData.muscleGroup = routine.muscleGroup;
     this.routineData.difficultyLevel = routine.difficultyLevel;
     this.routineData.rounds = [];
-    this.routineData.description=routine.detail;
+    this.routineData.description = routine.detail;
     this.routineData.duration = 0;
     for (let round = 0; round < routine.cycles.length; round++) {
       let cycle = routine.cycles[round];
@@ -465,7 +488,7 @@ export default {
         }|${this.setDuration(this.duration)}`,
         true,
         levels[this.routineData.difficultyLevel],
-        { id: this.typeItems.indexOf(this.routineData.type)+1 }
+        { id: this.typeItems.indexOf(this.routineData.type) + 1 }
       );
       const res = await RoutinesApi.createRoutine(routine);
       const routineId = res.id;
@@ -495,10 +518,10 @@ export default {
           );
         }
       }
-     
-     console.log(routineId);
 
-     this.$router.replace('/routine/'+routineId);
+      console.log(routineId);
+
+      this.$router.replace("/routine/" + routineId);
     },
 
     swapUp(item, elements) {
@@ -527,7 +550,7 @@ export default {
       });
     },
     removeRound(roundIndex) {
-      this.tab=0;
+      this.tab = 0;
       this.routineData.rounds.splice(roundIndex, 1);
       this.getDuration();
     },
@@ -583,6 +606,8 @@ export default {
 </style>
 
 <style scoped  lang="scss">
+@import "../sass/variables";
+
 .data-table-image-container {
   height: 50px;
   width: 100px;
@@ -600,18 +625,12 @@ export default {
   background-color: black;
 }
 
-.types-container {
-  background-color: transparent;
-}
-
 .select-container {
-  width: 100px;
+  width: 150px;
   position: relative;
-  margin-left: 15px;
-  margin-top: 0;
-  padding: 0;
-  z-index: 30;
-  right: 0;
+
+  z-index: 2;
+
   .v-input {
     margin: 0;
     padding: 0;
@@ -620,7 +639,7 @@ export default {
 
 .headers {
   position: relative;
-  height: 60vh;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -640,18 +659,17 @@ export default {
   padding: 0;
 }
 
-.btn-fmt{
-
+.btn-fmt {
   text-transform: none;
-  font-size:16px;
-  font-weight:600;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .routine-info {
   margin: auto;
   justify-self: center;
   position: absolute;
-  width: 50%;
+  width: 1000px;
   height: 50%;
   justify-content: center;
   align-items: center;
@@ -695,13 +713,16 @@ export default {
 }
 
 .info-container {
-  width: 60%;
+  width: $content-container-width - 150px;
   margin: auto !important;
+  margin-top: 20px !important;
 }
 
 .title-container {
   display: flex;
   align-items: center;
+  padding-top: 20px;
+  justify-content: center;
 }
 
 .exercise-container {
@@ -744,7 +765,7 @@ export default {
     background-color: rgb(116, 116, 116);
     .v-icon {
       color: black;
-      font-size: 60px;
+      font-size: 50px;
       padding: 10px;
       background-color: white;
     }
@@ -766,6 +787,8 @@ export default {
 .round-buttons-container {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+  margin-top: 20px;
 }
 
 .round-title-container {
