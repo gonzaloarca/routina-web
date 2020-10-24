@@ -29,7 +29,7 @@
       <v-card class="content-container">
         <h1>Recommended routines</h1>
         <h2>Just for you</h2>
-        <RoutineSlideGroup />
+        <RoutineSlideGroup :routines="routines"/>
       </v-card>
       <!-- <div class="content-container">
         <h1>Recommended routines</h1>
@@ -50,6 +50,9 @@ import RoutinesBanner from "../components/RoutinesBanner";
 export default {
   name: "Home",
   components: { RoutineSlideGroup, SpecialRoutineBanner, RoutinesBanner },
+  async created(){
+    await this.getRouts();
+  },
   data() {
     return {
       colors: [
@@ -61,26 +64,40 @@ export default {
       ],
       slides: ["First", "Second", "Third", "Fourth", "Fifth"],
       specialRoutine1: {
-        routineName: "Routine 1",
-        routineId: 1,
+        creator:{username:"agustin pelusalinsky"},
+        name: "Routine 1",
+        id: 1,
         author: "Julian Sicardi",
         type: "Cardio",
         difficulty: 2,
         muscleGroup: "Legs",
         time: 45,
+        username:"specialX",
         image: require("../assets/routine1.jpg"),
       },
-      routines:this.getRouts,
+      routines:[],
     };
   },
   methods:{
     async getRouts(){
-      const res = await RoutinesApi.getRoutines();
-      return await res.results; //hay que convertirlo al tipo de datos de slide-group
+      const res = await RoutinesApi.getSlideRoutines();
+      console.log("GET ROUTS");
+      console.log(res);
+      this.routines = res; //hay que convertirlo al tipo de datos de slide-group
+      console.log(this.routines);
+// averageRating: 0
+// category: {id: 6, name: "PILATES", detail: ""}
+// creator: {id: 3, username: "agustormakh", gender: "male", avatarUrl: "https://flic.kr/p/3ntH2u", dateCreated: 1603148436050, …}
+// dateCreated: 1603518889041
+// detail: "Lorem ipsum dolor sit amet, consectetur adipiscing elit | Legs | 15-30"
+// difficulty: "beginner"
+// id: 2
+// isPublic: true
+// name: "medium Arms"
     },
     getFullRoutine:async function(id){
       try {
-        const res = await RoutinesApi.getFullRoutine(id);
+        const res = await RoutinesApi.getSlideRoutines(id);
         console.log(res);
       } catch (error) {
         console.log(error);

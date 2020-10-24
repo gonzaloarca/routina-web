@@ -7,7 +7,7 @@
             <span
               class="type-label text-caption grey--text text--lighten-1 my-0"
               >ROUTINE TYPE</span
-            >{{ routineData.type }}
+            >{{ routineData.type}}
           </p>
           <p class="font-weight-medium my-0">
             <span
@@ -37,9 +37,9 @@
         </div>
         <img :src="routineData.image" class="card-image" />
         <div class="card-title white--text">
-          <p class="my-0 text-uppercase">{{ routineData.routineName }}</p>
+          <p class="my-0 text-uppercase">{{ routineData.name }}</p>
           <p class="user-label my-0">
-            by <span class="primary--text">{{ routineData.author }}</span>
+            by <span class="primary--text">{{ routineData.creator.username }}</span>
           </p>
         </div>
       </v-card>
@@ -63,6 +63,10 @@
 import DifficultyLevel from "./DifficultyLevel.vue";
 import RoutineOverlay from "./RoutineOverlay.vue";
 export default {
+  mounted(){
+    console.log("routine CARD");
+    console.log(this.routineData);
+  },
   name: "RoutineCard",
   data() {
     return {

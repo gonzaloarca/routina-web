@@ -28,8 +28,13 @@
             Weighting Recorded</span
           >
         </div>
-        <div class="weight-container center"><span>65.1kg</span></div>
-        <div>
+        <div :v-if="weightings.size!=0" class="weight-container center"><span>{{weightings[weightings.size].weight}}</span></div>
+       
+          <div  class="no-weights" >
+              <h3>No weightings recorded</h3>
+
+          </div>
+       <div>
           <v-btn
             x-big
             rounded
@@ -60,7 +65,13 @@
             History</span
           >
         </div>
-        <div class="center" v-if="routines.size!=0">
+        <div v-if="weightings.length==0" >
+          <div class="no-weights">
+            <h3>No weightings recorded</h3>
+
+          </div>
+        </div>
+        <div class="center" v-else>
           <div class="scroller">
             <v-list-item
               v-for="item in graphData.value"
@@ -108,9 +119,7 @@
             </v-list-item>
           </div>
         </div>
-        <div v-else >
-          <h3>No weightings recorded</h3>
-        </div>
+       
         <div>
           <v-btn
             x-big
@@ -147,7 +156,10 @@ export default {
   name: "Weights",
   components: { OverlayWeighting, OverlayGraph },
   props: {
-    weightings: Array,
+    weightings: {
+      type:Array,
+      default:null,},
+
     withOverlay: {
       type: Boolean,
       default: false,
@@ -192,6 +204,12 @@ export default {
   font-size: 40px;
 }
 
+.no-weights{
+
+  background-color: rgb(23, 23, 23);
+  height: 150px;
+  font-size: 18px;
+}
 .center {
   display: flex;
   align-items: center;
