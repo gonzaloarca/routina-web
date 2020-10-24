@@ -86,7 +86,9 @@ import {UserApi,FullWeighting} from "@/services/user.js";
     },
     
     async addWeighting(){
-      return await UserApi.addWeightingToUser(new FullWeighting(this.weighting, 1.5),);
+      const res=await UserApi.addWeightingToUser(new FullWeighting(this.weighting, 1.5),);
+      console.log(res);
+      this.closeOverlayWeight(); 
     },
   },
 };

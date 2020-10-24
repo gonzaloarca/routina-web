@@ -28,13 +28,12 @@
             Weighting Recorded</span
           >
         </div>
-        <div :v-if="weightings.size!=0" class="weight-container center"><span>{{weightings[weightings.size].weight}}</span></div>
-       
-          <div  class="no-weights" >
+        <div v-if="weightings.length!=0" class="weight-container center"><span>{{weightings[weightings.length-1].weight}}</span></div>
+          <div v-else class="no-weights" >
               <h3>No weightings recorded</h3>
-
           </div>
-       <div>
+      
+       <div >
           <v-btn
             x-big
             rounded
@@ -81,13 +80,10 @@
                 margin: auto;
                 margin-top: 10px;
                 background-color: rgb(66, 66, 66);
-                width: 95%;
-              "
-            >
+                width: 95%;">
               <div
                 class="white black--text"
-                style="left: 0; position: absolute; width: 20%; height: 100%"
-              >
+                style="left: 0; position: absolute; width: 20%; height: 100%">
                 <p class="ma-0 mt-1 font-weight-medium" style="font-size: 14px">
                   {{ graphData.date }}
                 </p>
@@ -118,16 +114,17 @@
               </div>
             </v-list-item>
           </div>
-        </div>
+        
        
-        <div>
-          <v-btn
-            x-big
-            rounded
-            class="my-6 primary black--text font-weight-bold"
-            v-on:click="clickGraph"
-            ><span>SHOW GRAPH</span></v-btn
-          >
+          <div>
+            <v-btn
+              x-big
+              rounded
+              class="my-6 primary black--text font-weight-bold"
+              v-on:click="clickGraph"
+              ><span>SHOW GRAPH</span></v-btn
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -158,7 +155,7 @@ export default {
   props: {
     weightings: {
       type:Array,
-      default:null,},
+      },
 
     withOverlay: {
       type: Boolean,

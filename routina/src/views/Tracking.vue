@@ -69,7 +69,7 @@ export default {
       //     weight: 60.2,
       //   },
       // ],
-      weightings: null,
+      weightings: [],
     };
   },
   methods:{

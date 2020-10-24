@@ -52,6 +52,7 @@ export default {
   components: { RoutineSlideGroup, SpecialRoutineBanner, RoutinesBanner },
   async created(){
     await this.getRouts();
+    
   },
   data() {
     return {
@@ -97,7 +98,7 @@ export default {
     },
     getFullRoutine:async function(id){
       try {
-        const res = await RoutinesApi.getSlideRoutines(id);
+        const res = await RoutinesApi.getFullRoutine(id);
         console.log(res);
       } catch (error) {
         console.log(error);

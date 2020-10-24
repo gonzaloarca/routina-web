@@ -241,6 +241,7 @@ class RoutineSlide{
         this.type = RoutineReal.categoryIdToType(routine.category.id);
         //this.type = routine.category.id;
         this.difficultyLevel = RoutineReal.difficultyEnumToNum(routine.difficulty); 
+        this.averageRating = routine.averageRating;
         this.creator = {};
         this.creator.avatarUrl = routine.creator.avatarUrl;
         this.creator.gender = routine.creator.gender;
