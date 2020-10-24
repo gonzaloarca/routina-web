@@ -1,6 +1,6 @@
 import { Api } from './api.js';
 
-export { RoutinesApi,Routine,Cycle,Exercise,Rating,ImageModel,RoutineReal};
+export { RoutinesApi,Routine,Cycle,Exercise,Rating,ImageModel,RoutineReal,RoutineSlide};
 
 class RoutinesApi {
 
@@ -31,7 +31,75 @@ class RoutinesApi {
         return routine;
     }
 
-    static async getFullRoutines(){
+    static async getSlideRoutines(){
+        const routinesResponses = await this.getRoutines();
+        const routines = routinesResponses.results;
+        let skipped=0;
+        const result = [];
+        for(let i=0;i<routines.length;i++){
+            try{
+                let routine = new RoutineSlide(routines[i]);
+           
+            const cyclesResponse = await this.getRoutineCycles(routine.id);
+            
+            let cycleId = cyclesResponse.results[0].id;
+            const exercisesRes = await this.getCycleExcercises(routine.id,cycleId);
+            
+            const imageRes = await this.getExerciseImages(routine.id,cycleId,exercisesRes.results[0].id);
+            
+            routine.addImage(imageRes.results[0].url)
+            result[i-skipped] =  routine;
+            }catch(error){
+                console.log("slide routine error " + error);
+                console.log(routines[i]);
+                skipped++;
+            }
+            
+        }
+        return result;
+        
+        // console.log("RUTINA ANTES DE SER CASTEADA");
+        // console.log(routineResponse);
+        // //descargar todos los ciclos
+        // const cyclesResponse = await this.getRoutineCycles(id,);
+        // const cycles = cyclesResponse.results;
+        // routine.addCycles(cycles);
+        // for(let i=0;i<cycles.length;i++){
+        //     const cycleId = cycles[i].id;
+        //     const exercisesRes = await this.getCycleExcercises(id,cycleId);
+        //     routine.addExercisesToCycles(i,exercisesRes);
+        //     for(let j=0;j<exercisesRes.results.length;j++){
+        //         let exercise = exercisesRes.results[j];
+        //         const imagesRes = await this.getExerciseImages(id,cycleId,exercise.id);
+        //         routine.addImagesToExercise(i,j,imagesRes);
+        //     }
+        // }
+        // return routine;
+    }
+
+    static async getFullRoutines(id){
+        const routineResponse =  await this.getRoutine(id);
+        let routine = new RoutineReal(routineResponse);
+        console.log("RUTINA ANTES DE SER CASTEADA");
+        console.log(routineResponse);
+        //descargar todos los ciclos
+        const cyclesResponse = await this.getRoutineCycles(id,);
+        const cycles = cyclesResponse.results;
+        routine.addCycles(cycles);
+        for(let i=0;i<cycles.length;i++){
+            const cycleId = cycles[i].id;
+            const exercisesRes = await this.getCycleExcercises(id,cycleId);
+            routine.addExercisesToCycles(i,exercisesRes);
+            for(let j=0;j<exercisesRes.results.length;j++){
+                let exercise = exercisesRes.results[j];
+                const imagesRes = await this.getExerciseImages(id,cycleId,exercise.id);
+                routine.addImagesToExercise(i,j,imagesRes);
+            }
+        }
+        return routine;
+    }
+
+    static async getFullRoutinesSMT(){
         const parameters="size=500";
         const routineResponses = await Api.get(`${RoutinesApi.url}/?${parameters}`, true);
         let routines = [];
@@ -160,6 +228,75 @@ class Routine{
         this.difficulty=difficulty;
         this.category=category;
     }
+}
+
+class RoutineSlide{
+    constructor(routine){
+        this.id = routine.id;
+        this.name = routine.name;
+        let piped = routine.detail.split("|");
+        this.detail = piped[0];
+        this.muscleGroup = piped[1];
+        this.duration = piped[2];
+        this.type = RoutineReal.categoryIdToType(routine.category.id);
+        //this.type = routine.category.id;
+        this.difficultyLevel = RoutineReal.difficultyEnumToNum(routine.difficulty); 
+        this.creator = {};
+        this.creator.avatarUrl = routine.creator.avatarUrl;
+        this.creator.gender = routine.creator.gender;
+        this.creator.username = routine.creator.username;
+        this.creator.id = routine.creator.id;
+        this.creator.dateCreated = routine.creator.dateCreated;
+        this.creator.dateLastActive = routine.creator.dateLastActive;
+    }
+
+    addFirstCycle(cycles){
+        this.cycles = cycles;
+    }
+
+    addExercisesToCycles(indexCycle,exercises){
+        this.cycles[indexCycle].exercises = exercises.results;
+    }
+
+    addImage(imagesRes){
+        this.image = imagesRes;
+    }
+
+    static categoryIdToType(id){
+        switch(id){
+            case 1:
+                return "CARDIO";
+            case 2:
+                return "STRENGTH";
+            case 3:
+                return "HIIT";
+            case 4:
+                return "YOGA";
+            case 5:
+                return "PILATES";
+            default:
+                return null;
+        }
+    }
+
+    static difficultyEnumToNum(difficulty){
+        switch(difficulty){
+            case "rookie":
+                return 0;
+            case "beginner":
+                return 1;
+            case "intermediate":
+                return 2;
+            case "advanced":
+                return 3;
+            case "expert":
+                return 4;
+            default:
+                return null;
+        }
+    }
+    
+    
 }
 
 class RoutineReal{

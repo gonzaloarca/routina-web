@@ -24,11 +24,14 @@
 import Stats from "../components/Tracking/Stats.vue";
 import Weights from "../components/Tracking/Weights.vue";
 import RoutinesBanner from "../components/RoutinesBanner.vue";
-// import UserApi from "@/services/user.js";
+import {UserApi} from "../services/user.js";
 
 export default {
   name: "Tracking",
   components: { Weights, Stats, RoutinesBanner },
+  created(){
+    this.getUserWeightings();
+  },
   data() {
     return {
       tab: null,
@@ -66,13 +69,13 @@ export default {
       //     weight: 60.2,
       //   },
       // ],
-      weightings: [],
+      weightings: null,
     };
   },
   methods:{
     async getUserWeightings(){
-      // const res= await UserApi.getWeightingFromUser();
-      // const toRet=res.results;
+      const res= await UserApi.getWeightingFromUser();
+      this.weightings=res.results;
 
     }
   }
