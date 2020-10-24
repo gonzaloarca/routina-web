@@ -11,6 +11,7 @@ import RegisterUser from "../views/RegisterUser.vue";
 import Settings from "../views/Settings.vue";
 import MyProfile from "../views/MyProfile.vue";
 import CreateExercise from "../views/CreateExercise.vue";
+import VerifyEmail from "../views/VerifyEmail.vue";
 
 Vue.use(VueRouter);
 
@@ -69,6 +70,11 @@ const routes = [
     path: "/create-exercise",
     name: "CreateExercise",
     component: CreateExercise,
+  },
+  {
+    path: "/verify-email",
+    name: "VerifyEmail",
+    component: VerifyEmail,
   },
 ];
 
