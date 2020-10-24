@@ -3,7 +3,6 @@
     <div class="headers">
       <v-img src="../assets/routine1.jpg" class="routine-image" />
       <div class="routine-info">
-        
         <div style="info-container">
           <h2>Now editing</h2>
           <h1>{{ routineData.name }}</h1>
@@ -153,6 +152,7 @@
                   itemHeight="55"
                   height="300"
                   editable
+                  v-on:mounted="fetchDB"
                   v-on:remove="(itemIndex) => removeExercise(index, itemIndex)"
                   v-on:edit="(itemIndex) => editExercise(index, itemIndex)"
                   v-on:swap-up="
@@ -205,8 +205,8 @@
                 >
 
                 <v-overlay style="z-index: 100" :value="addingExercise">
-                  <v-card  style="max-height:70vh; overflow-y:scroll">
-                    <div style="display: flex;">
+                  <v-card style="max-height: 70vh; overflow-y: scroll">
+                    <div style="display: flex">
                       <v-btn
                         v-on:click="addingExercise = false"
                         icon
@@ -255,7 +255,11 @@
           </v-tabs-items>
         </div>
         <div class="mx-2" style="display: flex; justify-content: center">
-          <v-btn v-on:click="createRoutine" class="title primary black--text ma-2" rounded small
+          <v-btn
+            v-on:click="createRoutine"
+            class="title primary black--text ma-2"
+            rounded
+            small
             >SAVE CHANGES</v-btn
           >
           <v-btn
@@ -272,7 +276,9 @@
         <div class="description-container">
           <div class="time-container">
             <v-icon>mdi-timer-outline</v-icon>
-            <h3>Estimated Duration Time: {{this.routineData.duration}} minutes</h3>
+            <h3>
+              Estimated Duration Time: {{ this.routineData.duration }} minutes
+            </h3>
           </div>
           <div class="description">
             <div class="description-title">
@@ -348,9 +354,9 @@ export default {
       addingExercise: false,
       edittingExercise: false,
       exerciseForEdit: null,
-      idGiver:0,
+      idGiver: 0,
       sliderDuration: 1,
-      typeItems: ["Cardio", "Strength", "HIIT","Yoga","Pilates"],
+      typeItems: ["Cardio", "Strength", "HIIT", "Yoga", "Pilates"],
       muscleGroupItems: ["Full body", "Legs", "Arms"],
 
       headers: [
@@ -372,116 +378,107 @@ export default {
       selectedFile: null,
     };
   },
-  async mounted() {
-    console.log(
-      "GEEEEEEEEEEEEET   EXERCISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEES"
-    );
-    this.exercises = await this.getExercises();
-
-    
-
-    let id = this.$route.params.id;
-    console.log(id);
-    let routine = await RoutinesApi.getFullRoutine(id);
-    console.log(routine);
-    this.routineData.name = routine.name;
-    this.routineData.type=routine.type;
-    this.routineData.muscleGroup = routine.muscleGroup;
-    this.routineData.difficultyLevel = routine.difficultyLevel;
-    this.routineData.rounds=[];
-    this.routineData.duration=0;
-    for(let round = 0; round<routine.cycles.length; round++){
-      let cycle = routine.cycles[round];
-      this.routineData.rounds[round]={name:cycle.name, exercises:[]};
-      for(let exercise = 0; exercise<cycle.exercises.length; exercise++){
-          this.routineData.duration += cycle.exercises[exercise].duration;
-          let ex = cycle.exercises[exercise];
-          this.routineData.exercises[exercise] ={idGiver:this.idGiver, name:ex.name, duration:ex.duration, image:ex.image};
-          this.routineData.exercises[exercise].idGiver = this.idGiver;
-          this.idGiver++;
-      }
-    }
-    await this.getExercisesImages();
-
-
-  },
   methods: {
+    async fetchDB() {
+      this.exercises = await this.getExercises();
+
+      let id = this.$route.params.id;
+      let routine = await RoutinesApi.getFullRoutine(id);
+      this.routineData.name = routine.name;
+      this.routineData.type = routine.type;
+      this.routineData.muscleGroup = routine.muscleGroup;
+      this.routineData.difficultyLevel = routine.difficultyLevel;
+      this.routineData.rounds = [];
+      this.routineData.duration = 0;
+      for (let round = 0; round < routine.cycles.length; round++) {
+        let cycle = routine.cycles[round];
+        let tmpRound = { name: cycle.name, exercises: [] };
+        for (let exercise = 0; exercise < cycle.exercises.length; exercise++) {
+          this.routineData.duration += cycle.exercises[exercise].duration;
+          let ex = Object.assign({}, cycle.exercises[exercise]);
+          ex.idGiver=this.idGiver;
+          tmpRound.exercises.push(ex);
+          this.idGiver += 2;
+        }
+        this.routineData.rounds.push(tmpRound);
+      }
+      await this.getExercisesImages();
+    },
+
     getExercisesImages: async function () {
-      console.log(this.exercises);
       try {
         for (const exercise of this.exercises) {
           const res = await RoutinesApi.getExerciseImages(1, 1, exercise.id);
           exercise.image = await res.results[0].url;
         }
-        console.log(this.exercises);
       } catch (error) {
         console.log(error);
       }
     },
     getExercises: async function () {
       const res = await RoutinesApi.getCycleExcercises(1, 1);
-      console.log(res);
       return res.results;
     },
-    setDuration(duration){
+    setDuration(duration) {
       let result = "";
-     
-      if(duration <15){
+
+      if (duration < 15) {
         result = "under 15";
-      }else if(duration<30){
+      } else if (duration < 30) {
         result = "15-30";
-      }else if(duration<45){
+      } else if (duration < 45) {
         result = "30-45";
-      }else if(duration<60){
+      } else if (duration < 60) {
         result = "45-60";
-      }else{
-        result="above 60";
+      } else {
+        result = "above 60";
       }
       return result;
     },
-    
-  async createRoutine() {
-        //primero validar que haya al menos una rutina
-        //crear la rutina
-        let levels=["rookie","beginner","intermediate","advanced","expert"];
-        const routine = new Routine(
-            this.routineData.name,
-            `${this.routineData.description}|${this.routineData.muscleGroup}|${this.setDuration(this.duration)}`,
-            true,
-            levels[this.routineData.difficultyLevel],
-            {id:this.typeItems.indexOf(this.routineData.type)}
-        );
-        const res = await RoutinesApi.createRoutine(routine);
-        const routineId = res.id;
-        //crear los ciclos
-        for (const cycle of this.routineData.rounds) {
-            let index = this.routineData.rounds.indexOf(cycle);
-            const cycleResponse = await RoutinesApi.createRoutineCycle(
-                routineId,
-                new Cycle(cycle.name, "detail", "exercise", index+1, 1)
-            );
 
-            const cycleId = cycleResponse.id;
-            //crear los ejercicios de cada cycle
-            for (const exercise of cycle.exercises) {
-                const exerciseResponse = await RoutinesApi.createCycleExercise(
-                    routineId,
-                    cycleId,
-                    new Exercise(exercise.name,"", "exercise", exercise.duration, 0)
-                );
-                const exerciseId = exerciseResponse.id;
-                //subir las imagenes de cada ejercicio
-                await RoutinesApi.createExerciseImage(
-                    routineId,
-                    cycleId,
-                    exerciseId,
-                    new ImageModel(1, exercise.image)
-                );
-            }
+    async createRoutine() {
+      //primero validar que haya al menos una rutina
+      //crear la rutina
+      let levels = ["rookie", "beginner", "intermediate", "advanced", "expert"];
+      const routine = new Routine(
+        this.routineData.name,
+        `${this.routineData.description}|${
+          this.routineData.muscleGroup
+        }|${this.setDuration(this.duration)}`,
+        true,
+        levels[this.routineData.difficultyLevel],
+        { id: this.typeItems.indexOf(this.routineData.type) }
+      );
+      const res = await RoutinesApi.createRoutine(routine);
+      const routineId = res.id;
+      //crear los ciclos
+      for (const cycle of this.routineData.rounds) {
+        let index = this.routineData.rounds.indexOf(cycle);
+        const cycleResponse = await RoutinesApi.createRoutineCycle(
+          routineId,
+          new Cycle(cycle.name, "detail", "exercise", index + 1, 1)
+        );
+
+        const cycleId = cycleResponse.id;
+        //crear los ejercicios de cada cycle
+        for (const exercise of cycle.exercises) {
+          const exerciseResponse = await RoutinesApi.createCycleExercise(
+            routineId,
+            cycleId,
+            new Exercise(exercise.name, "", "exercise", exercise.duration, 0)
+          );
+          const exerciseId = exerciseResponse.id;
+          //subir las imagenes de cada ejercicio
+          await RoutinesApi.createExerciseImage(
+            routineId,
+            cycleId,
+            exerciseId,
+            new ImageModel(1, exercise.image)
+          );
         }
-      console.log(res);
+      }
     },
-    
+
     swapUp(item, elements) {
       if (item > 0) {
         this.swap(item, item - 1, elements);
@@ -500,14 +497,6 @@ export default {
       elements[id2].idGiver--;
       elements[id1].idGiver++;
       elements[id1].idGiver--;
-
-
-      elements[id2].idGiver++;
-      elements[id2].idGiver--;
-      elements[id1].idGiver++;
-      elements[id1].idGiver--;
-
-
     },
     addRound() {
       this.routineData.rounds.push({
@@ -527,14 +516,13 @@ export default {
     addExercise() {
       this.addingExercise = false;
       let cycle = this.routineData.rounds[this.roundIndex];
-      this.selected.forEach(exercise =>{
-        this.routineData.duration+=exercise.duration;
+      this.selected.forEach((exercise) => {
+        this.routineData.duration += exercise.duration;
         let ex = Object.assign({}, exercise);
-        ex.idGiver=this.idGiver;
-        this.idGiver++;
+        ex.idGiver = this.idGiver;
+        this.idGiver += 2;
         cycle.exercises.push(ex);
       });
-      
     },
     removeExercise(roundIndex, exerciseIndex) {
       let cycle = this.routineData.rounds[roundIndex];
@@ -549,8 +537,9 @@ export default {
       this.sliderDuration = this.exerciseForEdit.duration;
     },
     saveExercise() {
-      this.edittingExercise=false;
-      this.routineData.duration += this.sliderDuration - this.exerciseForEdit.duration;
+      this.edittingExercise = false;
+      this.routineData.duration +=
+        this.sliderDuration - this.exerciseForEdit.duration;
       this.exerciseForEdit.duration = this.sliderDuration;
     },
   },

@@ -44,6 +44,9 @@ export default {
       rerender: 0,
     };
   },
+  mounted(){
+    this.$emit("mounted");
+  },
   methods: {
     async swapUp(item) {
       let actualIndex = this.exercises.indexOf(item);
