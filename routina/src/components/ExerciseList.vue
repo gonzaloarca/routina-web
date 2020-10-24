@@ -1,7 +1,7 @@
 <template>
   <div class="scroller-container">
     <div class="scroller">
-      <transition-group name="swap" :key="rerender" tag="div">
+      <transition-group v-if="transition" name="swap" :key="rerender" tag="div">
         <v-list-item v-for="item in exercises" class="item" :key="item.idGiver">
           <v-row class="excercise-row">
             <v-col class="ma-0 pa-0"
@@ -26,6 +26,31 @@
           </v-row>
         </v-list-item>
       </transition-group>
+      <div v-else :key="rerender">
+        <v-list-item v-for="item in exercises" class="item" :key="item.idGiver">
+          <v-row class="excercise-row">
+            <v-col class="ma-0 pa-0"
+              ><img :src="item.image"
+            /></v-col>
+            <v-col> {{ item.duration }} ' </v-col>
+            <v-col> {{ item.name }} </v-col>
+            <v-col v-if="editable" class="editable ma-0 pa-0">
+              <v-btn v-on:click="edit(item)"  x-small class="ma-0 pa-0" icon
+                ><v-icon class="ma-0 pa-0">mdi-pencil</v-icon></v-btn
+              >
+              <v-btn v-on:click="swapUp(item)" x-small class="ma-0 pa-0" icon
+                ><v-icon class="ma-0 pa-0">mdi-arrow-up</v-icon></v-btn
+              >
+              <v-btn v-on:click="swapDown(item)" x-small class="ma-0 pa-0" icon
+                ><v-icon class="ma-0 pa-0">mdi-arrow-down</v-icon></v-btn
+              >
+              <v-btn v-on:click="remove(item)" x-small class="ma-0 pa-0" icon
+                ><v-icon class="ma-0 pa-0">mdi-close</v-icon></v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-list-item>
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +63,7 @@ export default {
     itemHeight: String,
     height: String,
     editable: { type: Boolean, default: false },
+    transition: { type: Boolean, default: true },
   },
   data() {
     return {

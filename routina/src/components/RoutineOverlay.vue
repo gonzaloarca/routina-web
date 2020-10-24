@@ -6,12 +6,12 @@
       >
       <div class="headers">
         <div class="backdrop-card-image"></div>
-        <v-img class="card-image" :src="routineData.image" />
+        <v-img class="card-image" :src="data.image" />
         <div class="card-title white--text">
-          <h1 class="my-0 text-uppercase">{{ routineData.routineName }}</h1>
+          <h1 class="my-0 text-uppercase">{{ data.name }}</h1>
           <p class="user-label">
             by
-            <v-btn text flat class="btn-fmt primary--text" router :to="'/generic-profile/'+routineData.routineId"><span class="primary--text">{{ routineData.author }}</span></v-btn>
+            <v-btn text class="btn-fmt primary--text" router :to="'/generic-profile/'+data.routineId"><span class="primary--text">{{ data.creator.username }}</span></v-btn>
           </p>
         </div>
         <div style="display: flex; justify-content: center">
@@ -21,7 +21,7 @@
             x-small
             style="font-size: 13px"
             router
-            :to="'/routine/' + routineData.id +'/edit-routine'"
+            :to="'/routine/' + data.id +'/edit-routine'"
             ><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</v-btn
           >
         </div>
@@ -29,18 +29,18 @@
           <v-col class="text-uppercase">
             <span class="type-label">ROUTINE TYPE</span>
             <br />
-            <span class="data-display">{{ routineData.type }}</span>
+            <span class="data-display">{{ data.type }}</span>
           </v-col>
           <v-col class="text-uppercase">
             <span class="type-label">DURATION</span>
             <br />
             <v-icon dense>mdi-timer-outline</v-icon>
-            <span class="data-display">{{ formatTime }}</span>
+            <span class="data-display">{{ data.duration }}</span>
           </v-col>
           <v-col class="text-uppercase">
             <span class="type-label">MUSCLE GROUP</span>
             <br />
-            <span class="data-display">{{ routineData.muscleGroup }}</span>
+            <span class="data-display">{{ data.muscleGroup }}</span>
           </v-col>
           <v-col>
             <span class="type-label">DIFFICULTY</span>
@@ -83,7 +83,7 @@
             "
             rounded
             router
-            :to="'routine/'+routineData.routineId"
+            :to="'routine/'+data.routineId"
             class="goto-button ma-0 primary black--text font-weight-bold"
             >GO TO ROUTINE</v-btn
           >
@@ -106,7 +106,7 @@
           <div style="width:100%; background-color:grey darken-5; ">
             <v-tabs class="tab-fmt" v-model="tab" :fixed-tabs="true">
             <v-tab
-              v-for="round in rounds"
+              v-for="round in data.cycles"
               v-model="round.name"
               :key="round.name"
               class="tab-fmt"
@@ -118,7 +118,7 @@
           <div class="ma-5" style="background-color:rgb(30, 30, 30);">
             <v-tabs-items class="black" v-model="tab">
             <v-tab-item
-              v-for="round in rounds"
+              v-for="round in data.cycles"
               :key="round.name"
               class="mx-2"
             >
@@ -126,9 +126,7 @@
                 <ExerciseList
                   itemHeight="55"
                   height="300"
-                  
-                  v-on:swap-up="(index) => swapUp(index, round.exercises)"
-                  v-on:swap-down="(index) => swapDown(index, round.exercises)"
+                  :transition="false"
                   :exercises="round.exercises"
                 />
               </div>
@@ -148,7 +146,7 @@
             <v-list-item class="item" v-for="item in excercises" :key="item.id">
               <v-row class="excercise-row">
                 <v-col class="ma-0 pa-0"
-                  ><img :src="routineData.image"
+                  ><img :src="data.image"
                 /></v-col>
                 <v-col> duration </v-col>
                 <v-col> {{ item }} </v-col>
@@ -168,7 +166,7 @@
             <template v-slot="{ item }">
               <v-list-item class="item">
                 <v-row class="equipment-row">
-                  <img :src="routineData.image" />
+                  <img :src="data.image" />
                   <v-col> {{ item }} </v-col>
                 </v-row>
               </v-list-item>
@@ -181,58 +179,29 @@
 </template>
 
 <script>
+import {RoutinesApi} from "../services/routines.js";
 import DifficultyLevel from "./DifficultyLevel.vue";
 import ExerciseList from "./ExerciseList.vue";
 export default {
   name: "RoutineOverlay",
   props: { overlay: Boolean, routineData: Object },
-
   data() {
     return {
-      rounds: [{
-        name:"warm up",
-        exercises:[
-          { name: "ejercicio1" },
-          { name: "ejercicio2" },
-          { name: "ejercicio3" },
-          { name: "ejercicio4" },
-          { name: "ejercicio5" },
-          { name: "ejercicio6" },
-          { name: "ejercicio7" },
-          { name: "ejercicio8" },
-        ],},
-        {name:"round 1",
-        exercises: [
-          { name: "ejercicio1" },
-          { name: "ejercicio2" },
-          { name: "ejercicio3" },
-          { name: "ejercicio4" },
-          { name: "ejercicio5" },
-          { name: "ejercicio6" },
-          { name: "ejercicio7" },
-          { name: "ejercicio8" },
-        ],},
-        {name:"round 2",
-        exercises:[
-          { name: "ejercicio1" },
-          { name: "ejercicio2" },
-          { name: "ejercicio3" },
-          { name: "ejercicio4" },
-          { name: "ejercicio5" },
-          { name: "ejercicio6" },
-          { name: "ejercicio7" },
-          { name: "ejercicio8" },
-        ],},
-      ],
       tab:null,
       pressed: false,
-    };
+      data:{
+        creator:{
+          id:0,
+          username:""
+        }
+      }
+    }
   },
   components: { DifficultyLevel, ExerciseList },
   computed: {
     formatTime() {
-      let hours = Math.floor(this.routineData.time / 60);
-      let minutes = this.routineData.time % 60;
+      let hours = Math.floor(this.data.time / 60);
+      let minutes = this.data.time % 60;
       return `${hours !== 0 ? hours + "h" : ""} ${
         minutes !== 0 ? minutes + "'" : ""
       }`;
@@ -245,6 +214,15 @@ export default {
       return;
     },
   },
+  watch:{
+    overlay: async function (newPressed, oldPressed){
+      if(newPressed == true && oldPressed==false){
+        this.data = await RoutinesApi.getFullRoutine(this.routineData.id);
+        this.data.image = this.routineData.image;
+        console.log(this.data);
+      }
+    }
+  }
 };
 </script>
 

@@ -28,6 +28,7 @@ class RoutinesApi {
                 routine.addImagesToExercise(i,j,imagesRes);
             }
         }
+
         return routine;
     }
 
@@ -302,6 +303,7 @@ class RoutineSlide{
 
 class RoutineReal{
     constructor(routine){
+        this.id=routine.id;
         this.name = routine.name;
         let piped = routine.detail.split("|");
         this.detail = piped[0];

@@ -6,7 +6,7 @@
         <div style="info-container">
           <h2>Now editing</h2>
           <h1>{{ routineData.name }}</h1>
-          <h2>Originally made by <span class="primary--text">UserX</span></h2>
+          <h2>Originally made by<v-btn text class="btn-fmt primary--text" router :to="'/generic-profile/'+routineData.creator.id"><span>{{routineData.creator.username}}</span></v-btn></h2>
         </div>
       </div>
     </div>
@@ -372,6 +372,10 @@ export default {
         muscleGroup: null,
         description: "",
         duration: 0,
+        creator:{
+          id:0,
+          username:"",
+        },
         repeats: 0,
         rounds: [{ name: "round 1", exercises: [] }],
       },
@@ -387,6 +391,7 @@ export default {
       return;
     }
     let routine = await RoutinesApi.getFullRoutine(id);
+    this.routineData.creator=routine.creator;
     this.routineData.name = routine.name;
     this.routineData.type = routine.type;
     this.routineData.muscleGroup = routine.muscleGroup;
@@ -544,7 +549,7 @@ export default {
     },
     removeExercise(roundIndex, exerciseIndex) {
       let cycle = this.routineData.rounds[roundIndex];
-      this.routineData.duration -= cycle.exercises[exerciseIndex];
+      this.routineData.duration -= cycle.exercises[exerciseIndex].duration;
       cycle.exercises.splice(exerciseIndex, 1);
     },
     editExercise(roundIndex, exerciseIndex) {
@@ -633,6 +638,13 @@ export default {
   top: 0;
   margin: 0;
   padding: 0;
+}
+
+.btn-fmt{
+
+  text-transform: none;
+  font-size:16px;
+  font-weight:600;
 }
 
 .routine-info {

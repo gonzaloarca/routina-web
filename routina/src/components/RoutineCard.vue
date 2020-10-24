@@ -14,7 +14,7 @@
               class="type-label text-caption grey--text text--lighten-1 my-0"
               >DURATION</span
             >
-            <v-icon dense>mdi-timer-outline</v-icon>{{ formatTime }}
+            <v-icon dense>mdi-timer-outline</v-icon>{{ routineData.duration }}
           </p>
           <p class="text-uppercase text-caption font-weight-medium mb-0">
             <span
@@ -63,10 +63,6 @@
 import DifficultyLevel from "./DifficultyLevel.vue";
 import RoutineOverlay from "./RoutineOverlay.vue";
 export default {
-  mounted(){
-    console.log("routine CARD");
-    console.log(this.routineData);
-  },
   name: "RoutineCard",
   data() {
     return {
