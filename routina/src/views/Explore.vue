@@ -37,7 +37,16 @@
         </v-row>
         <v-tabs-items v-if="!showingRoutines" v-model="explore_tabs">
           <v-tab-item v-for="tab in tabs" :key="tab.name">
+            <ExploreGrid
+              v-if="tab.name === 'all'"
+              :withOverlay="true"
+              componentType="RoutineCard"
+              name="Routine"
+              :categories="routines"
+              width="100%"
+            ></ExploreGrid>
             <div
+              v-else
               style="
                 overflow: hidden;
                 display: flex;
@@ -127,6 +136,9 @@ export default {
       type:null,
 
       tabs: [
+        {
+          name: "all",
+        },
         {
           name: "featured",
           icon: "mdi-star",
