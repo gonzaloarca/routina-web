@@ -4,7 +4,8 @@
       <v-img src="../assets/routine1.jpg" class="routine-image" />
       <div class="routine-info">
         <div style="info-container">
-          <h2>Now editing</h2>
+          <h2 v-if="$route.params.id!=-1">Now editing</h2>
+          <h2 v-else >Now creating</h2>
           <h1
             style="
               width: 900px;
@@ -13,10 +14,10 @@
               text-overflow: ellipsis;
             "
           >
-            {{ routineData.name }}
+            <span v-if="routineData.name && routineData.name.length>0" >{{ routineData.name }}</span>
+            <span v-else >ROUTINE</span>
           </h1>
-          <div v-if="!routineData.name" style="height: 42px"></div>
-          <h2>
+          <h2 v-if="$route.params.id!=-1">
             Originally made by<v-btn
               text
               class="btn-fmt primary--text"
@@ -252,6 +253,7 @@
                       :items="exercises"
                       item-key="name"
                       :search="search"
+                      class="text-uppercase"
                       :showSelect="true"
                       :items-per-page="5"
                     >
@@ -416,7 +418,8 @@ export default {
     let routine = await RoutinesApi.getFullRoutine(id);
     this.routineData.creator = routine.creator;
     this.routineData.name = routine.name;
-    this.routineData.type = routine.type;
+    this.routineData.type = routine.type.toLowerCase();
+    this.routineData.type = this.routineData.type.charAt(0).toUpperCase() + this.routineData.type.slice(1);
     this.routineData.muscleGroup = routine.muscleGroup;
     this.routineData.difficultyLevel = routine.difficultyLevel;
     this.routineData.rounds = [];
@@ -661,7 +664,7 @@ export default {
 
 .btn-fmt {
   text-transform: none;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
 }
 
