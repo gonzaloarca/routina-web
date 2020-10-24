@@ -42,11 +42,13 @@ class DatabaseCreator {
 
         let categories = await CategoriesApi.getCategories();
         let routines = await RoutinesApi.getRoutines();
-        console.log(routines.results);
-        routines.results.forEach(routine =>{
+        for (const routine of routines.results) {
+            let cycles = await RoutinesApi.getRoutineCycles(routine.id);
+            for (const cycle of cycles.results) {
+                await RoutinesApi.deleteRoutineCycle(routine.id, cycle.id);
+            }
             RoutinesApi.deleteRoutine(routine.id);
-
-        });
+        }
 
         categories.results.forEach(category => {
 
