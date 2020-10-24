@@ -1,5 +1,6 @@
 <template>
   <div class="Home">
+<<<<<<< HEAD
     <v-carousel
       cycle
       height="350"
@@ -15,6 +16,9 @@
       </v-carousel-item>
     </v-carousel>
     
+=======
+    <RoutinesBanner banner-image-url="banner-2.jpg" banner-title="Home" />
+>>>>>>> ecec08d90ee6ec2e1b835b6e6aa3f8a7a4c7a9e9
 
     <!-- banner viejo -->
     <!-- <section class="exhibitor">
@@ -57,12 +61,16 @@
 <script>
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
 import SpecialRoutineBanner from "../components/SpecialRoutineBanner";
+<<<<<<< HEAD
 import {RoutinesApi} from "../services/routines.js"
+=======
+import RoutinesBanner from "../components/RoutinesBanner";
+>>>>>>> ecec08d90ee6ec2e1b835b6e6aa3f8a7a4c7a9e9
 // @ is an alias to /src
 
 export default {
   name: "Home",
-  components: { RoutineSlideGroup, SpecialRoutineBanner },
+  components: { RoutineSlideGroup, SpecialRoutineBanner, RoutinesBanner },
   data() {
     return {
       colors: [
@@ -128,7 +136,6 @@ export default {
   align-content: center;
   margin: 0 auto 30px;
 }
-
 
 /* 
 Del Carousel Viejo
