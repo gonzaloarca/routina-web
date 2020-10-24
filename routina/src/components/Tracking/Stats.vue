@@ -3,11 +3,14 @@
     <div class="container">
       <div class="routine-history-scroller">
         <div class="title">
-          <v-icon class="ma-2">mdi-history</v-icon><span><h3>Routine History</h3></span>
+          <v-icon class="ma-2">mdi-history</v-icon
+          ><span><h3>Routine History</h3></span>
         </div>
         <div class="scroller">
           <div class="item-container" v-for="item in stats" :key="item.id">
-            <div class="date-container"><h3>{{ item.date }}</h3></div>
+            <div class="date-container">
+              <h3>{{ item.date }}</h3>
+            </div>
             <div class="name-container">
               <span class="routine-name">{{ item.name }}</span>
               <span class="routine-author">
@@ -21,7 +24,7 @@
     <div class="divider"></div>
     <div class="container">
       <div class="date-btn-container">
-        <div style="margin-left:auto">
+        <div style="margin-left: auto">
           <v-select
             :items="dates.titles"
             label="Time"
@@ -34,32 +37,49 @@
             tile
             light
             single-line
-            class="black --text"
-          
+            class="black--text font-weight-medium"
           ></v-select>
         </div>
-        
       </div>
       <div class="data-container">
         <div class="title-big">
           <v-icon class="ma-2">mdi-history</v-icon>
-          <span><h3 class="ml-10">AVERAGE TIME SPENT WORKING OUT PER DAY</h3></span>
+          <span><h3>AVERAGE TIME SPENT WORKING OUT PER DAY</h3></span>
         </div>
-        <div class="description" style="display:flex; align-items:center; justify-content:center; height:90px;">32.7 minutos</div>
+        <div
+          class="description"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90px;
+          "
+        >
+          32.7 minutes
+        </div>
       </div>
       <div class="data-container">
         <div class="title-big">
           <v-icon class="ma-2">mdi-history</v-icon>
-          <span><h3 class="ml-10">TOTAL TIME SPENT WORKING OUT</h3></span>
+          <span><h3>TOTAL TIME SPENT WORKING OUT</h3></span>
         </div>
-        <div class="description" style="display:flex; align-items:center; justify-content:center; height:90px;">5 hours, 30.1 minutes</div>
+        <div
+          class="description"
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90px;
+          "
+        >
+          5 hours, 30.1 minutes
+        </div>
       </div>
       <div class="btn-container">
         <v-btn
           v-on:click="overlayGraph = true"
           rounded
           class="primary black--text"
-          
           ><h3>Show Graph</h3></v-btn
         >
       </div>
@@ -189,17 +209,13 @@ export default {
   padding: 0;
 }
 
-
-
 .container {
   width: 50%;
   background-color: rgb(33, 33, 33);
-  
 }
 
 .select-fmt {
   color: $primary;
-  
 }
 
 .routine-history-scroller {
@@ -209,26 +225,31 @@ export default {
   .item-container {
     background-color: rgb(66, 66, 66);
     margin: 10px;
+    height: 60px;
     display: flex;
     .date-container {
       background-color: white;
       color: black;
+      font-size: 14px;
       display: flex;
       align-items: center;
       padding-left: 5px;
       padding-bottom: 5px;
       padding-top: 5px;
       padding-right: 5px;
-
     }
     .name-container {
       margin-left: 120px;
       margin-right: 10px;
+      margin-top: 15px;
+      width: 290px;
       .routine-name {
         font-size: 20px;
+        font-weight: 600;
       }
       .routine-author {
         font-size: 18px;
+        font-weight: 600;
       }
     }
   }
@@ -252,9 +273,9 @@ export default {
   align-items: center;
   text-align: center;
   justify-content: center;
-  height:45px;
-  min-height:fit-content;
-  text-transform:uppercase;
+  height: 45px;
+
+  text-transform: uppercase;
   .v-icon {
     position: absolute;
     left: 0;
@@ -264,20 +285,20 @@ export default {
 .title-big {
   background-color: rgb(100, 100, 100);
   position: relative;
-  font-size: 15px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
   display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
-  height:60px;
-  min-height:fit-content;
-  text-transform:uppercase;
+  height: 45px;
+
+  text-transform: uppercase;
   .v-icon {
     position: absolute;
     left: 0;
   }
 }
-
 
 .description {
   background-color: rgb(23, 23, 23);
@@ -285,13 +306,13 @@ export default {
 }
 
 .date-btn-container {
-  display: flex;
+  width: 150px;
   margin: 20px;
 
   .v-btn {
     // margin-left: auto;
     margin-right: 0;
-    width:50%;
+    width: 10%;
   }
 }
 
@@ -309,8 +330,8 @@ export default {
 
 .divider {
   width: 3px;
-  margin-top:20px;
-  margin-bottom:20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   background-color: rgb(20, 20, 20);
 }
 </style>
