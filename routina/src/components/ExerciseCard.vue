@@ -5,9 +5,6 @@
         <img :src="exerciseData.image" class="card-image" />
         <div class="card-title white--text">
           <p class="my-0 text-uppercase">{{ exerciseData.exerciseName }}</p>
-          <p class="user-label my-0">
-            by <span class="primary--text">{{ exerciseData.author }}</span>
-          </p>
         </div>
       </v-card>
     </div>
@@ -100,6 +97,8 @@ $exercise-info-width: 75px;
   z-index: 1;
   height: $card-height;
   width: $card-width;
+  position: absolute;
+  display: grid;
   overflow: hidden;
   transition-duration: 200ms;
   transition-property: width, height, transform !important;
@@ -144,11 +143,6 @@ $exercise-info-width: 75px;
   }
   .card-title {
     height: $card-title-height * $card-title-mult;
-    .user-label {
-      visibility: visible;
-      opacity: 1;
-      max-height: 20px;
-    }
   }
 }
 
@@ -176,14 +170,5 @@ $exercise-info-width: 75px;
   transition-duration: 200ms;
   transition-property: height !important;
   font-weight: 600;
-}
-
-.user-label {
-  visibility: hidden;
-  opacity: 0;
-  max-height: 0;
-  transition-duration: 200ms;
-  transition-property: max-height, visibility, opacity !important;
-  font-size: 80%;
 }
 </style>

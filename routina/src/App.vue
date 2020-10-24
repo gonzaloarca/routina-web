@@ -37,9 +37,9 @@ $scrollbar-color-secondary: rgb(0, 0, 0);
 }
 
 .v-application {
-  font-family: $body-font-family, sans-serif !important;
+  font-family: $body-font-family !important;
   .title {
-    font-family: $title-font, sans-serif !important;
+    font-family: $title-font !important;
   }
 }
 
