@@ -28,6 +28,7 @@
             Weighting Recorded</span
           >
         </div>
+
         <div v-if="weightings.length!=0" class="weight-container center"><span>{{weightings[weightings.length-1].weight}}
         kg</span></div>
           <div v-else class="no-weights" >
@@ -87,11 +88,11 @@
                 class="white black--text"
                 style="left: 0; position: absolute; width: 20%; height: 100%">
                 <p class="ma-0 mt-1 font-weight-medium" style="font-size: 14px">
-                  {{ formatTime(weight.date) }}
+                  {{formatTime(weight.date)}}
                 </p>
-                <p class="ma-0 font-weight-medium" style="font-size: 14px">
+                <!-- <p class="ma-0 font-weight-medium" style="font-size: 14px">
                   {{ weight.year }}
-                </p>
+                </p> -->
               </div>
               <div
                 style="
@@ -139,10 +140,11 @@
     >
     </OverlayWeighting>
     <OverlayGraph
+      v-if="weightings.length!=0"
       :value="overlayGraph"
       v-on:close-graph="overlayGraph = false"
       :data="weightings.map((item) => item.weight)"
-      :labels="weightings.map((item) => item.date)"
+      :labels="weightings.map((item) => formatTime(item.date))"
       label="Weight"
     >
     </OverlayGraph>
@@ -176,6 +178,8 @@ export default {
         year: "2020",
         value: this.weightings.map((item) => item.weight),
       },
+      months:["Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" ],
+     
     };
   },
   methods: {
@@ -190,7 +194,12 @@ export default {
     updateWeightings(){
       this.$emit("update-weightings", false);
     },
-    
+    formatTime(time){
+      let date=new Date(time);
+      let [month, day, year]=date.toLocaleDateString().split("/");
+      return this.months[month-1]+" "+day+" "+year;
+    }
+      
   },
 };
 </script>
@@ -235,3 +244,4 @@ export default {
   background-color: rgb(20, 20, 20);
 }
 </style>
+        this.id=routine.id;
