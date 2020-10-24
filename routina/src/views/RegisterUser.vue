@@ -161,6 +161,8 @@
                   light
                   class="button font-weight-bold pa-3"
                   v-on:click="createAccount"
+                  router
+                  :to="login ? 'register' : 'verify-email'"
                   style="z-index: 2"
                 >
                   <span v-if="!login">Continue</span>

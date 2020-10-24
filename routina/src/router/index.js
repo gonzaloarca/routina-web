@@ -12,6 +12,7 @@ import Settings from "../views/Settings.vue";
 import MyProfile from "../views/MyProfile.vue";
 import CreateExercise from "../views/CreateExercise.vue";
 import GenericProfile from "../views/GenericProfile.vue";
+import VerifyEmail from "../views/VerifyEmail.vue";
 
 Vue.use(VueRouter);
 
@@ -75,6 +76,11 @@ const routes = [
     path: "/generic-profile/:id",
     name: "GenericProfile",
     component: GenericProfile,
+  },
+  {
+    path: "/verify-email",
+    name: "VerifyEmail",
+    component: VerifyEmail,
   },
 ];
 
