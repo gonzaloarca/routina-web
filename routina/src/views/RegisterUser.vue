@@ -96,6 +96,7 @@
                 dense
                 :rules="[() => !!gender || 'This field is required']"
                 light
+                :menu-props="{ light: true }"
               ></v-select>
             </div>
             <div class="divForm">
@@ -130,6 +131,7 @@
                   no-title
                   scrollable
                   color="primary"
+                  :max="new Date().toISOString().substr(0, 10)"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="dateMenu = false">
@@ -296,9 +298,17 @@ export default {
         console.log(
           `username= ${this.username}, email = ${this.email}, password = ${this.password}`
         );
-        if (this.username !== "" && this.email !== "" && this.password !== "" && this.fullName!== null && this.gender!==null) {
+        if (
+          this.username !== "" &&
+          this.email !== "" &&
+          this.password !== "" &&
+          this.fullName !== null &&
+          this.gender !== null
+        ) {
           const cred = new Credentials(this.username, this.password);
-          await UserApi.createUser(new User(cred,this.email,this.fullName,this.gender));
+          await UserApi.createUser(
+            new User(cred, this.email, this.fullName, this.gender)
+          );
         } else {
           if (this.username === "") {
             this.usernameError = "Username field is required";
