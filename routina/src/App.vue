@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css family=Open+Sans&display=swap");
 @import "./sass/variables";
 
 $scrollbar-color-primary: rgb(87, 87, 87);
