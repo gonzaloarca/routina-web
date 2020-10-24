@@ -1,18 +1,17 @@
 <template>
   <div class="Settings">
-    <RoutinesBanner
-      banner-image-url="settings.jpg"
-      banner-title="Settings"
-    />
+    <RoutinesBanner banner-image-url="settings.jpg" banner-title="Settings" />
     <div class="settings-content">
       <v-card class="content-container" tile>
         <div class="tab-format">
           <v-tabs vertical v-model="tabs">
             <v-tab>
-              <v-icon left>mdi-account</v-icon><h3>Edit profile</h3>
+              <v-icon left>mdi-account</v-icon>
+              <h3>Edit profile</h3>
             </v-tab>
             <v-tab>
-              <v-icon left>mdi-lock</v-icon><h3>Security</h3>
+              <v-icon left>mdi-lock</v-icon>
+              <h3>Security</h3>
             </v-tab>
           </v-tabs>
         </div>
@@ -20,126 +19,208 @@
           <v-tabs-items v-model="tabs">
             <v-tab-item>
               <v-card tile flat>
-                <div class="dark-grey-card">
-                    <div class="pl-5 ml-5" style="display:flex; " >
-                        <h1>Username: </h1>
-                        <div style="width:5px;"></div>
-                        <h1 class="primary--text ">{{user.userName}}</h1>
-                    </div>
-                </div>  
                 <div class="light-grey-card">
-                  <div class="pl-5 ml-5">
-                    <h1>Avatar</h1>
+                  <div class="pa-5">
+                    <h2>Avatar</h2>
                   </div>
 
                   <div class="centered-div pa-4">
-                      <v-avatar size="150" color="white" class="my-4">
-                          <img :src="require(`../assets/avatar.jpg`)"/>
-                      </v-avatar></div>
+                    <v-avatar size="150" color="white" class="my-4">
+                      <img :src="require(`../assets/avatar.jpg`)" />
+                    </v-avatar>
+                  </div>
                   <div class="centered-div pa-4">
-                      <v-btn color="grey darken-1" class="black--text" rounded><h4>Upload new image</h4></v-btn>
+                    <div style="width: 250px; margin-bottom: 30px">
+                      <v-file-input
+                        filled
+                        dense
+                        label="Upload new image"
+                        prepend-icon="mdi-camera"
+                        hide-details
+                        background-color="grey darken-4"
+                      ></v-file-input>
+                    </div>
                   </div>
                 </div>
                 <div class="dark-grey-card">
-                  <div class="pl-5 ml-5">
-                    <h1 class="py-1">Profile Data</h1>
+                  <div class="pa-5">
+                    <h2 class="py-1">Profile Data</h2>
                   </div>
-                   <div style="margin-left:30px;">
-                       <div class="centered-div">
-                           <span class="span-fmt">
-                               <h3>First name</h3>
-                               <div style="display:flex; width:80%;">
-                                  <v-text-field
-                                  clearable
-                                  :value="user.firstName"
-                                  solo 
-                                  hide-details
-                                  dense
-                                  rounded
-                                  light> 
-                                  </v-text-field>
-                               </div>
-                            </span>
-                           <span class="span-fmt">
-                               <h3>Gender</h3>
-                               <v-select
-                                class="white"
-                                style="width:80%;"
-                                v-model="user.gender"
-                                :items="genders"
-                                single-line
-                                hide-details
-                                light
-                                dense
-                                rounded
-                                filled
-                                solo
-                                :menu-props="{light:true}"
-                                ></v-select>
-                           </span>
-                       </div>
-                       <div class="centered-div">
-                           <span class="span-fmt">
-                               <h3>Last name</h3>
-                               <div style="display:flex; width:80%;">
-                                  <v-text-field 
-                                    clearable
-                                    :value="user.lastName"
-                                    solo 
-                                    hide-details
-                                    dense
-                                    rounded
-                                    light>
-                                    </v-text-field>
-                                  
-                               </div>
-                            </span>
-                           <span class="span-fmt">
-                               <h3>Birth date</h3>
-                               <DatePicker :dateNum="user.date"/>
-                           </span>
-                       </div>
+                  <div
+                    style="
+                      width: fit-content;
+                      margin: auto;
+                      padding-bottom: 30px;
+                    "
+                  >
+                    <div class="centered-div">
+                      <span class="mx-5">
+                        <h3>Full name</h3>
+                        <div style="width: 250px">
+                          <v-text-field
+                            clearable
+                            v-model="user.fullName"
+                            solo
+                            dense
+                            rounded
+                            light
+                            :rules="[required]"
+                          >
+                          </v-text-field>
+                        </div>
+                      </span>
+                      <span class="mx-5">
+                        <h3>Gender</h3>
+                        <v-select
+                          style="width: 250px"
+                          v-model="user.gender"
+                          :items="genders"
+                          single-line
+                          light
+                          dense
+                          rounded
+                          solo
+                          :menu-props="{ light: true }"
+                        ></v-select>
+                      </span>
                     </div>
-                   
-                      
-                     
+                    <div class="centered-div">
+                      <span>
+                        <h3>Birth date</h3>
+                        <DatePicker :dateNum="user.date" />
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                 <div class="centered-div light-grey-card pa-4">
-                        <div class="pa-4" style="width:25%"><v-btn color="grey darken-3" class="black--text " rounded ><h4>Discard Changes</h4></v-btn></div>
-                        <div class="pa-4" style="width:25%"><v-btn color="primary" class="white--text " rounded ><h4>Save Changes</h4></v-btn></div>
-                    </div>  
+                <div
+                  class="centered-div light-grey-card pa-4"
+                  style="gap: 20px"
+                >
+                  <v-btn color="primary" class="black--text" rounded
+                    ><h4>Save Changes</h4></v-btn
+                  >
+                  <v-btn
+                    outlined
+                    color="primary"
+                    class="black"
+                    style="border-width: 2px; border-color: #ff8000 !important"
+                    rounded
+                    ><h4>Discard Changes</h4></v-btn
+                  >
+                </div>
               </v-card>
             </v-tab-item>
             <v-tab-item>
               <v-card tile flat>
-                  <div class="light-grey-card">
-                  <div class="pl-5 ml-5">
-                    <h1>Change password</h1>
-                  </div>
-                  <div style="margin-left:30px;">
-                       
-                    </div> 
-
+                <div class="light-grey-card pa-5">
+                  <h2 class="pb-4">Change password</h2>
+                  <v-row>
+                    <v-col cols="5">
+                      <div style="width: 300px; margin: auto">
+                        <h4>Current password</h4>
+                        <v-text-field
+                          :type="showCurrPassword ? 'text' : 'password'"
+                          placeholder="Enter current password"
+                          class="textFieldForm pb-3"
+                          solo
+                          rounded
+                          min-height="10px"
+                          height="20px"
+                          dense
+                          light
+                          clearable
+                          :append-icon="
+                            showCurrPassword ? 'mdi-eye' : 'mdi-eye-off'
+                          "
+                          @click:append="showCurrPassword = !showCurrPassword"
+                        ></v-text-field>
+                      </div>
+                      <div style="width: 300px; margin: auto">
+                        <h4>New password</h4>
+                        <v-text-field
+                          :type="showNewPassword ? 'text' : 'password'"
+                          placeholder="Enter new password"
+                          class="textFieldForm pb-3"
+                          solo
+                          rounded
+                          min-height="10px"
+                          height="20px"
+                          dense
+                          light
+                          clearable
+                          :append-icon="
+                            showNewPassword ? 'mdi-eye' : 'mdi-eye-off'
+                          "
+                          @click:append="showNewPassword = !showNewPassword"
+                        ></v-text-field>
+                      </div>
+                      <div class="centered-div">
+                        <v-btn color="primary" class="black--text" rounded
+                          ><h4>Save Changes</h4></v-btn
+                        >
+                      </div>
+                    </v-col>
+                    <v-col cols="2">
+                      <div
+                        style="
+                          margin: auto;
+                          height: 90%;
+                          width: 2px;
+                          background-color: grey;
+                        "
+                      ></div>
+                    </v-col>
+                    <v-col cols="5">
+                      <div style="width: 300px">
+                        <h3>Forgot password?</h3>
+                        <br />
+                        <h4 class="pa-7">
+                          An e-mail will be sent to the address linked to this
+                          account with the steps necessary to restore your
+                          password
+                        </h4>
+                        <div class="centered-div">
+                          <v-btn color="primary" class="black--text" rounded
+                            ><h4>Restore password</h4></v-btn
+                          >
+                        </div>
+                      </div>
+                    </v-col>
+                  </v-row>
                 </div>
-                <div class="dark-grey-card">
-                  <div class="pl-5 ml-5">
-                    <h1 class="py-1">Change email address</h1>
+                <div class="dark-grey-card pa-5">
+                  <h2 class="mb-5">Change e-mail address</h2>
+                  <div
+                    class="centered-div"
+                    style="flex-direction: column; gap: 20px"
+                  >
+                    <h4 style="width: 450px; text-align: center">
+                      An e-mail will be sent to the address linked to this
+                      account with the steps necessary to change your e-mail
+                      address
+                    </h4>
+                    <v-btn color="primary" class="black--text" rounded
+                      ><h4>Change email</h4></v-btn
+                    >
                   </div>
-                   <div style="margin-left:30px;">
-                       
-                    </div> 
                 </div>
-                <div class="light-grey-card">
-                  <div class="pl-5 ml-5">
-                    <h1>Delete account</h1>
+                <div class="light-grey-card pa-5">
+                  <h2>Delete account</h2>
+                  <div
+                    class="centered-div"
+                    style="flex-direction: column; gap: 20px"
+                  >
+                    <h4 style="width: 400px; text-align: center">
+                      Keep in mind that once you click the
+                      <span class="red--text">Delete Account</span>
+                      button, your account will be
+                      <span class="red--text">deleted forever</span>
+                    </h4>
+                    <v-btn color="red" class="black--text" rounded
+                      ><h4>Delete account</h4></v-btn
+                    >
                   </div>
-                  <div style="margin-left:30px;">
-                       
-                    </div> 
-
                 </div>
-
-                            
               </v-card>
             </v-tab-item>
           </v-tabs-items>
@@ -152,7 +233,7 @@
 <script>
 // @ is an alias to /src
 import RoutinesBanner from "../components/RoutinesBanner";
-import DatePicker from "../components/DatePicker"
+import DatePicker from "../components/DatePicker";
 
 export default {
   name: "Settings",
@@ -160,20 +241,18 @@ export default {
   data() {
     return {
       tabs: null,
-      user:{
-          firstName:"el",
-          lastName:"Beto",
-          gender:"Male",
-          userName:"Byte",
-          //ojo que el mes empieza en cero
-          date: new Date("2000","10","01"),
+      user: {
+        fullName: "El Beto",
+        gender: "Male",
+        //ojo que el mes empieza en cero
+        date: new Date("2000", "10", "01"),
       },
-      genders:["Male", "Female", "Other"],
-
+      genders: ["Male", "Female", "Other"],
+      required: (value) => !!value || "Value cannot be empty.",
+      showCurrPassword: false,
+      showNewPassword: false,
     };
   },
-  
-
 };
 </script>
 
@@ -184,47 +263,34 @@ export default {
   background-color: black;
 }
 
-.span-fmt{
-    width:50%;
+.light-grey-card {
+  background-color: rgb(46, 45, 45);
 }
 
-.light-grey-card{
-    background-color: rgb(46, 45, 45);
-}
-
-.dark-grey-card{
-    background-color: rgb(29, 29, 29);
-    margin-bottom:10px;
+.dark-grey-card {
+  background-color: rgb(29, 29, 29);
+  margin-bottom: 10px;
 }
 .tab-format {
-  width: 20%;
+  width: 200px;
   background-color: rgb(15, 15, 15);
 }
 
-.v-input__slot:hover, .v-input:hover {
-    background-color:white !important;
-}
-
-
-
 .settings-content {
-  max-width: $content-container-width;
+  min-width: $content-container-width - 200px;
   margin: auto;
   padding: 30px 30px 30px 30px;
-
 }
 
 .content-container {
-  max-width: $content-container-width - 300px;
-  align-content: center;
+  width: $content-container-width - 300px;
+
   display: flex;
   margin: 0 auto 30px;
-  
-  
 }
 
 .title-cont {
-  max-width: fit-content;
+  width: fit-content;
 }
 
 .centered-div {
@@ -234,7 +300,7 @@ export default {
   padding: 10px 10px 10px 10px;
 }
 
-.items-container{
-    width:100%;
+.items-container {
+  width: 100%;
 }
 </style>
