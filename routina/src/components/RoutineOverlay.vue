@@ -11,7 +11,7 @@
           <h1 class="my-0 text-uppercase">{{ routineData.routineName }}</h1>
           <p class="user-label">
             by
-            <span class="primary--text">{{ routineData.author }}</span>
+            <v-btn text flat class="btn-fmt primary--text" router :to="'/generic-profile/'+routineData.routineId"><span class="primary--text">{{ routineData.author }}</span></v-btn>
           </p>
         </div>
         <div style="display: flex; justify-content: center">
@@ -21,7 +21,7 @@
             x-small
             style="font-size: 13px"
             router
-            to="edit-routine"
+            :to="'routine/' + routineData.id +'/edit-routine'"
             ><v-icon>mdi-pencil</v-icon>EDIT ROUTINE</v-btn
           >
         </div>
@@ -83,7 +83,7 @@
             "
             rounded
             router
-            to="routine"
+            :to="'routine/'+routineData.routineId"
             class="goto-button ma-0 primary black--text font-weight-bold"
             >GO TO ROUTINE</v-btn
           >
@@ -91,6 +91,7 @@
             v-on:click="pressed = !pressed"
             icon
             class="like-button primary--text"
+    
           >
             <v-icon v-if="pressed" class="like-icon" dark> mdi-heart </v-icon>
             <v-icon v-if="!pressed" class="like-icon" dark>
@@ -143,6 +144,7 @@ import DifficultyLevel from "./DifficultyLevel.vue";
 export default {
   name: "RoutineOverlay",
   props: { overlay: Boolean, routineData: Object },
+
   data() {
     return {
       excercises: [
@@ -186,6 +188,13 @@ export default {
   position: absolute;
   right: 0px;
   z-index: 10;
+}
+
+.btn-fmt{
+
+  text-transform: none;
+  font-size:16px;
+  font-weight:600;
 }
 
 .card-buttons-container {

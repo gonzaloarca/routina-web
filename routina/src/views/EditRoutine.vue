@@ -3,9 +3,7 @@
     <div class="headers">
       <v-img src="../assets/routine1.jpg" class="routine-image" />
       <div class="routine-info">
-        <v-file-input class="image-button" v-model="selectedFile"
-          >Change routine image
-        </v-file-input>
+        
         <div style="info-container">
           <h2>Now editing</h2>
           <h1>{{ routineData.name }}</h1>
@@ -99,9 +97,7 @@
               <div class="center-h center-v"><h2>ADD A NEW ROUND!</h2></div>
               <div class="center-h center-v">
                 <v-btn v-on:click="addRound" icon rounded
-                  ><v-icon class="primary--text"
-                    >mdi-plus-circle</v-icon
-                  ></v-btn
+                  ><v-icon class="primary--text">mdi-plus-circle</v-icon></v-btn
                 >
               </div>
             </div>
@@ -156,6 +152,7 @@
                   height="300"
                   editable
                   v-on:remove="(itemIndex) => removeExercise(index, itemIndex)"
+                  v-on:edit="(itemIndex) => editExercise(index, itemIndex)"
                   v-on:swap-up="
                     (itemIndex) => swapUp(itemIndex, round.exercises)
                   "
@@ -164,6 +161,37 @@
                   "
                   :exercises="round.exercises"
                 />
+
+                <v-overlay :value="edittingExercise">
+                  <v-card style="z-index=30">
+                    <div>
+                      <v-btn icon v-on:click="edittingExercise = false"
+                        ><v-icon>mdi-close</v-icon></v-btn
+                      >
+                    </div>
+                    <div style="margin-left: 20px; margin-bottom: 40px">
+                      <div class="center-h"><h3>Change duration</h3></div>
+                      <div class="center-h"><h4>(in minutes)</h4></div>
+                    </div>
+                    <div style="width: 500px">
+                      <v-slider
+                        v-model="sliderDuration"
+                        thumb-label="always"
+                        :min="0"
+                        :max="60"
+                      ></v-slider>
+                    </div>
+                    <div class="center-h">
+                      <v-btn
+                        class="title primary white--text ma-2"
+                        rounded
+                        small
+                        v-on:click="saveExercise"
+                        >SAVE</v-btn
+                      >
+                    </div>
+                  </v-card>
+                </v-overlay>
               </div>
               <div class="py-4" style="display: flex; justify-content: center">
                 <v-btn
@@ -175,8 +203,8 @@
                 >
 
                 <v-overlay style="z-index: 100" :value="addingExercise">
-                  <v-card>
-                    <div style="display: flex">
+                  <v-card  style="max-height:70vh; overflow-y:scroll">
+                    <div style="display: flex;">
                       <v-btn
                         v-on:click="addingExercise = false"
                         icon
@@ -202,8 +230,14 @@
                       :search="search"
                       :singleSelect="true"
                       :showSelect="true"
-                      :items-per-page="10"
-                    ></v-data-table>
+                      :items-per-page="5"
+                    >
+                      <template v-slot:[`item.image`]="{ item }">
+                        <div class="data-table-image-container">
+                          <img :src="item.image" />
+                        </div>
+                      </template>
+                    </v-data-table>
                     <div class="center-h">
                       <v-btn
                         class="title primary black--text ma-2"
@@ -289,6 +323,13 @@
 <script>
 // @ is an alias to /src
 import ExerciseList from "../components/ExerciseList.vue";
+import {
+  RoutinesApi,
+  Routine,
+  Cycle,
+  Exercise,
+  ImageModel,
+} from "../services/routines";
 //import EquipmentNeeded from "../components/EquipmentNeeded.vue";
 //import {Images} from "../services/images.js";
 //import EquipmentNeeded from "../components/EquipmentNeeded.vue";
@@ -304,112 +345,115 @@ export default {
       roundIndex: 0,
       editingRoundName: false,
       addingExercise: false,
-      typeItems: ["Cardio", "Strength", "Yoga"],
+      edittingExercise: false,
+      exerciseForEdit: null,
+      idGiver:0,
+      sliderDuration: 1,
+      typeItems: ["Cardio", "Strength", "HIIT","Yoga","Pilates"],
       muscleGroupItems: ["Full body", "Legs", "Arms"],
 
-      headers: [{ text: "Name", value: "name" }],
-      exercises: [
-        { name: "ejercicio1" },
-        { name: "ejercicio2" },
-        { name: "ejercicio3" },
-        { name: "ejercicio4" },
-        { name: "ejercicio5" },
-        { name: "ejercicio6" },
-        { name: "ejercicio7" },
-        { name: "ejercicio8" },
+      headers: [
+        { text: "Name", value: "name" },
+        { text: "Picture", value: "image" },
       ],
-
+      exercises: [],
       routineData: {
         name: null,
         type: null,
-        difficultyLevel: null,
+        difficultyLevel: null, // es [ rookie, beginner, intermediate, advanced, expert ]
         muscleGroup: null,
         description: "",
-        rounds: [{ name: "round", exercises: [] }],
+        duration: 0,
+        repeats: 0,
+        rounds: [{ name: "round 1", exercises: [] }],
       },
-      // routineData: {
-      //   name: "Routine 1",
-      //   description:
-      //     "Lorem ipsum dolor sit amet, consectetur adipircitationem voluppraesentium expedita, delectus dolorum vitae. Illum minima fuga repudiandae tempore.",
-      //   rounds: [
-      //     {
-      //       name: "round 1",
-      //       exercises: [
-      //         { name: "ejercicio1" },
-      //         { name: "ejercicio2" },
-      //         { name: "ejercicio3" },
-      //         { name: "ejercicio4" },
-      //         { name: "ejercicio5" },
-      //         { name: "ejercicio6" },
-      //         { name: "ejercicio7" },
-      //         { name: "ejercicio8" },
-      //       ],
-      //     },
-      //     {
-      //       name: "round 2",
-      //       exercises: [
-      //         { name: "ejercicio1" },
-      //         { name: "ejercicio2" },
-      //         { name: "ejercicio3" },
-      //         { name: "ejercicio4" },
-      //         { name: "ejercicio5" },
-      //         { name: "ejercicio6" },
-      //         { name: "ejercicio7" },
-      //         { name: "ejercicio8" },
-      //       ],
-      //     },
-      //     {
-      //       name: "round 3",
-      //       exercises: [
-      //         { name: "ejercicio1" },
-      //         { name: "ejercicio2" },
-      //         { name: "ejercicio3" },
-      //         { name: "ejercicio4" },
-      //         { name: "ejercicio5" },
-      //         { name: "ejercicio6" },
-      //         { name: "ejercicio7" },
-      //         { name: "ejercicio8" },
-      //       ],
-      //     },
-      //   ],
-      //   equipments: [
-      //     "equipo1",
-      //     "equipo2",
-      //     "equipo3",
-      //     "equipo4",
-      //     "equipo5",
-      //     "equipo6",
-      //     "equipo7",
-      //     "equipo8",
-      //     "equipo9",
-      //   ],
-      // },
-
       pressed: false,
       selectedFile: null,
     };
   },
+  async created() {
+    console.log(
+      "GEEEEEEEEEEEEET   EXERCISEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEES"
+    );
+    this.exercises = await this.getExercises();
+
+    await this.getExercisesImages();
+  },
   methods: {
-    uploadImage: async function () {
+    getExercisesImages: async function () {
+      console.log(this.exercises);
       try {
-        // const res = await Images.uploadImage(this.selectedFile);
-        // const res2 = await res.text();
-        // console.log(res2);
-        // const data = JSON.parse(res2).secure_url;
-        // console.log(data);
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    printFileState() {
-      console.log(this.selectedFile);
-    },
-    onFileSelected(event) {
-      console.log("file selected");
-      try {
-        this.selectedFile = event.target.files[0];
+        for (const exercise of this.exercises) {
+          const res = await RoutinesApi.getExerciseImages(1, 1, exercise.id);
+          exercise.image = await res.results[0].url;
+        }
+        console.log(this.exercises);
       } catch (error) {
         console.log(error);
+      }
+    },
+    getExercises: async function () {
+      const res = await RoutinesApi.getCycleExcercises(1, 1);
+      console.log(res);
+      return res.results;
+    },
+    setDuration(duration){
+      let result = "";
+     
+      if(duration <15){
+        result = "under 15";
+      }else if(duration<30){
+        result = "15-30";
+      }else if(duration<45){
+        result = "30-45";
+      }else if(duration<60){
+        result = "45-60";
+      }else{
+        result="above 60";
+      }
+      return result;
+    },
+    createRoutine: async function () {
+      //primero validar que haya al menos una rutina
+
+      //crear la rutina
+      
+      const routine = new Routine(
+        this.routineData.name,
+        `${this.routineData.detail} | ${this.routineData.muscleGroup} | ${this.setDuration(this.routineData.duration)}`,
+        true,
+        this.routineData.difficultyLevel,
+        this.typeItems.indexOf(this.routineData.type)+2
+      );
+      const res = await RoutinesApi.createRoutine(routine);
+      
+      const routineId = res.id;
+      //crear los ciclos
+      for (const cycle in this.routineData.rounds) {
+        let index = this.routineData.rounds.indexOf(cycle);
+        const cycleResponse = await RoutinesApi.createRoutineCycle(
+          routineId,
+          new Cycle(cycle.name, "", "exercise", index,1)
+        );
+        
+        const cycleId = cycleResponse.id;
+        //crear los ejercicios de cada cycle
+        for (const exercise in cycle.exercises) {
+          const exerciseResponse = await RoutinesApi.createCycleExercise(
+            routineId,
+            cycleId,
+            new Exercise(exercise)
+          );
+          console.log(exerciseResponse);
+          const exerciseId = exerciseResponse.id;
+          //subir las imagenes de cada ejercicio
+          await RoutinesApi.createExerciseImage(
+            routineId,
+            cycleId,
+            exerciseId,
+            new ImageModel(1, exercise.image)
+          );
+        }
       }
     },
     swapUp(item, elements) {
@@ -423,9 +467,21 @@ export default {
       }
     },
     swap(id1, id2, elements) {
-      let aux = elements[id1].name;
-      elements[id1].name = elements[id2].name;
-      elements[id2].name = aux;
+      let aux = elements[id1];
+      elements[id1] = elements[id2];
+      elements[id2] = aux;
+      elements[id2].idGiver++;
+      elements[id2].idGiver--;
+      elements[id1].idGiver++;
+      elements[id1].idGiver--;
+
+
+      elements[id2].idGiver++;
+      elements[id2].idGiver--;
+      elements[id1].idGiver++;
+      elements[id1].idGiver--;
+
+
     },
     addRound() {
       this.routineData.rounds.push({
@@ -445,13 +501,26 @@ export default {
     addExercise() {
       this.addingExercise = false;
       let cycle = this.routineData.rounds[this.roundIndex];
-      cycle.exercises.push({
-        name: this.selected[0].name,
-      });
+      let ex = Object.assign({}, this.selected[0]);
+      ex.idGiver=this.idGiver;
+      this.idGiver++;
+      console.log(ex);
+      cycle.exercises.push(ex);
     },
     removeExercise(roundIndex, exerciseIndex) {
       let cycle = this.routineData.rounds[roundIndex];
       cycle.exercises.splice(exerciseIndex, 1);
+    },
+    editExercise(roundIndex, exerciseIndex) {
+      this.edittingExercise = true;
+      this.exerciseForEdit = this.routineData.rounds[roundIndex].exercises[
+        exerciseIndex
+      ];
+      this.sliderDuration = this.exerciseForEdit.duration;
+    },
+    saveExercise() {
+      this.edittingExercise=false;
+      this.exerciseForEdit.duration = this.sliderDuration;
     },
   },
 };
@@ -471,6 +540,19 @@ export default {
 </style>
 
 <style scoped  lang="scss">
+.data-table-image-container {
+  height: 50px;
+  width: 100px;
+  position: relative;
+  display: flex;
+  img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
 .routine {
   background-color: black;
 }

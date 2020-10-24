@@ -27,11 +27,11 @@
          
            </div>
          </div>
-         <v-card tile class="medium-card">
+         <v-card v-if="current" tile class="medium-card">
            <h3 class="medium-title">Latest workout</h3>
            <div class="pt-4"><RoutineCard :routineData="user.latestWork" :withOverlay="true"></RoutineCard></div>
          </v-card>
-         <v-card tile class="medium-card">
+         <v-card v-if="current" tile class="medium-card">
            <h3 class="medium-title">Most used routine</h3>
            <div class="pt-4"><RoutineCard :routineData="user.mostUsed" :withOverlay="true"></RoutineCard></div>
          </v-card>
@@ -39,6 +39,7 @@
         
         <div class="row-fmt mt-3">
         <v-btn
+              :v-if="current"
               rounded
               color="black"
               class="button font-weight-bold"
@@ -62,6 +63,10 @@ export default {
     user:{
       type:Object,
       required: true,
+    },
+    current:{
+      type:Boolean,
+      required:true,
     },
     latestWorkout:{type:Object,required:true},
     mostUsedRoutine:{type:Object,required:true},

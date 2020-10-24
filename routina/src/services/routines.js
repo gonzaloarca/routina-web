@@ -1,6 +1,6 @@
 import { Api } from './api.js';
 
-export { RoutinesApi,Routine,Cycle,Exercise,Rating,ImageModel};
+export { RoutinesApi,Routine,Cycle,Exercise,Rating,ImageModel,RoutineReal};
 
 class RoutinesApi {
 
@@ -9,12 +9,26 @@ class RoutinesApi {
         return `${Api.baseUrl}/routines`;
     }
 
+    static async getFullRoutine(id){
+        const routineResponse =  await this.getRoutine(id);
+        let routine = new RoutineReal(routineResponse);
+        //descargar todos los ciclos
+        const cyclesResponse = await this.getRoutineCycles(id,);
+        const cycles = cyclesResponse.results;
+        routine.addCycles(cycles);
+        for(let i=0;i<cycles.length;i++){
+            const res = await this.getCycleExcercises(id,cycles[i].id);
+            routine.addExercisesToCycles(i,res);
+        }
+        return routine;
+    }
+
     static async getRoutines(difficulty,page,size,orderBy,direction,controller){
         let parameters =parametersFormatter(page,size,orderBy,direction);
         if(difficulty!==null && difficulty!==''){
             parameters+=`difficulty=${difficulty}`;
         }
-        parameters="";
+        parameters="size=500";
         return await Api.get(`${RoutinesApi.url}/?${parameters}`, true, controller);
          
     }
@@ -90,12 +104,12 @@ class RoutinesApi {
     //-----------------------------------------------------------
     static async getCycleExcercises(routineId,cycleId,page,size,orderBy,direction,controller){
         let parameters =parametersFormatter(page,size,orderBy,direction);
-        parameters="";
-        return await Api.get(`${RoutinesApi.url}/${routineId}/cycles/${cycleId}?${parameters}`,true,controller);
+        parameters="size=500";
+        return await Api.get(`${RoutinesApi.url}/${routineId}/cycles/${cycleId}/exercises?${parameters}`,true,controller);
     }
 
     static async createCycleExercise(routineId,cycleId,exercise,controller){
-        return await Api.post(`${RoutinesApi.url}/${routineId}/cycles/${cycleId}`,true,exercise,controller);
+        return await Api.post(`${RoutinesApi.url}/${routineId}/cycles/${cycleId}/exercises`,true,exercise,controller);
     }
 
     static async getCycleExcercise(routineId,cycleId,exerciseId,controller){
@@ -129,6 +143,43 @@ class Routine{
         this.category=category;
     }
 }
+
+class RoutineReal{
+    constructor(routine){
+        this.name = routine.name;
+        let piped = routine.detail.split("|");
+        this.detail = piped[0];
+        this.muscleGroup = piped[1];
+        this.duration = piped[2];
+        this.type = this.categoryIdToType(routine.category.id);
+    }
+
+    static addCycles(cycles){
+        this.cycles = cycles;
+    }
+
+    static addExercisesToCycles(indexCycle,exercises){
+        this.cycles[indexCycle].exercises = exercises;
+    }
+
+    static categoryIdToType(id){
+        switch(id){
+            case 2:
+                return "CARDIO";
+            case 3:
+                return "STRENGTH";
+            case 4:
+                return "HIIT";
+            case 5:
+                return "YOGA";
+            case 6:
+                return "PILATES";
+            default:
+                return null;
+        }
+    }
+}
+
 
 class Cycle{
     constructor(name,detail,type,order,repetitions){

@@ -119,7 +119,7 @@
 import RoutinesBanner from "@/components/RoutinesBanner";
 import {Images} from "../services/images.js";
 import { RoutinesApi,Routine,Exercise,ImageModel} from "../services/routines.js";
-import {CategoriesApi, Category} from "../services/categories.js";
+import { UserApi } from '../services/user.js';
 export default {
   name: "CreateExercise",
   components: { RoutinesBanner },
@@ -153,63 +153,39 @@ export default {
     createExercise:async function(){
       this.errorMessage="";
       if(this.selectedFile!==null && this.exerciseName!=="" && this.exerciseDetail!==""){
+        let id = this.getUserExerciseRoutine();
+        if(id===null){
+         const res = await RoutinesApi.createRoutine(new Routine("internal","",false,"rookie",1));
+         id = res.id;
+        }
         const res = await RoutinesApi.createCycleExercise(1,1,new Exercise(this.exerciseName,this.exerciseDetail,"exercise",0,0));
-        const imgUrl = await this.uploadImage();
-        const exerciseId = res.id;
-        const res2 = await RoutinesApi.createExerciseImage(1,1,exerciseId,new ImageModel(1,imgUrl));
-        console.log(res2);
-        console.log("SUCCESS");
+          const imgUrl = await this.uploadImage();
+          const exerciseId = res.id;
+          const res2 = await RoutinesApi.createExerciseImage(1,1,exerciseId,new ImageModel(1,imgUrl));
+          console.log(res2);
+          console.log("SUCCESS");
       }else{
         console.log("te faltan completar datos mostro");
         this.errorMessage="All Text fields must be filled";
       }
     },
-    createInitialRoutine:async function(){
-      try {
-        const res = await RoutinesApi.createRoutine(new Routine("global-exercises","this routine contains a unique cycle with all the exercises",true,"rookie",{id:1}));
-        console.log(res);
-      } catch (error) {
-        console.log(error);
+    getUserExerciseRoutine:async function(){
+      
+      
+      const res = await UserApi.getCurrentUserFavouriteRoutines();
+      const routines = await res.results;
+      for(const routine in routines){
+        if(routine.name ==="internal"){
+          //encontramos la rutina en la que este usuario guarda sus ejercicios
+          return routine.id;
+        }
       }
-    },
-    getCategories:async function(){
-      console.log("fetch categoires");
-      try {
-        const res = await CategoriesApi.getCategories();
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    getRoutines:async function(){
-      console.log("fetch routines");
-      try {
-        const res = await RoutinesApi.getRoutines();
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    deleteRoutines:async function(){
-      console.log("delete routines");
-      try {
-        const res = await RoutinesApi.deleteRoutine(2);
-        await RoutinesApi.deleteRoutine(3);
-        await RoutinesApi.deleteRoutine(5);
-        await RoutinesApi.deleteRoutine(4);
-        await RoutinesApi.deleteRoutine(6);
-        await RoutinesApi.deleteRoutine(7);
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    createCategory:async function(){
-      const res = await CategoriesApi.createCategory(new Category("Equipment","insertar descripcion"));
-      console.log(res);
+      return null;
     }
   }
-};
+
+}
+
 </script>
 
 <style scoped lang="scss">

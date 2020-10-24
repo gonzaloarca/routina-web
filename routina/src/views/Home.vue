@@ -26,7 +26,7 @@
       <v-card class="content-container">
         <h1>Recommended routines</h1>
         <h2>Just for you</h2>
-        <RoutineSlideGroup />
+        <RoutineSlideGroup :routines="routines"/>
       </v-card>
 
       <v-card class="content-container-special">
@@ -54,6 +54,7 @@
 <script>
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
 import SpecialRoutineBanner from "../components/SpecialRoutineBanner";
+import {RoutinesApi} from "../services/routines.js"
 // @ is an alias to /src
 
 export default {
@@ -79,8 +80,15 @@ export default {
         time: 45,
         image: require("../assets/routine1.jpg"),
       },
+      routines:this.getRouts,
     };
   },
+  methods:{
+    async getRouts(){
+      const res = await RoutinesApi.getRoutines();
+      return await res.results; //hay que convertirlo al tipo de datos de slide-group
+    }
+  }
 };
 </script>
 

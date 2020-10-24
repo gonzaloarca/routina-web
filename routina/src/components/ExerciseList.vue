@@ -1,16 +1,16 @@
 <template>
   <div class="scroller-container">
     <div class="scroller">
-      <transition-group name="swap" tag="div">
-        <v-list-item v-for="item in exercises" class="item" :key="item.name">
+      <transition-group name="swap" :key="rerender" tag="div">
+        <v-list-item v-for="item in exercises" class="item" :key="item.idGiver">
           <v-row class="excercise-row">
             <v-col class="ma-0 pa-0"
-              ><img src="../assets/routine1.jpg"
+              ><img :src="item.image"
             /></v-col>
-            <v-col> duration </v-col>
+            <v-col> {{ item.duration }} ' </v-col>
             <v-col> {{ item.name }} </v-col>
             <v-col v-if="editable" class="editable ma-0 pa-0">
-              <v-btn x-small class="ma-0 pa-0" icon
+              <v-btn v-on:click="edit(item)"  x-small class="ma-0 pa-0" icon
                 ><v-icon class="ma-0 pa-0">mdi-pencil</v-icon></v-btn
               >
               <v-btn v-on:click="swapUp(item)" x-small class="ma-0 pa-0" icon
@@ -49,16 +49,25 @@ export default {
       let actualIndex = this.exercises.indexOf(item);
       await this.$emit("swap-up", actualIndex);
       item.rerender--;
+      //this.rerender++;
     },
     async swapDown(item) {
       let actualIndex = this.exercises.indexOf(item);
       await this.$emit("swap-down", actualIndex);
       item.rerender++;
+      //this.rerender++;
     },
     async remove(item) {
       let actualIndex = this.exercises.indexOf(item);
       await this.$emit("remove", actualIndex);
       item.rerender++;
+      //this.rerender++;
+    },
+    async edit(item) {
+      let actualIndex = this.exercises.indexOf(item);
+      await this.$emit("edit", actualIndex);
+      item.rerender++;
+      //this.rerender++;
     },
 
   },

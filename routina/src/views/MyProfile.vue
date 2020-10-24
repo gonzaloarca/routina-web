@@ -1,6 +1,6 @@
 <template>
   <div class="Profile">
-    <ProfileBanner :user="user" :latestWorkout="latestWorkout" :mostUsedRoutine="mostUsedRoutine" />
+    <ProfileBanner :user="user" :latestWorkout="latestWorkout" :mostUsedRoutine="mostUsedRoutine" :current="true" />
     <div class="profile-content">
       <v-card
         v-for="sg in slidegroups"
@@ -55,7 +55,6 @@ export default {
         slidegroups:[
           {name:"Recently Used"}, 
           {name:"Favorite Routines"}, 
-          {name:"Recently Used"}, 
           {name:"Routines created by me"}, 
           {name:"Exercises created by me"}],
         user:{},
