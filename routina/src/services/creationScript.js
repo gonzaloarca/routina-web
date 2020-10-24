@@ -1,6 +1,7 @@
-import { RoutinesApi, Routine, Cycle } from "../services/routines.js";
+import { RoutinesApi, Routine, Cycle,Exercise,ImageModel } from "../services/routines.js";
 import { CategoriesApi, Category } from "../services/categories.js";
 import { UserApi, Credentials } from '../services/user.js';
+
 
 export { DatabaseCreator };
 
@@ -33,6 +34,7 @@ class DatabaseCreator {
         await this.createInitialCategory();
         await this.createInitialRoutine();
         await this.createCycleRoutineMain();
+        await this.createExercises();
         //this.logout();
 
     }
@@ -43,7 +45,7 @@ class DatabaseCreator {
         let categories = await CategoriesApi.getCategories();
         let routines = await RoutinesApi.getRoutines();
         console.log(routines.results);
-        routines.results.forEach(routine =>{
+        routines.results.forEach(routine => {
             RoutinesApi.deleteRoutine(routine.id);
 
         });
@@ -78,4 +80,25 @@ class DatabaseCreator {
             console.log(error);
         }
     }
+    static async createExercises() {
+        for(let i=0;i<this.exercises.length;i++){
+            const res = await RoutinesApi.createCycleExercise(1, 1, new Exercise(this.exercises.map(item=>item.ej)[i], this.exercises[i], "exercise", 0, 0));
+            const exerciseId = res.id;
+            await RoutinesApi.createExerciseImage(1, 1, exerciseId, new ImageModel(1, this.exercises.map(item=>item.link)[i]));
+        }
+
+    }
+
+    static exercises=[
+        {ej:"squats",link:"https://res.cloudinary.com/atormakh/image/upload/v1603495875/y3ryp44puaxlgc7wdnr4.jpg"},
+        {ej:"russian twists",link:"https://res.cloudinary.com/atormakh/image/upload/v1603499408/russian_twists_lrocm9.jpg"},
+        {ej:"pushups" , link:"https://res.cloudinary.com/atormakh/image/upload/v1603499408/Pushup_ix4gt6.jpg"},
+        {ej:"deadlift" , link:"https://res.cloudinary.com/atormakh/image/upload/v1603499408/deadlift_wq4hce.jpg"},
+        {ej:"crunches" , link:"https://res.cloudinary.com/atormakh/image/upload/v1603499409/crunches_kqbtu6.jpg"},
+        {ej:"dips" , link:"https://res.cloudinary.com/atormakh/image/upload/v1603499408/dips_irgktf.jpg"},
+        {ej:"plank" , link:"https://res.cloudinary.com/atormakh/image/upload/v1603499409/plancha_quocaq.jpg"},
+        {ej:"side plank" , link:"https://res.cloudinary.com/atormakh/image/upload/v1603499409/plancha_lateral_w33c8q.jpg"},
+        {ej:"inclined pushups" , link:"https://res.cloudinary.com/atormakh/image/upload/v1603499410/flexiones_inclinadas_oxto04.jpg"},     
+    ];
+
 }

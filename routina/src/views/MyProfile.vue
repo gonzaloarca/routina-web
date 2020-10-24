@@ -1,6 +1,6 @@
 <template>
   <div class="Profile">
-    <ProfileBanner :user="user" />
+    <ProfileBanner :user="user" :latestWorkout="latestWorkout" :mostUsedRoutine="mostUsedRoutine" />
     <div class="profile-content">
       <v-card
         v-for="sg in slidegroups"

@@ -18,11 +18,11 @@
            <div class="row-fmt">
              <v-card class="small-card" tile>
                <h2 class="small-title">Last Active</h2>
-               <h3>{{user.lastAct}}</h3>
+               <h3>{{user.dateLastActive}}</h3>
             </v-card >
             <v-card class="small-card" tile>
              <h2 class="small-title">Member Since</h2>
-             <h3>{{user.memSince}}</h3>
+             <h3>{{user.dateCreated}}</h3>
             </v-card >
          
            </div>
@@ -62,8 +62,9 @@ export default {
     user:{
       type:Object,
       required: true,
-    
     },
+    latestWorkout:{type:Object,required:true},
+    mostUsedRoutine:{type:Object,required:true},
     
   },
   components:{RoutineCard},
