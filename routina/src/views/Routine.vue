@@ -285,20 +285,7 @@ export default {
       }
     }
   }
-  // .row {
-  //   width: 60%;
-  //   margin: auto;
-  //   text-align: center;
-  //   .v-btn {
-  //     margin-top: auto !important;
-  //     margin-bottom: auto !important;
-  //     margin-left: 10px;
-  //     font-size: 20px !important;
-  //     .like-icon {
-  //       font-size: 40px;
-  //     }
-  //   }
-  // }
+ 
 }
 
 .info-container {

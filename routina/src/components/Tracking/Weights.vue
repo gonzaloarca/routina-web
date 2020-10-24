@@ -1,10 +1,17 @@
 <template>
-  <div style="display: flex; justify-content: center">
+  <div class="my-5" style="display: flex; justify-content: center; width: 100%">
     <div
-      style="background-color: rgb(33, 33, 33); width: 40%; height: fit-content"
+      style="
+        background-color: rgb(33, 33, 33);
+        width: 40%;
+        height: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
       class="my-0 center"
     >
-      <div class="my-4">
+      <div class="my-4 mx-4">
         <div
           style="
             position: relative;
@@ -16,9 +23,9 @@
           "
           class="grey darken-2"
         >
-          <span class="font-weight-black mx-10"
+          <span class="font-weight-bold mx-8"
             ><v-icon class="icon-left">mdi-scale-bathroom</v-icon> Latest
-            Weightings Records</span
+            Weighting Recorded</span
           >
         </div>
         <div class="weight-container center"><span>65.1kg</span></div>
@@ -26,7 +33,7 @@
           <v-btn
             x-big
             rounded
-            class="my-6 primary black--text font-weight-black"
+            class="my-6 primary black--text font-weight-bold"
             @click="clickWeightings"
             ><span>Add New Weighting</span></v-btn
           >
@@ -35,10 +42,10 @@
     </div>
     <div class="divider"></div>
     <div
-      style="background-color: rgb(33, 33, 33); width: 60%"
+      style="background-color: rgb(33, 33, 33); width: 40%"
       class="my-0 center"
     >
-      <div style="width: 95%" class="my-4">
+      <div style="width: 400px" class="my-4">
         <div
           style="
             position: relative;
@@ -49,7 +56,7 @@
           "
           class="grey darken-2"
         >
-          <span class="font-weight-black mx-10"
+          <span class="font-weight-bold mx-8"
             ><v-icon class="icon-left">mdi-history</v-icon> Weighting
             History</span
           >
@@ -64,18 +71,40 @@
                 margin: auto;
                 margin-top: 10px;
                 background-color: rgb(66, 66, 66);
-                width: 80%;
+                width: 95%;
               "
             >
               <div
                 class="white black--text"
-                style="left: 0; position: absolute"
+                style="left: 0; position: absolute; width: 20%; height: 100%"
               >
-                Mar 10 <br />
-                2020
+                <p class="ma-0 mt-1 font-weight-medium" style="font-size: 14px">
+                  {{ graphData.date }}
+                </p>
+                <p class="ma-0 font-weight-medium" style="font-size: 14px">
+                  {{ graphData.year }}
+                </p>
               </div>
-              <div style="position: absolute; right: 0; margin-right: 3px">
-                <span><v-icon>mdi-scale-bathroom</v-icon>{{ item }} kg</span>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
+                <span
+                  style="
+                    width: 80%;
+                    position: absolute;
+                    right: 0;
+                    font-size: 16px;
+                    font-weight: 600;
+                  "
+                  >{{ item }} kg<v-icon
+                    style="position: absolute; right: 0; margin-right: 3px"
+                    >mdi-scale-bathroom</v-icon
+                  ></span
+                >
               </div>
             </v-list-item>
           </div>
@@ -84,7 +113,7 @@
           <v-btn
             x-big
             rounded
-            class="my-6 primary black--text font-weight-black"
+            class="my-6 primary black--text font-weight-bold"
             v-on:click="clickGraph"
             ><span>SHOW GRAPH</span></v-btn
           >
@@ -127,6 +156,8 @@ export default {
       overlayWeight: false,
       overlayGraph: false,
       graphData: {
+        date: "Mar 10",
+        year: "2020",
         value: this.weightings.map((item) => item.weight),
       },
     };
@@ -174,7 +205,7 @@ export default {
 }
 
 .divider {
-  width: 10px;
-  background-color: black;
+  width: 3px;
+  background-color: rgb(20, 20, 20);
 }
 </style>

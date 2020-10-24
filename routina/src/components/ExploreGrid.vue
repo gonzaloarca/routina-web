@@ -1,13 +1,30 @@
 <template>
   <div
-    style="overflow:hidden; position:relative; width:100%; align-items:center; justify-content:center"
+    style="
+      position: relative;
+      width: 100%;
+      min-height: 530px;
+      align-items: center;
+      justify-content: center;
+    "
   >
-   
-    <div style=" position:relative; width:100%; align-items:center; justify-content:center">
+    <div
+      style="
+        position: relative;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+      "
+    >
       <v-row class="row-style" justify="center">
-        <v-container style="width:75%" fluid>
+        <v-container style="width: 75%" fluid>
           <v-row>
-            <v-col v-for="cat in categories" :key="cat.name" :cols="3" class="col-style">
+            <v-col
+              v-for="cat in categories"
+              :key="cat.name"
+              :cols="3"
+              class="col-style"
+            >
               <component
                 v-on:click="clickEvent"
                 :is="componentType"
@@ -33,24 +50,24 @@ export default {
   props: {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     categories: {
       type: Array,
-      required: true
+      required: true,
     },
     componentType: {
-      type: String
+      type: String,
     },
-    withOverlay:{
-      type:Boolean
-    }
+    withOverlay: {
+      type: Boolean,
+    },
   },
   methods: {
     clickEvent(event) {
       this.$emit("click", event);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -59,8 +76,8 @@ export default {
 @import "~vuetify/src/styles/styles.sass";
 .col-style {
   position: relative;
-    display:flex;
-    justify-content:center;
+  display: flex;
+  justify-content: center;
   padding: 10px 10px 10px 10px;
 }
 
