@@ -12,7 +12,7 @@
             <span class="type-label grey--text my-0"
               >DURATION</span
             >
-            <v-icon dense>mdi-timer-outline</v-icon>{{ routineData.duration }}
+            <v-icon dense>mdi-timer-outline</v-icon>{{ getDuration(routineData.duration) }}
           </p>
           <p class="text-uppercase mb-0">
             <span class="type-label grey--text  my-0"
@@ -104,6 +104,11 @@ export default {
     },
   },
   methods: {
+    getDuration(duration){
+      if(duration && duration.includes("under")) return "< 15";
+      else  if(duration && duration.includes("above")) return "> 60";
+      else return duration;
+    },
     clickEvent(event) {
       this.overlay = true;
       this.$emit("click", event);

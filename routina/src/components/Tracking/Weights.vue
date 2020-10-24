@@ -76,7 +76,7 @@
         <div class="center">
           <div class="scroller">
             <v-list-item
-              v-for="weight in weightings"
+              v-for="weight in weightings.slice().reverse()"
               :key="weight.id"
               style="
                 position: relative;
@@ -142,6 +142,7 @@
     <OverlayGraph
       v-if="weightings.length!=0"
       :value="overlayGraph"
+      :key="rerender"
       v-on:close-graph="overlayGraph = false"
       :data="weightings.map((item) => item.weight)"
       :labels="weightings.map((item) => formatTime(item.date))"
@@ -173,13 +174,11 @@ export default {
     return {
       overlayWeight: false,
       overlayGraph: false,
-      graphData: {
-        date: "Mar 10",
-        year: "2020",
-        value: this.weightings.map((item) => item.weight),
-      },
+      labels:[],
+
       months:["Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" ],
-     
+      rerender:0,
+      
     };
   },
   methods: {
@@ -191,16 +190,24 @@ export default {
       this.overlayGraph = true;
       this.$emit("click-graph", event);
     },
-    updateWeightings(){
-      this.$emit("update-weightings", false);
+    async updateWeightings(){
+
+      await this.$emit("update-weightings", event);
+      
     },
     formatTime(time){
       let date=new Date(time);
       let [month, day, year]=date.toLocaleDateString().split("/");
       return this.months[month-1]+" "+day+" "+year;
-    }
+    },
+    
       
   },
+  watch:{
+    weightings: async function (){
+      this.rerender++;
+    }
+  }
 };
 </script>
 

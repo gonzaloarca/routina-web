@@ -20,8 +20,8 @@
         <v-container style="width: 75%" fluid>
           <v-row>
             <v-col
-              v-for="cat in categories"
-              :key="cat.name"
+              v-for="(cat,index) in categories"
+              :key="index"
               :cols="3"
               class="col-style"
             >

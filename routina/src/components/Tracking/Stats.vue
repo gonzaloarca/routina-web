@@ -6,18 +6,34 @@
           <v-icon class="ma-2">mdi-history</v-icon
           ><span><h3>Routine History</h3></span>
         </div>
-        <div class="scroller">
+       <div v-if="stats.length!=0">
+          <div class="scroller">
           <div class="item-container" v-for="item in stats" :key="item.id">
             <div class="date-container">
-              <h3>{{ item.date }}</h3>
+              <h3>{{ formatTime(item.date) }}</h3>
             </div>
             <div class="name-container">
-              <span class="routine-name">{{ item.name }}</span>
+              <span class="routine-name">{{ item.routine.name }}</span>
               <span class="routine-author">
-                by <span class="primary--text">{{ item.author }}</span></span
+                by <span class="primary--text">{{ item.routine.creator.username }}</span></span
               >
             </div>
           </div>
+        </div>
+        
+       </div>
+       <div v-else>
+          <h3>You haven't tried any routines yet</h3>
+          <div >
+          <v-btn
+            x-big
+            rounded
+            class="my-6 primary black--text font-weight-bold"
+            router
+            to="/explore"
+            ><span>Explore routines</span></v-btn>
+        </div>
+
         </div>
       </div>
     </div>
@@ -97,72 +113,22 @@
 
 <script>
 import OverlayGraph from "./OverlayGraph.vue";
+import {UserApi} from "../../services/user.js";
+
+
 export default {
   name: "Stats",
   components: { OverlayGraph },
+  created(){
+    this.stats=UserApi.getCurrentuserExecutions();
+  },
   data() {
     return {
       overlayGraph: false,
       dates: {
         titles: ["Last Week", "Last Month", "Last Year", "Ever"],
       },
-      stats: [
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-        {
-          date: "Mar. 17 2020",
-          name: "Routine 1",
-          author: "UserX",
-        },
-      ],
+      stats: [],
       statsWithTime: [
         {
           date: "mar 1 2020",
@@ -198,6 +164,11 @@ export default {
         },
       ],
     };
+  },
+  formatTime(time){
+      let date=new Date(time);
+      let [month, day, year]=date.toLocaleDateString().split("/");
+      return this.months[month-1]+" "+day+" "+year;
   },
 };
 </script>

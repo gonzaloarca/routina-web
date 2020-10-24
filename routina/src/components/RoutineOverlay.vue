@@ -15,7 +15,7 @@
               text
               class="btn-fmt primary--text"
               router
-              :to="'/generic-profile/' + data.routineId"
+              :to="'/generic-profile/' + data.creator.id"
               ><span class="primary--text">{{
                 data.creator.username
               }}</span></v-btn
@@ -91,7 +91,7 @@
             "
             rounded
             router
-            :to="'routine/' + data.routineId"
+            :to="'routine/' + data.id"
             class="goto-button ma-0 primary black--text font-weight-bold"
             >GO TO ROUTINE</v-btn
           >

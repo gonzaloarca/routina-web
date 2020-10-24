@@ -33,9 +33,10 @@
               solo
               rounded
               dense
-              hide-details
+              
               light
               clearable
+              :rules="[rules.required, rules.number]"
               style="width: 300px"
               v-model="weighting"
             ></v-text-field>
@@ -77,6 +78,10 @@ import {UserApi,} from "@/services/user.js";
   data(){
     return{
       weighting:0,
+      rules: {
+          required: value => !!value || 'This field is required.',
+          number: value=> (parseFloat(value) >0 && parseFloat(value) <500)|| 'Invalid weight entered',
+      },    
     }
   },
   methods: {
@@ -90,15 +95,10 @@ import {UserApi,} from "@/services/user.js";
     },
     
     async addWeighting(){
-      console.log("WEEEEEEIIIIGHHTING");
-      console.log(this.weighting);
       this.weighting = parseFloat(this.weighting);
       const res=await UserApi.addWeightingToUser(this.weighting,);
-      console.log("hola");
       this.updateWeights();
-      console.log("holaaaa");
       this.closeOverlayWeight();
-      console.log("holaaaaaaaa");
      
       return res;
     },

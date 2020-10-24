@@ -44,6 +44,10 @@ class UserApi {
         await Api.post(`${UserApi.url}/resend_verfication`,false,{"email":email});
     }
 
+    static async getCurrentUserRoutines(controller){
+        return await Api.get(`${UserApi.url}/current/routines/`,true,controller);
+    }
+
     static async getCurrentUserFavouriteRoutines(page,size,orderBy,direction,controller){
         let parameters = "";
         let concatenate = false;
@@ -71,7 +75,8 @@ class UserApi {
         if(concatenate == true){
             parameters+="&";
         }
-        return await Api.get(`${UserApi.url}/current/routines/favourites?${parameters}`,true,controller);
+        parameters="";
+        return await Api.get(`${UserApi.url}/current/routines/favourites${parameters}`,true,controller);
         
     }
 
@@ -102,11 +107,9 @@ class UserApi {
         if(concatenate == true){
             parameters+="&";
         }
-        return await Api.get(`${UserApi.url}/${userId}/routines/favourites?${parameters}`,true,controller);
+        return await Api.get(`${UserApi.url}/current/routines/favourites?${parameters}`,true,controller);
         
     }
-
-
 
     static async addRoutineToUserFavourites(id,controller){
         return await Api.post(`${UserApi.url}/current/routines/${id}/favourites`,true,controller);
@@ -168,8 +171,6 @@ class UserApi {
         return await Api.get(`${UserApi.url}/current/routines/executions?${parameters}`,true,controller);
         
     }
-
-
 }
 
 class Credentials {

@@ -52,6 +52,7 @@ export default {
   components: { RoutineSlideGroup, SpecialRoutineBanner, RoutinesBanner },
   async created(){
     await this.getRouts();
+    this.specialRoutine1 = this.routines[Math.floor(Math.random()*this.routines.length)];
     
   },
   data() {
@@ -65,7 +66,7 @@ export default {
       ],
       slides: ["First", "Second", "Third", "Fourth", "Fifth"],
       specialRoutine1: {
-        creator:{username:"agustin pelusalinsky"},
+        creator:{username:"agustin Jerusalinsky"},
         name: "Routine 1",
         id: 1,
         author: "Julian Sicardi",

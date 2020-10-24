@@ -12,8 +12,8 @@ class RoutinesApi {
     static async getFullRoutine(id){
         const routineResponse =  await this.getRoutine(id);
         let routine = new RoutineReal(routineResponse);
-        console.log("RUTINA ANTES DE SER CASTEADA");
-        console.log(routineResponse);
+        //console.log("RUTINA ANTES DE SER CASTEADA");
+        //console.log(routineResponse);
         //descargar todos los ciclos
         const cyclesResponse = await this.getRoutineCycles(id,);
         const cycles = cyclesResponse.results;
@@ -39,10 +39,8 @@ class RoutinesApi {
         const result = [];
         for(let i=0;i<routines.length;i++){
             try{
-                let routine = new RoutineSlide(routines[i]);
-           
+            let routine = new RoutineSlide(routines[i]);
             const cyclesResponse = await this.getRoutineCycles(routine.id);
-            
             let cycleId = cyclesResponse.results[0].id;
             const exercisesRes = await this.getCycleExcercises(routine.id,cycleId);
             
@@ -50,6 +48,7 @@ class RoutinesApi {
             
             routine.addImage(imageRes.results[0].url)
             result[i-skipped] =  routine;
+           
             }catch(error){
                 console.log("slide routine error " + error);
                 console.log(routines[i]);
@@ -57,6 +56,7 @@ class RoutinesApi {
             }
             
         }
+        result.splice(0,1);
         return result;
         
         // console.log("RUTINA ANTES DE SER CASTEADA");

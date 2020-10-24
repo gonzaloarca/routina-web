@@ -10,11 +10,11 @@
           My favorite routines
           <v-icon size="90%">mdi-heart</v-icon>
         </h1>
-        <RoutineSlideGroup />
+        <RoutineSlideGroup :routines="favoriteRoutines"/>
       </v-card>
       <v-card class="content-container">
         <h1 class="title-cont">Routines created by me</h1>
-        <RoutineSlideGroup :editable="routineEditing" />
+        <RoutineSlideGroup  :routines="myRoutines" :editable="routineEditing" />
 
         <div class="centered-div">
           <div class="centered-div pa-3">
@@ -95,16 +95,59 @@
 import RoutinesBanner from "../components/RoutinesBanner";
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
 import ExerciseSlideGroup from "../components/ExerciseSlideGroup";
-
+import {UserApi} from "../services/user.js";
+import {RoutinesApi} from "../services/routines";
 export default {
   name: "Routines",
   components: { RoutinesBanner, RoutineSlideGroup, ExerciseSlideGroup },
+  mounted(){
+    this.getFavoriteRoutines();
+    this.getMyRoutines();
+    this.getUserExercises();
+  },
   data() {
     return {
       routineEditing: false,
       exerciseEditing: false,
+      favoriteRoutines:[],
+      myRoutines:[],
+      myExercises:[],
     };
   },
+  methods:{
+    getFavoriteRoutines: async function(){
+      const res = await UserApi.getCurrentUserFavouriteRoutines();
+      console.log("GETTING FAVORITE ROUTINES");
+      this.favoriteRoutines = [];
+      for(const routine of res.results){
+        console.log(routine);
+        const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
+        this.favoriteRoutines.push(fullResponse);
+      }
+    },
+    getMyRoutines: async function(){
+      const res = await UserApi.getCurrentUserRoutines();
+      console.log(res);
+      console.log("GETTING MY ROUTINES");
+      this.myRoutines = [];
+      for(const routine of res.results){
+        
+        const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
+        this.myRoutines.push(fullResponse);
+      }
+    },
+    getUserExercises:async function(){
+      const res = await UserApi.getCurrentUserRoutines();
+      for(const routine of res.results){
+        if(routine.name ==="internal"){
+          this.myExercises = [];
+          const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
+          this.myExercises = fullResponse.cycles[0].exercises;
+        }
+      }
+      console.log(this.myExercises);
+    }
+  }
 };
 </script>
 

@@ -44,7 +44,6 @@ export default {
     async getUserWeightings(){
       const res= await UserApi.getWeightingFromUser();
       this.weightings=res.results;
-
     }
   }
 };
