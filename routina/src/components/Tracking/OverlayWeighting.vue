@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import {UserApi,FullWeighting} from "@/services/user.js";
+import {UserApi,} from "@/services/user.js";
  export default {
   name: "overlayWeight",
   props: {
@@ -76,7 +76,7 @@ import {UserApi,FullWeighting} from "@/services/user.js";
   },
   data(){
     return{
-      weighting:"",
+      weighting:0,
     }
   },
   methods: {
@@ -84,11 +84,23 @@ import {UserApi,FullWeighting} from "@/services/user.js";
       this.$emit("close-overlay-weight", false);
       return;
     },
+
+    updateWeights(){
+      this.$emit("update-weightings", false);
+    },
     
     async addWeighting(){
-      const res=await UserApi.addWeightingToUser(new FullWeighting(this.weighting, 1.5),);
-      console.log(res);
-      this.closeOverlayWeight(); 
+      console.log("WEEEEEEIIIIGHHTING");
+      console.log(this.weighting);
+      this.weighting = parseFloat(this.weighting);
+      const res=await UserApi.addWeightingToUser(this.weighting,);
+      console.log("hola");
+      this.updateWeights();
+      console.log("holaaaa");
+      this.closeOverlayWeight();
+      console.log("holaaaaaaaa");
+     
+      return res;
     },
   },
 };

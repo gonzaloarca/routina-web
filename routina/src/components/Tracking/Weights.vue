@@ -28,7 +28,8 @@
             Weighting Recorded</span
           >
         </div>
-        <div v-if="weightings.length!=0" class="weight-container center"><span>{{weightings[weightings.length-1].weight}}</span></div>
+        <div v-if="weightings.length!=0" class="weight-container center"><span>{{weightings[weightings.length-1].weight}}
+        kg</span></div>
           <div v-else class="no-weights" >
               <h3>No weightings recorded</h3>
           </div>
@@ -70,11 +71,12 @@
 
           </div>
         </div>
-        <div class="center" v-else>
+        <div v-else>
+        <div class="center">
           <div class="scroller">
             <v-list-item
-              v-for="item in graphData.value"
-              :key="item.id"
+              v-for="weight in weightings"
+              :key="weight.id"
               style="
                 position: relative;
                 margin: auto;
@@ -85,10 +87,10 @@
                 class="white black--text"
                 style="left: 0; position: absolute; width: 20%; height: 100%">
                 <p class="ma-0 mt-1 font-weight-medium" style="font-size: 14px">
-                  {{ graphData.date }}
+                  {{ formatTime(weight.date) }}
                 </p>
                 <p class="ma-0 font-weight-medium" style="font-size: 14px">
-                  {{ graphData.year }}
+                  {{ weight.year }}
                 </p>
               </div>
               <div
@@ -106,7 +108,7 @@
                     font-size: 16px;
                     font-weight: 600;
                   "
-                  >{{ item }} kg<v-icon
+                  >{{ weight.weight }} kg<v-icon
                     style="position: absolute; right: 0; margin-right: 3px"
                     >mdi-scale-bathroom</v-icon
                   ></span
@@ -115,7 +117,7 @@
             </v-list-item>
           </div>
         
-       
+          </div>
           <div>
             <v-btn
               x-big
@@ -126,11 +128,13 @@
             >
           </div>
         </div>
+        
       </div>
     </div>
     <OverlayWeighting
       v-if="overlayWeight"
       v-on:close-overlay-weight="overlayWeight = false"
+      v-on:update-weightings="updateWeightings"
       :overlayWeightings="overlayWeight"
     >
     </OverlayWeighting>
@@ -148,9 +152,10 @@
 <script>
 import OverlayWeighting from "./OverlayWeighting.vue";
 import OverlayGraph from "./OverlayGraph.vue";
+// import {UserApi} from "@/services/user.js"
 
 export default {
-  name: "Weights",
+  name: "Weights",  
   components: { OverlayWeighting, OverlayGraph },
   props: {
     weightings: {
@@ -182,6 +187,10 @@ export default {
       this.overlayGraph = true;
       this.$emit("click-graph", event);
     },
+    updateWeightings(){
+      this.$emit("update-weightings", false);
+    },
+    
   },
 };
 </script>

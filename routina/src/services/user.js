@@ -1,7 +1,7 @@
 import { Api } from './api.js';
 import {Cookies} from './cookies.js';
 
-export { UserApi, Credentials,FullUser,User,FullWeighting };
+export { UserApi, Credentials,FullUser,User };
 
 class UserApi {
 
@@ -116,8 +116,16 @@ class UserApi {
         return await Api.delete(`${UserApi.url}/current/routines/${id}/favourites`,true,controller);
     }
 
-    static async addWeightingToUser(weight, controller){
-        return await Api.post(`${UserApi.url}/current/weightings/`,true, weight,controller);
+    static async addWeightingToUser(weightParam, controller){
+        // let parameters = "";
+        // let height=1.7;
+        // // let concatenate = false;
+        // if(weight instanceof Number && weight>=0){
+        //     parameters+=`weight=${weight}`;
+        // }
+        // parameters+=`height=${height}`;
+        // console.log(parameters);
+        return await Api.post(`${UserApi.url}/current/weightings`,true,new Weight(weightParam,1.3),controller);
     }
 
     static async getWeightingFromUser(controller){
@@ -161,13 +169,7 @@ class UserApi {
         
     }
 
-    
 
-
-
-
-
-    
 }
 
 class Credentials {
@@ -210,9 +212,10 @@ class User{
 
 } 
 
-class FullWeighting{
-    constructor( weight, height){
+class Weight{
+    constructor(weight,height){
         this.weight=weight;
         this.height=height;
     }
 }
+

@@ -73,7 +73,7 @@
 import ExploreBanner from "../components/ExploreBanner";
 import ExploreTabHead from "../components/ExploreTabHead";
 import ExploreGrid from "../components/ExploreGrid";
-
+import {RoutinesApi} from "../services/routines.js";
 export default {
   name: "Explore",
   components: { ExploreBanner, ExploreTabHead, ExploreGrid },
@@ -82,6 +82,14 @@ export default {
       this.tabName = event.emitter;
       this.showingRoutines = true;
     },
+    getAllRoutines: async function(){
+      try {
+        const routines = await RoutinesApi.getSlideRoutines();
+        this.filterRoutines(routines);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   data() {
     return {
@@ -235,7 +243,6 @@ export default {
             { name: "above 60'", image: "fullbody.jpg" },
           ],
         },
-
         {
           name: "type",
           icon: "fa-heartbeat",
@@ -247,7 +254,6 @@ export default {
             { name: "Pilates", image: "pilates.jpg" },
           ],
         },
-
         {
           name: "difficulty level",
           icon: "mdi-fire",
@@ -258,7 +264,6 @@ export default {
             { name: "Hard", image: "back.jpg" },
           ],
         },
-
         {
           name: "muscle group",
           icon: "fa-running",
