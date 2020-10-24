@@ -24,6 +24,7 @@
 import Stats from "../components/Tracking/Stats.vue";
 import Weights from "../components/Tracking/Weights.vue";
 import RoutinesBanner from "../components/RoutinesBanner.vue";
+// import UserApi from "@/services/user.js";
 
 export default {
   name: "Tracking",
@@ -31,42 +32,50 @@ export default {
   data() {
     return {
       tab: null,
-      weightings: [
-        {
-          date: "mar 1 2020",
-          weight: 61.5,
-        },
-        {
-          date: "mar 2 2020",
-          weight: 62.3,
-        },
-        {
-          date: "mar 3 2020",
-          weight: 60.2,
-        },
-        {
-          date: "mar 8 2020",
-          weight: 64.3,
-        },
-        {
-          date: "mar 15 2020",
-          weight: 65.7,
-        },
-        {
-          date: "mar 16 2020",
-          weight: 63.2,
-        },
-        {
-          date: "mar 17 2020",
-          weight: 62.1,
-        },
-        {
-          date: "mar 18 2020",
-          weight: 60.2,
-        },
-      ],
+      // weightings: [
+      //   {
+      //     date: "mar 1 2020",
+      //     weight: 61.5,
+      //   },
+      //   {
+      //     date: "mar 2 2020",
+      //     weight: 62.3,
+      //   },
+      //   {
+      //     date: "mar 3 2020",
+      //     weight: 60.2,
+      //   },
+      //   {
+      //     date: "mar 8 2020",
+      //     weight: 64.3,
+      //   },
+      //   {
+      //     date: "mar 15 2020",
+      //     weight: 65.7,
+      //   },
+      //   {
+      //     date: "mar 16 2020",
+      //     weight: 63.2,
+      //   },
+      //   {
+      //     date: "mar 17 2020",
+      //     weight: 62.1,
+      //   },
+      //   {
+      //     date: "mar 18 2020",
+      //     weight: 60.2,
+      //   },
+      // ],
+      weightings: [],
     };
   },
+  methods:{
+    async getUserWeightings(){
+      // const res= await UserApi.getWeightingFromUser();
+      // const toRet=res.results;
+
+    }
+  }
 };
 </script>
 

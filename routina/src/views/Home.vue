@@ -1,24 +1,6 @@
 <template>
   <div class="Home">
-<<<<<<< HEAD
-    <v-carousel
-      cycle
-      height="350"
-      hide-delimiter-background
-      show-arrows-on-hover
-    >
-      <v-carousel-item v-for="(slide, i) in slides" :key="i">
-        <v-sheet :color="colors[i]" height="100%">
-          <v-row class="fill-height" align="center" justify="center">
-            <div class="display-3 font-weight-bold">{{ slide }} Slide</div>
-          </v-row>
-        </v-sheet>
-      </v-carousel-item>
-    </v-carousel>
-    
-=======
     <RoutinesBanner banner-image-url="banner-2.jpg" banner-title="Home" />
->>>>>>> ecec08d90ee6ec2e1b835b6e6aa3f8a7a4c7a9e9
 
     <!-- banner viejo -->
     <!-- <section class="exhibitor">
@@ -61,11 +43,8 @@
 <script>
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
 import SpecialRoutineBanner from "../components/SpecialRoutineBanner";
-<<<<<<< HEAD
 import {RoutinesApi} from "../services/routines.js"
-=======
 import RoutinesBanner from "../components/RoutinesBanner";
->>>>>>> ecec08d90ee6ec2e1b835b6e6aa3f8a7a4c7a9e9
 // @ is an alias to /src
 
 export default {

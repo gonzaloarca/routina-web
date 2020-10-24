@@ -35,8 +35,7 @@
             rounded
             class="my-6 primary black--text font-weight-bold"
             @click="clickWeightings"
-            ><span>Add New Weighting</span></v-btn
-          >
+            ><span>Add New Weighting</span></v-btn>
         </div>
       </div>
     </div>
@@ -61,7 +60,7 @@
             History</span
           >
         </div>
-        <div class="center">
+        <div class="center" v-if="routines.size!=0">
           <div class="scroller">
             <v-list-item
               v-for="item in graphData.value"
@@ -108,6 +107,9 @@
               </div>
             </v-list-item>
           </div>
+        </div>
+        <div v-else >
+          <h3>No weightings recorded</h3>
         </div>
         <div>
           <v-btn
