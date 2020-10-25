@@ -78,6 +78,8 @@ class RoutinesApi {
         // return routine;
     }
 
+    
+
     static async getFullRoutines(id){
         const routineResponse =  await this.getRoutine(id);
         let routine = new RoutineReal(routineResponse);

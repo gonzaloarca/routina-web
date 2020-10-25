@@ -154,24 +154,24 @@ export default {
       this.errorMessage="";
       if(this.selectedFile!==null && this.exerciseName!=="" && this.exerciseDetail!==""){
         let id = this.getUserExerciseRoutine();
+        console.log("USER EXERCISES ROUTINE ID");
+        console.log(id);
         if(id===null){
          const res = await RoutinesApi.createRoutine(new Routine("internal","",false,"rookie",1));
          id = res.id;
         }
         const res = await RoutinesApi.createCycleExercise(1,1,new Exercise(this.exerciseName,this.exerciseDetail,"exercise",0,0));
-          const imgUrl = await this.uploadImage();
-          const exerciseId = res.id;
-          const res2 = await RoutinesApi.createExerciseImage(1,1,exerciseId,new ImageModel(1,imgUrl));
-          console.log(res2);
-          console.log("SUCCESS");
+        const imgUrl = await this.uploadImage();
+        const exerciseId = res.id;
+        const res2 = await RoutinesApi.createExerciseImage(1,1,exerciseId,new ImageModel(1,imgUrl));
+        console.log(res2);
+        console.log("SUCCESS");
       }else{
         console.log("te faltan completar datos mostro");
         this.errorMessage="All Text fields must be filled";
       }
     },
     getUserExerciseRoutine:async function(){
-      
-      
       const res = await UserApi.getCurrentUserFavouriteRoutines();
       const routines = await res.results;
       for(const routine in routines){

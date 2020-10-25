@@ -3,8 +3,8 @@
   <ProfileBanner :user="usr" :current="false"/>
   <div class="profile-content">
       <v-card v-for="sg in slidegroups" :key="sg.name" class="content-container">
-        <h1>{{sg.name}}<div style="width:10px;"></div>{{usr.name}}</h1>
-        <RoutineSlideGroup />
+        <h1>{{sg.name}}{{usr.username}}<div style="width:10px;"></div>{{usr.name}}</h1>
+        <RoutineSlideGroup :routines="sg.routines" />
       </v-card>
   </div>
 </div>  
@@ -13,6 +13,7 @@
 import ProfileBanner from "../components/ProfileBanner";
 import RoutineSlideGroup from "../components/RoutineSlideGroup";
 import {UserApi} from "../services/user.js";
+import {RoutinesApi} from "../services/routines.js";
 export default {
     name:"GenericProfile",
     components:{ProfileBanner, RoutineSlideGroup},
@@ -48,15 +49,14 @@ export default {
         //   }
         // },
         slidegroups:[
-          {name:"Routines created by "}, 
-          {name:"Exercises created by "}],
+          {name:"Routines created by ", routines:[],}, ],
       }
     },
-    created(){
-        UserApi.getUser(this.id).then(function(data){
-            this.usr=data.body;
-        });
+    async created(){
+        this.usr = await UserApi.getUser(this.id);
+        this.slidegroups[0].routines= await RoutinesApi.getSlideRoutines();
     },
+   
 
 };
 </script>

@@ -71,7 +71,7 @@
             height: 90px;
           "
         >
-          32.7 minutes
+          37 minutes
         </div>
       </div>
       <div class="data-container">
@@ -105,7 +105,7 @@
       v-on:close-graph="overlayGraph = false"
       :data="statsWithTime.map((item) => item.time)"
       :labels="statsWithTime.map((item) => item.date)"
-      label="Weight"
+      label="Minutes spent working out"
     >
     </OverlayGraph>
   </div>
@@ -165,10 +165,15 @@ export default {
       ],
     };
   },
+  methods:{
   formatTime(time){
       let date=new Date(time);
       let [month, day, year]=date.toLocaleDateString().split("/");
       return this.months[month-1]+" "+day+" "+year;
+  },
+  calcAverage(){
+    return this.stats.map((item)=>item.duration).reduce((a,b)=>a+b,0)/this.stats.length;
+  }
   },
 };
 </script>

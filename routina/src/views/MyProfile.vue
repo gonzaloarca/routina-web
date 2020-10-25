@@ -8,7 +8,7 @@
         class="content-container"
       >
         <h1>{{ sg.name }}</h1>
-        <RoutineSlideGroup />
+        <RoutineSlideGroup :routines="sg.routines"/>
       </v-card>
     </div>
   </div>
@@ -53,10 +53,10 @@ export default {
           },
         },
         slidegroups:[
-          {name:"Recently Used"}, 
-          {name:"Favorite Routines"}, 
-          {name:"Routines created by me"}, 
-          {name:"Exercises created by me"}],
+          {name:"Recently Used", routines:[],}, 
+          {name:"Favorite Routines", routines:[],}, 
+          {name:"Routines created by me", routines:[],}, 
+          {name:"Exercises created by me", routines:[],}],
         user:{},
         numberOfExecutions:0,
         lastRoutine:{},

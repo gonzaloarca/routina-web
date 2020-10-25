@@ -50,7 +50,7 @@
       </v-card>
       <v-card class="content-container">
         <h1 class="title-cont">Exercises created by me</h1>
-        <ExerciseSlideGroup :editable="exerciseEditing" />
+        <ExerciseSlideGroup :exercises="myExercises" :editable="exerciseEditing" />
 
         <div class="centered-div">
           <div class="centered-div pa-3">
@@ -122,6 +122,8 @@ export default {
       for(const routine of res.results){
         console.log(routine);
         const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
+        const imageRes = await RoutinesApi.getExerciseImages(fullResponse.id, fullResponse.cycles[0].id, fullResponse.cycles[0].exercises[0].id);
+        fullResponse.image = imageRes.results[0].url;
         this.favoriteRoutines.push(fullResponse);
       }
     },
@@ -133,6 +135,8 @@ export default {
       for(const routine of res.results){
         
         const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
+        const imageRes = await RoutinesApi.getExerciseImages(fullResponse.id, fullResponse.cycles[0].id, fullResponse.cycles[0].exercises[0].id);
+        fullResponse.image = imageRes.results[0].url;
         this.myRoutines.push(fullResponse);
       }
     },

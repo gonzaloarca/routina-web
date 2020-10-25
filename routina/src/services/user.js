@@ -48,6 +48,10 @@ class UserApi {
         return await Api.get(`${UserApi.url}/current/routines/`,true,controller);
     }
 
+    static async getUserRoutines(id,controller){
+        return await Api.get(`${UserApi.url}/${id}/routines/`,true,controller);
+    }
+
     static async getCurrentUserFavouriteRoutines(page,size,orderBy,direction,controller){
         let parameters = "";
         let concatenate = false;
@@ -172,6 +176,9 @@ class UserApi {
         
     }
 }
+
+
+
 
 class Credentials {
     constructor(username, password) {

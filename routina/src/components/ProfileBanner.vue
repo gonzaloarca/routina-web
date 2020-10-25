@@ -18,11 +18,11 @@
            <div class="row-fmt">
              <v-card class="small-card" tile>
                <h2 class="small-title">Last Active</h2>
-               <h3>{{user.dateLastActive}}</h3>
+               <h3>{{formatTime(user.dateLastActive)}}</h3>
             </v-card >
             <v-card class="small-card" tile>
              <h2 class="small-title">Member Since</h2>
-             <h3>{{user.dateCreated}}</h3>
+             <h3>{{formatTimeStyle(user.dateCreated)}}</h3>
             </v-card >
          
            </div>
@@ -72,7 +72,27 @@ export default {
     mostUsedRoutine:{type:Object,required:true},
     
   },
+  data(){
+    return{
+    months:["Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" ],
+    };
+  },
   components:{RoutineCard},
+  methods:{
+  formatTime(time){
+      let date=new Date(time);
+      let [month, day, year]=date.toLocaleDateString().split("/");
+      let [hour, minute, second]=date.toLocaleTimeString().split(/:| /);
+      date=month+second+year;
+    
+      return day+" days "+hour+" hours "+minute+" minutes ago";
+  },
+  formatTimeStyle(time){
+      let date=new Date(time);
+      let [month, day, year]=date.toLocaleDateString().split("/");
+      return this.months[month-1]+" "+day+" "+year;
+  },
+  },
 
 };
 </script>
