@@ -27,14 +27,7 @@
          
            </div>
          </div>
-         <v-card v-if="current" tile class="medium-card">
-           <h3 class="medium-title">Latest workout</h3>
-           <div class="pt-4"><RoutineCard :routineData="user.latestWork" :withOverlay="true"></RoutineCard></div>
-         </v-card>
-         <v-card v-if="current" tile class="medium-card">
-           <h3 class="medium-title">Most used routine</h3>
-           <div class="pt-4"><RoutineCard :routineData="user.mostUsed" :withOverlay="true"></RoutineCard></div>
-         </v-card>
+
        </div>
         
         <div class="row-fmt mt-3">
@@ -55,7 +48,7 @@
 
 <script>
 
-import RoutineCard from "./RoutineCard";
+//import RoutineCard from "./RoutineCard";
 
 export default {
   name: "ProfileBanner",
@@ -78,7 +71,7 @@ export default {
     months:["Jan","Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" ],
     };
   },
-  components:{RoutineCard},
+  
   methods:{
   formatTime(time){
       let date=new Date(time);
