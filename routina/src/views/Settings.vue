@@ -26,13 +26,15 @@
 
                   <div class="centered-div pa-4">
                     <v-avatar size="150" color="white" class="my-4">
-                      <img :src="require(`../assets/avatar.jpg`)" />
+                      <img :src="user.avatarUrl" />
                     </v-avatar>
                   </div>
                   <div class="centered-div pa-4">
                     <div style="width: 250px; margin-bottom: 30px">
                       <v-file-input
+                        v-model="selectedFile"
                         filled
+                        v-on:change="uploadImage"
                         dense
                         label="Upload new image"
                         prepend-icon="mdi-camera"
@@ -87,7 +89,7 @@
                     <div class="centered-div">
                       <span>
                         <h3>Birth date</h3>
-                        <DatePicker :dateNum="user.date" />
+                        <DatePicker :key="rerender" v-on:save="date => saveDate(date)" :dateNum="user.birthdate" />
                       </span>
                     </div>
                   </div>
@@ -96,7 +98,7 @@
                   class="centered-div light-grey-card pa-4"
                   style="gap: 20px"
                 >
-                  <v-btn color="primary" class="black--text" rounded
+                  <v-btn v-on:click="save" color="primary" class="black--text" rounded
                     ><h4>Save Changes</h4></v-btn
                   >
                   <v-btn
@@ -105,6 +107,7 @@
                     class="black"
                     style="border-width: 2px; border-color: #ff8000 !important"
                     rounded
+                    v-on:click="$router.go(-1)"
                     ><h4>Discard Changes</h4></v-btn
                   >
                 </div>
@@ -234,25 +237,62 @@
 // @ is an alias to /src
 import RoutinesBanner from "../components/RoutinesBanner";
 import DatePicker from "../components/DatePicker";
+import {UserApi} from "../services/user.js";
+import {Images} from "../services/images.js";
 
 export default {
   name: "Settings",
   components: { RoutinesBanner, DatePicker },
+  async mounted(){
+    let user = await UserApi.getCurrentUser();
+    this.user=user;
+    this.user.birthdate = new Date(this.user.birthdate);
+    this.rerender++;
+  },
   data() {
     return {
       tabs: null,
+      rerender:0,
+      selectedFile:{},
       user: {
         fullName: "El Beto",
         gender: "Male",
         //ojo que el mes empieza en cero
-        date: new Date("2000", "10", "01"),
+        birthdate: new Date("2000", "10", "01"),
       },
-      genders: ["Male", "Female", "Other"],
+      genders: ["male", "female", "other"],
       required: (value) => !!value || "Value cannot be empty.",
       showCurrPassword: false,
       showNewPassword: false,
     };
   },
+  methods:{
+
+    saveDate(date){
+      this.user.birthdate=date;
+    },
+    save(){
+      this.user.birthdate = this.user.birthdate.getTime();
+      UserApi.updateCurrentUser(this.user);
+      this.$router.replace("/");
+      //this.user.username, this.user.fullName,this.user.gender,this.
+    },
+
+    uploadImage:async function(){
+      try{
+        const res = await Images.uploadImage(this.selectedFile);
+        const res2 = await res.text();
+        
+        const data = JSON.parse(res2).secure_url;
+        this.user.avatarUrl=data;
+        return data;
+        //RoutinesApi.createCycleExercise(routineId,cycleId,new Exercise(name,detail,type,duration,repetitions),controller);
+      }catch(e){
+        console.log(e);
+      }
+    },
+    
+  }
 };
 </script>
 

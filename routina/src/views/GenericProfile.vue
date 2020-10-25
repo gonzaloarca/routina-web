@@ -21,33 +21,6 @@ export default {
       return{
         id:this.$route.params.id,
         usr:{},  
-        // userDemo:{
-        //   firstName:"el",
-        //   lastName:"Beto",
-        //   userName:"MBEEEEH",
-        //   lastAct:"5 hours ago",
-        //   memSince:"1 Mar 2020",
-        //   latestWork:{
-        //     routineName: "Routine 1",
-        //     routineId: 1,
-        //     author: "Julian Sicardi",
-        //     type: "Cardio",
-        //     difficulty: 2,
-        //     muscleGroup: "Legs",
-        //     time: 45,
-        //     image: require("../assets/routine1.jpg"),
-        //   },
-        //   mostUsed:{
-        //     routineName: "Routine 1",
-        //     routineId: 1,
-        //     author: "Julian Sicardi",
-        //     type: "Cardio",
-        //     difficulty: 2,
-        //     muscleGroup: "Legs",
-        //     time: 45,
-        //     image: require("../assets/routine1.jpg"),
-        //   }
-        // },
         slidegroups:[
           {name:"Routines created by ", routines:[],}, ],
       }

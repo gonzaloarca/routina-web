@@ -33,7 +33,7 @@
       >
         <v-spacer></v-spacer>
         <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-        <v-btn text color="primary" @click="$refs.menu.save(date)"> OK </v-btn>
+        <v-btn text color="primary" @click="$refs.menu.save(date); send()"> OK </v-btn>
       </v-date-picker>
     </v-menu>
   </div>
@@ -54,6 +54,11 @@ export default {
       required: (value) => !!value || "Value cannot be empty.",
     };
   },
+  methods:{
+    send(){
+      this.$emit('save',new Date(this.date));
+    }
+  }
 };
 </script>
 <style scoped lang="scss">

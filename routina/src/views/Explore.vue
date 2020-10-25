@@ -1,6 +1,7 @@
 <template>
   <div class="Explore">
     <ExploreBanner />
+    <div class="content-wrapper">
     <div class="explore-content">
       <div class="content-container">
         <h1 class="title-container">Explore routines by:</h1>
@@ -37,7 +38,16 @@
         </v-row>
         <v-tabs-items v-if="!showingRoutines" v-model="explore_tabs">
           <v-tab-item v-for="tab in tabs" :key="tab.name">
+            <div  v-if="allRoutines && tab.name === 'all'">
+            <ExploreGrid
+              :withOverlay="true"
+              componentType="RoutineCard"
+              name="Routine"
+              :categories="allRoutines"
+              width="100%"
+            ></ExploreGrid></div>
             <div
+              v-else
               style="
                 overflow: hidden;
                 display: flex;
@@ -65,6 +75,7 @@
           width="100%"
         ></ExploreGrid>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -127,6 +138,10 @@ export default {
       type:null,
 
       tabs: [
+        {
+          name: "all",
+          categories:[]
+        },
         {
           name: "featured",
           icon: "mdi-star",
@@ -235,5 +250,11 @@ export default {
   padding: 2px 2px 2px 2px;
   text-align: center;
   font-weight: 600;
+}
+
+.content-wrapper{
+  width:100%;
+  height: fit-content;
+  background-color:black;
 }
 </style>
