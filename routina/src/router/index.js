@@ -73,7 +73,7 @@ const routes = [
     component: GenericProfile,
   },
   {
-    path: "/verify-email",
+    path: "/verify-email/:mail",
     name: "VerifyEmail",
     component: VerifyEmail,
   },

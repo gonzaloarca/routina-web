@@ -163,8 +163,6 @@
                   light
                   class="button font-weight-bold pa-3"
                   v-on:click="createAccount"
-                  router
-                  :to="login ? 'register' : 'verify-email'"
                   style="z-index: 2"
                 >
                   <span v-if="!login">Continue</span>
@@ -288,7 +286,7 @@ export default {
     birthDate: "",
     birthDatePlaceholder: "Birth Date",
     birthDateError: "",
-    genderItems: ["Male", "Female", "Other"],
+    genderItems: ["male", "female", "other"],
     login: false,
     provError: false,
   }),
@@ -298,16 +296,19 @@ export default {
         console.log(
           `username= ${this.username}, email = ${this.email}, password = ${this.password}`
         );
+        console.log(this.birthDate);
         if (
           this.username !== "" &&
           this.email !== "" &&
           this.password !== "" &&
           this.fullName !== null &&
           this.gender !== null
+
         ) {
           const cred = new Credentials(this.username, this.password);
+          //credential,email,fullName,gender,birthdate,avatarUrl,phone
           await UserApi.createUser(
-            new User(cred, this.email, this.fullName, this.gender)
+            new User(cred, this.email, this.fullName, this.gender,new Date(this.birthDate).getTime(),"https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.freepik.es%2Fvector-premium%2Fperfil-avatar-hombre-icono-redondo_2651713.htm&psig=AOvVaw1w1S-sZe5kSvfLnbgmAPbl&ust=1603676201254000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPiJysbNzuwCFQAAAAAdAAAAABAD","")
           );
         } else {
           if (this.username === "") {
@@ -323,6 +324,8 @@ export default {
       } catch (error) {
         console.log(error);
       }
+      let path= this.login ? 'register' : 'verify-email';
+      this.$router.replace("/"+path + "/"+this.email);
     },
   },
 };

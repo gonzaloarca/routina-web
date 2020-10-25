@@ -13,15 +13,32 @@
         with a link for verifying your account. Please follow the link in order
         to access your account.
       </h3>
+      <div class="my-5 center-h center-v">
+        <h3>Confirmation Code:  </h3>
+        <div class="center-v mx-4" style="width: 200px"><v-text-field v-model="code"></v-text-field></div>
+        <div> <v-btn v-on:click="verify" text class="primary black--text" rounded>Confirm</v-btn> </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import RoutinesBanner from "@/components/RoutinesBanner";
+import {UserApi} from "../services/user.js";
 export default {
   name: "VerifyEmail",
   components: { RoutinesBanner },
+  data(){
+    return{
+      code:""
+    }
+  },
+  methods:{
+    verify(){
+      UserApi.verify(this.$route.params.mail,this.code);
+      this.$router.replace("/");
+    }
+  }
 };
 </script>
 

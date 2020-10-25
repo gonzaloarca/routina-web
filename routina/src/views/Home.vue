@@ -8,9 +8,9 @@
     </section>-->
 
     <!-- Cuerpo principal con rutinas y contenido -->
-    <div>
+    <!-- <div>
       <v-btn @click="getFullRoutine(2)">Get Full ROUTINE</v-btn>
-    </div>
+    </div> -->
     <div class="home-content">
       <v-card class="content-container">
         <h1>Recommended routines</h1>

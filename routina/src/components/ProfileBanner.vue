@@ -39,7 +39,7 @@
         
         <div class="row-fmt mt-3">
         <v-btn
-              :v-if="current"
+              v-if="current"
               rounded
               color="black"
               class="button font-weight-bold"
@@ -67,6 +67,7 @@ export default {
     current:{
       type:Boolean,
       required:true,
+      default:false,
     },
     latestWorkout:{type:Object,required:true},
     mostUsedRoutine:{type:Object,required:true},

@@ -11,7 +11,7 @@ class UserApi {
     }
 
     static async createUser(user,controller){
-        const result = await Api.post(`${UserApi.url}/login`, false, user, controller);
+        const result = await Api.post(`${UserApi.url}`, false, user, controller);
         return result;
     }
 
@@ -27,6 +27,10 @@ class UserApi {
         Api.token = undefined;
         Cookies.deleteCookie("token");
     }
+    static async verify(email,code){
+        await Api.post(`${UserApi.url}/verify_email`,false,new Verfication(email,code));
+    }
+
     static async getUser(id,controller){
         return await Api.get(`${UserApi.url}/${id}`,true,controller);
     }
@@ -45,7 +49,7 @@ class UserApi {
     }
 
     static async getCurrentUserRoutines(controller){
-        return await Api.get(`${UserApi.url}/current/routines/`,true,controller);
+        return await Api.get(`${UserApi.url}/current/routines/?size=1000`,true,controller);
     }
 
     static async getUserRoutines(id,controller){
@@ -184,6 +188,13 @@ class Credentials {
     constructor(username, password) {
         this.username = username;
         this.password = password;
+    }
+}
+
+class Verfication{
+    constructor(email,code){
+        this.email=email;
+        this.code = code;
     }
 }
 

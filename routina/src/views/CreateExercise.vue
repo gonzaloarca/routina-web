@@ -118,7 +118,7 @@
 <script>
 import RoutinesBanner from "@/components/RoutinesBanner";
 import {Images} from "../services/images.js";
-import { RoutinesApi,Routine,Exercise,ImageModel} from "../services/routines.js";
+import { RoutinesApi,Routine,Exercise,ImageModel,Cycle} from "../services/routines.js";
 import { UserApi } from '../services/user.js';
 export default {
   name: "CreateExercise",
@@ -152,17 +152,22 @@ export default {
     },
     createExercise:async function(){
       this.errorMessage="";
-      if(this.selectedFile!==null && this.exerciseName!=="" && this.exerciseDetail!==""){
-        let id = this.getUserExerciseRoutine();
+      if(this.selectedFile!==null && this.exerciseName!=="" ){
+        let id = await this.getUserExerciseRoutine();
         console.log("USER EXERCISES ROUTINE ID");
         console.log(id);
-        if(id===null){
-         const res = await RoutinesApi.createRoutine(new Routine("internal","",false,"rookie",1));
-         id = res.id;
-        }
-        const res = await RoutinesApi.createCycleExercise(1,1,new Exercise(this.exerciseName,this.exerciseDetail,"exercise",0,0));
+        let cycleId; 
+       if(id===null){
+         const res = await RoutinesApi.createRoutine(new Routine("internal","",false,"rookie",{id:1}));
+          id = res.id;
+         console.log("ID--------------------------------------------------");
+         console.log(id);
+         const cycleRes = await RoutinesApi.createRoutineCycle(id,new Cycle("user-exercises","","warmup",1,1));
+         cycleId= cycleRes.id;
+       }
+        const exerciseRes = await RoutinesApi.createCycleExercise(id,cycleId,new Exercise(this.exerciseName,this.exerciseDetail,"exercise",0,0));
         const imgUrl = await this.uploadImage();
-        const exerciseId = res.id;
+        const exerciseId = exerciseRes.id;
         const res2 = await RoutinesApi.createExerciseImage(1,1,exerciseId,new ImageModel(1,imgUrl));
         console.log(res2);
         console.log("SUCCESS");
@@ -171,10 +176,11 @@ export default {
         this.errorMessage="All Text fields must be filled";
       }
     },
+  
     getUserExerciseRoutine:async function(){
       const res = await UserApi.getCurrentUserFavouriteRoutines();
       const routines = await res.results;
-      for(const routine in routines){
+      for(const routine of routines){
         if(routine.name ==="internal"){
           //encontramos la rutina en la que este usuario guarda sus ejercicios
           return routine.id;

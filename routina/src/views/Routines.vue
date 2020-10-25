@@ -22,6 +22,8 @@
               rounded
               color="orange darken-3"
               light
+              router
+              to="routine/-1/edit-routine"
               class="button font-weight-bold pa-3"
             >
               <v-icon class="icon-fmt" color="black" left>
@@ -31,7 +33,7 @@
             </v-btn>
           </div>
           <div class="centered-div pa-3">
-            <v-btn
+            <!-- <v-btn
               rounded
               color="grey darken-2"
               dark
@@ -44,7 +46,7 @@
               <v-icon v-else color="white" left> mdi-pencil </v-icon>
               <span v-if="routineEditing"> Finish editing </span>
               <span v-else> Edit routine </span>
-            </v-btn>
+            </v-btn> -->
           </div>
         </div>
       </v-card>
@@ -69,7 +71,7 @@
             </v-btn>
           </div>
           <div class="centered-div pa-3">
-            <v-btn
+            <!-- <v-btn
               rounded
               color="grey darken-2"
               dark
@@ -82,7 +84,7 @@
               <v-icon v-else color="white" left> mdi-pencil </v-icon>
               <span v-if="exerciseEditing"> Finish editing </span>
               <span v-else> Edit exercise </span>
-            </v-btn>
+            </v-btn> -->
           </div>
         </div>
       </v-card>
@@ -120,7 +122,6 @@ export default {
       console.log("GETTING FAVORITE ROUTINES");
       this.favoriteRoutines = [];
       for(const routine of res.results){
-        console.log(routine);
         const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
         const imageRes = await RoutinesApi.getExerciseImages(fullResponse.id, fullResponse.cycles[0].id, fullResponse.cycles[0].exercises[0].id);
         fullResponse.image = imageRes.results[0].url;
@@ -129,23 +130,28 @@ export default {
     },
     getMyRoutines: async function(){
       const res = await UserApi.getCurrentUserRoutines();
-      console.log(res);
-      console.log("GETTING MY ROUTINES");
       this.myRoutines = [];
       for(const routine of res.results){
-        
-        const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
+        try{
+           const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
         const imageRes = await RoutinesApi.getExerciseImages(fullResponse.id, fullResponse.cycles[0].id, fullResponse.cycles[0].exercises[0].id);
         fullResponse.image = imageRes.results[0].url;
         this.myRoutines.push(fullResponse);
+        }catch(error){
+          console.log(error);
+        }
+       
       }
     },
     getUserExercises:async function(){
       const res = await UserApi.getCurrentUserRoutines();
       for(const routine of res.results){
+        console.log("GETTING USER EXERCISES");
+        console.log(routine);
         if(routine.name ==="internal"){
           this.myExercises = [];
           const fullResponse = await RoutinesApi.getFullRoutine(routine.id);
+          console.log(fullResponse);
           this.myExercises = fullResponse.cycles[0].exercises;
         }
       }

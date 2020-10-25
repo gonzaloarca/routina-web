@@ -1,7 +1,7 @@
 <template>
   <div class="Profile">
     <ProfileBanner :user="user" :latestWorkout="latestWorkout" :mostUsedRoutine="mostUsedRoutine" :current="true" />
-    <div class="profile-content">
+    <!-- <div class="profile-content">
       <v-card
         v-for="sg in slidegroups"
         :key="sg.name"
@@ -10,12 +10,12 @@
         <h1>{{ sg.name }}</h1>
         <RoutineSlideGroup :routines="sg.routines"/>
       </v-card>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 import ProfileBanner from "../components/ProfileBanner";
-import RoutineSlideGroup from "../components/RoutineSlideGroup";
+//import RoutineSlideGroup from "../components/RoutineSlideGroup";
 import {UserApi} from "../services/user.js";
 export default {
     created(){
@@ -23,7 +23,7 @@ export default {
       this.analyzeExecutions();
     },
     name:"MyProfile",
-    components:{ProfileBanner, RoutineSlideGroup},
+    components:{ProfileBanner},
     data(){
       return{
         userDemo:{

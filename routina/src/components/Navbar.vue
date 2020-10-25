@@ -21,8 +21,8 @@
           src="../assets/logo.png"
         />
       </router-link>
-      <v-btn v-on:click="createDatabase">CREATE DB</v-btn>
-      <v-btn v-on:click="deleteDatabase">DELETE DB</v-btn>
+      <!-- <v-btn v-on:click="createDatabase">CREATE DB</v-btn>
+      <v-btn v-on:click="deleteDatabase">DELETE DB</v-btn> -->
       <div></div>
 
       <v-spacer></v-spacer>
